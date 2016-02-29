@@ -20,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  */
 class Yoast_ACF_Analysis {
+
+	/** @var array Plugin information. */
 	private $plugin_data = null;
 
 	/**
