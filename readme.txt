@@ -14,4 +14,4 @@ Adds the content of all ACF fields to the Yoast SEO score analysis.
 
 This had previously been done by the [WordPress SEO ACF Content Analysis](https://wordpress.org/plugins/wp-seo-acf-content-analysis/) plugin but that no longer works with Yoast 3.0. Kudos to [ryuheixys](https://profiles.wordpress.org/ryuheixys/), the author of that plugin, for the original idea.
 
-Please note that this does not work with the \"Recalculate SEO scores\" tool in Yoast SEO\'s admin area. I am [looking into that](https://github.com/Yoast/wordpress-seo/issues/3323#issuecomment-160114155).
+Please note that this does not work with the "Recalculate SEO scores" tool in Yoast WordPress SEO's admin area. I am [looking into that](https://github.com/Yoast/wordpress-seo/issues/3323#issuecomment-160114155).
