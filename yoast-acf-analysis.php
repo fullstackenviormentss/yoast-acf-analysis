@@ -4,7 +4,7 @@
  * Plugin URI: https://forsberg.ax
  * Description: Adds the content of all ACF fields to the Yoast SEO score analysis.
  * Version: 1.1.0
- * Author: Marcus Forsberg
+ * Author: Marcus Forsberg & Team Yoast
  * Author URI: https://forsberg.ax
  * License: GPL v3
  */
@@ -28,13 +28,15 @@ class Yoast_ACF_Analysis {
 	 * Yoast_ACF_Analysis constructor.
 	 *
 	 * Add hooks and filters.
-	 *
 	 */
 	function __construct() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 		add_filter( 'wpseo_post_content_for_recalculation', array( $this, 'add_recalculation_data_to_post_content' ) );
-		add_filter( 'wpseo_term_description_for_recalculation', array( $this, 'add_recalculation_data_to_term_content' ) );
+		add_filter( 'wpseo_term_description_for_recalculation', array(
+			$this,
+			'add_recalculation_data_to_term_content'
+		) );
 	}
 
 	/**
@@ -52,7 +54,7 @@ class Yoast_ACF_Analysis {
 				$deactivate = true;
 			}
 
-			// WordPress SEO
+			// Yoast SEO for WordPress
 			if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) && ! is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) {
 				add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
 				$deactivate = true;
@@ -60,7 +62,7 @@ class Yoast_ACF_Analysis {
 			else {
 				// Compare if version is >= 3.0
 				if ( defined( 'WPSEO_VERSION' ) ) {
-					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.0', '<' ) ) {
+					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.1', '<' ) ) {
 						add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
 						$deactivate = true;
 					}
@@ -95,10 +97,10 @@ class Yoast_ACF_Analysis {
 	}
 
 	/**
-	 * Notify that we need WordPress SEO to be installed and active.
+	 * Notify that we need Yoast SEO for WordPress to be installed and active.
 	 */
 	public function wordpress_seo_requirements_not_met() {
-		$message = __( 'ACF Yoast Analysis requires Yoast SEO 3.0+ to be installed and activated.', 'yoast-acf-analysis' );
+		$message = __( 'ACF Yoast Analysis requires Yoast SEO for WordPress 3.1+ to be installed and activated.', 'yoast-acf-analysis' );
 
 		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 	}
@@ -185,7 +187,7 @@ class Yoast_ACF_Analysis {
 	 *
 	 * @return string Content of all ACF fields combined.
 	 */
-	function get_field_data( $fields ) {
+	private function get_field_data( $fields ) {
 		$output = '';
 
 		if ( ! is_array( $fields ) ) {
@@ -201,10 +203,8 @@ class Yoast_ACF_Analysis {
 				case 'array':
 					if ( isset( $field['sizes']['thumbnail'] ) ) {
 						// Put all images in img tags for scoring.
-						$alt   = ( isset( $field['alt'] ) ) ? $field['alt'] : '';
-						$title = ( isset( $field['title'] ) ) ? $field['title'] : '';
-
-						$output .= ' <img src="' . esc_url( $field['sizes']['thumbnail'] ) . '" alt="' . esc_attr( $alt ) . '" title="' . esc_attr( $title ) . '" />';
+						$alt = ( isset( $field['alt'] ) ) ? $field['alt'] : '';
+						$output .= ' <img src="' . esc_url( $field['sizes']['thumbnail'] ) . '" alt="' . esc_attr( $alt ) . '" />';
 					}
 					else {
 						$output .= ' ' . $this->get_field_data( $field );
