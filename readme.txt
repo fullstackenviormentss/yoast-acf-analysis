@@ -1,5 +1,5 @@
 === Yoast ACF Analysis ===
-Contributors: marcusforsberg
+Contributors: marcusforsberg, joostdevalk, atimmer, omarreiss, jipmoors
 Tags: yoast, seo, acf, advanced custom fields, analysis, search engine optimization, seo score
 Donate link: https://forsberg.ax
 Requires at least: 4.3.1
