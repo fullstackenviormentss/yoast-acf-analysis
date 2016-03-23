@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         browserify: {
             build: {
                 files: {
-                    "js/yoast-acf-analysis.js": [ "js/src/yoast-acf-analysis.js" ]
+                    "js/yoast-acf-analysis.js": [ "js/src/main.js" ]
                 }
             }
         }

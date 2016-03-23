@@ -1,6 +1,6 @@
 {
   "name": "yoast-acf-analysis",
-  "version": "1.1.0",
+  "version": "2.0.0-dev",
   "description": "Adds the content of all ACF fields to the Yoast SEO score analysis.",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
     "seo",
     "score"
   ],
-  "author": "Marcus Forsberg, Thomas Kraeftner & Team Yoast",
+  "author": "Thomas Kräftner, Marcus Forsberg & Team Yoast",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/kraftner/yoast-acf-analysis/issues"
