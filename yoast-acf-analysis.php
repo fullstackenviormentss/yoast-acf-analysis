@@ -67,7 +67,8 @@ class Yoast_ACF_Analysis {
 
 		// Enqueue when no problems were found.
 		if ( empty( $notice_functions ) ) {
-			add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			// Make sure we load very late to be able to check enqueue of scripts we depend on.
+			add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 999 );
 		}
 		else {
 			// Show notices to users who can act on them.
@@ -86,45 +87,58 @@ class Yoast_ACF_Analysis {
 	 * Notify that we need ACF to be installed and active.
 	 */
 	public function acf_not_active_notification() {
-		$message = __( 'Yoast SEO: ACF Analysis requires Advanced Custom Fields (free or pro) to be installed and activated.', 'yoast-acf-analysis' );
 
-		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
+		$message = sprintf(
+			__( 'Please %1$sinstall & activate Advanced Custom Fields%2$s to use Yoast SEO: ACF Analysis.', 'yoast-acf-analysis' ),
+			'<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&type=term&s=advanced+custom+fields&plugin-search-input=Search+Plugins' ) ) . '">',
+			'</a>'
+		);
+
+		printf( '<div class="error"><p>%s</p></div>', $message );
 	}
 
 	/**
 	 * Notify that we need Yoast SEO for WordPress to be installed and active.
 	 */
 	public function wordpress_seo_requirements_not_met() {
-		$message = __( 'Yoast SEO: ACF Analysis requires Yoast SEO for WordPress 3.1+ to be installed and activated.', 'yoast-acf-analysis' );
+		$message = sprintf(
+			__( 'Please %1$sinstall & activate Yoast SEO 3.1+%2$s to use Yoast SEO: ACF Analysis.', 'yoast-acf-analysis' ),
+			'<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&type=term&s=yoast+seo&plugin-search-input=Search+Plugins' ) ) . '">',
+			'</a>'
+		);
 
-		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
+		printf( '<div class="error"><p>%s</p></div>', $message );
 	}
 
 	/**
 	 * Enqueue JavaScript file to feed data to Yoast Content Analyses.
 	 */
 	public function enqueue_scripts() {
-		// Post page enqueue.
-		wp_enqueue_script(
-			'yoast-acf-analysis-post',
-			plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
-			array(
-				'jquery',
-				'wp-seo-post-scraper',
-			),
-			self::VERSION
-		);
+		if ( wp_script_is( 'yoast-seo-post-scraper', 'enqueued' ) ) {
+			// Post page enqueue.
+			wp_enqueue_script(
+				'yoast-acf-analysis-post',
+				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
+				array(
+					'jquery',
+					'yoast-seo-post-scraper',
+				),
+				self::VERSION
+			);
+		}
 
-		// Term page enqueue.
-		wp_enqueue_script(
-			'yoast-acf-analysis-term',
-			plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
-			array(
-				'jquery',
-				'wp-seo-term-scraper',
-			),
-			self::VERSION
-		);
+		if ( wp_script_is( 'yoast-seo-term-scraper', 'enqueued' ) ) {
+			// Term page enqueue.
+			wp_enqueue_script(
+				'yoast-acf-analysis-term',
+				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
+				array(
+					'jquery',
+					'yoast-seo-term-scraper',
+				),
+				self::VERSION
+			);
+		}
 	}
 
 	/**
