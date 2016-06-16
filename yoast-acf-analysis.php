@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Yoast ACF Analysis
+ * Plugin Name: Yoast SEO: ACF Analysis
  * Plugin URI: https://forsberg.ax
  * Description: Adds the content of all ACF fields to the Yoast SEO score analysis.
  * Version: 1.1.0
@@ -75,7 +75,7 @@ class Yoast_ACF_Analysis {
 				$this->show_notices( $notice_functions );
 
 				// Deactivate this plugin if we are not a mu-plugin.
-				if ( is_plugin_active( YOAST_ACF_ANALYSIS_FILE ) ) {
+				if ( is_plugin_active( plugin_basename( YOAST_ACF_ANALYSIS_FILE ) ) ) {
 					$this->deactivate();
 				}
 			}
