@@ -21,8 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Yoast_ACF_Analysis {
 
-	/** @var array Plugin information. */
-	private $plugin_data = null;
+	const VERSION = '1.1.0';
 
 	/**
 	 * Yoast_ACF_Analysis constructor.
@@ -44,46 +43,51 @@ class Yoast_ACF_Analysis {
 	 */
 	public function admin_init() {
 
-		// Require ACF and Yoast
-		if ( current_user_can( 'activate_plugins' ) ) {
-			$deactivate = false;
+		$notice_functions = array();
 
-			// ACF
-			if ( ! is_plugin_active( 'advanced-custom-fields/acf.php' ) && ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
-				add_action( 'admin_notices', array( $this, 'acf_not_active_notification' ) );
-				$deactivate = true;
-			}
+		// ACF
+		if ( ! class_exists( 'acf' ) && ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+			$notice_functions[] = 'acf_not_active_notification';
+		}
 
-			// Yoast SEO for WordPress
-			if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) && ! is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) {
-				add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
-				$deactivate = true;
-			}
-			else {
-				// Compare if version is >= 3.0
-				if ( defined( 'WPSEO_VERSION' ) ) {
-					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.1', '<' ) ) {
-						add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
-						$deactivate = true;
-					}
+		// Yoast SEO for WordPress
+		if ( ! defined( 'WPSEO_VERSION' ) ) {
+			$notice_functions[] = 'wordpress_seo_requirements_not_met';
+		}
+		// Make sure that version is >= 3.1
+		else if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.1', '<' ) ) {
+			$notice_functions[] = 'wordpress_seo_requirements_not_met';
+		}
+
+		// Stop here if we cannot do the job we are hired to do.
+		if ( ! empty( $notice_functions ) ) {
+			// Deactivate if installed as a plugin.
+			if ( current_user_can( 'activate_plugins' ) && is_plugin_active( plugin_basename( __FILE__ ) ) ) {
+				foreach ( $notice_functions as $function ) {
+					add_action( 'admin_notices', array( $this, $function ) );
 				}
-			}
+				unset( $function );
+				
+				$file = plugin_basename( __FILE__ );
 
-			// Deactivate when we cannot do the job we are hired to do.
-			if ( $deactivate ) {
-				deactivate_plugins( plugin_basename( __FILE__ ) );
+				deactivate_plugins( $file, false, is_network_admin() );
 
+				// Add to recently active plugins list.
+				if ( ! is_network_admin() ) {
+					update_option( 'recently_activated', array( $file => time() ) + (array) get_option( 'recently_activated' ) );
+				} else {
+					update_site_option( 'recently_activated', array( $file => time() ) + (array) get_site_option( 'recently_activated' ) );
+				}
+
+				// Prevent trying again on page reload.
 				if ( isset( $_GET['activate'] ) ) {
 					unset( $_GET['activate'] );
 				}
-
-				return;
 			}
-
-			// Only enqueue when we are active.
+		}
+		else {
+			// Only enqueue when all requirements are met.
 			add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
-			$this->plugin_data = get_plugin_data( dirname( __FILE__ ) );
 		}
 	}
 
@@ -117,7 +121,7 @@ class Yoast_ACF_Analysis {
 				'jquery',
 				'wp-seo-post-scraper',
 			),
-			$this->plugin_data['Version']
+			self::VERSION
 		);
 
 		// Term page enqueue.
@@ -128,7 +132,7 @@ class Yoast_ACF_Analysis {
 				'jquery',
 				'wp-seo-term-scraper',
 			),
-			$this->plugin_data['Version']
+			self::VERSION
 		);
 	}
 
