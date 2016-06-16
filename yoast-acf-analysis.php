@@ -13,6 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! defined( 'YOAST_ACF_ANALYSIS_FILE ' ) ) {
+	define( 'YOAST_ACF_ANALYSIS_FILE', __FILE__ );
+}
+
 /**
  * Class Yoast_ACF_Analysis
  *
@@ -45,49 +49,36 @@ class Yoast_ACF_Analysis {
 
 		$notice_functions = array();
 
-		// ACF
+		// Check for: Yoast SEO for WordPress.
+		if ( defined( 'WPSEO_VERSION' ) ) {
+			// Make sure that version is >= 3.1
+			if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.1', '<' ) ) {
+				$notice_functions[] = 'wordpress_seo_requirements_not_met';
+			}
+		}
+		else  {
+			$notice_functions[] = 'wordpress_seo_requirements_not_met';
+		}
+
+		// Check for: ACF.
 		if ( ! class_exists( 'acf' ) && ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 			$notice_functions[] = 'acf_not_active_notification';
 		}
 
-		// Yoast SEO for WordPress
-		if ( ! defined( 'WPSEO_VERSION' ) ) {
-			$notice_functions[] = 'wordpress_seo_requirements_not_met';
-		}
-		// Make sure that version is >= 3.1
-		else if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.1', '<' ) ) {
-			$notice_functions[] = 'wordpress_seo_requirements_not_met';
-		}
-
-		// Stop here if we cannot do the job we are hired to do.
-		if ( ! empty( $notice_functions ) ) {
-			// Deactivate if installed as a plugin.
-			if ( current_user_can( 'activate_plugins' ) && is_plugin_active( plugin_basename( __FILE__ ) ) ) {
-				foreach ( $notice_functions as $function ) {
-					add_action( 'admin_notices', array( $this, $function ) );
-				}
-				unset( $function );
-				
-				$file = plugin_basename( __FILE__ );
-
-				deactivate_plugins( $file, false, is_network_admin() );
-
-				// Add to recently active plugins list.
-				if ( ! is_network_admin() ) {
-					update_option( 'recently_activated', array( $file => time() ) + (array) get_option( 'recently_activated' ) );
-				} else {
-					update_site_option( 'recently_activated', array( $file => time() ) + (array) get_site_option( 'recently_activated' ) );
-				}
-
-				// Prevent trying again on page reload.
-				if ( isset( $_GET['activate'] ) ) {
-					unset( $_GET['activate'] );
-				}
-			}
+		// Enqueue when no problems were found.
+		if ( empty( $notice_functions ) ) {
+			add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
 		else {
-			// Only enqueue when all requirements are met.
-			add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			// Show notices to users who can act on them.
+			if ( current_user_can( 'activate_plugins' ) ) {
+				$this->show_notices( $notice_functions );
+
+				// Deactivate this plugin if we are not a mu-plugin.
+				if ( is_plugin_active( YOAST_ACF_ANALYSIS_FILE ) ) {
+					$this->deactivate();
+				}
+			}
 		}
 	}
 
@@ -116,7 +107,7 @@ class Yoast_ACF_Analysis {
 		// Post page enqueue.
 		wp_enqueue_script(
 			'yoast-acf-analysis-post',
-			plugins_url( '/js/yoast-acf-analysis.js', __FILE__ ),
+			plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
 			array(
 				'jquery',
 				'wp-seo-post-scraper',
@@ -127,7 +118,7 @@ class Yoast_ACF_Analysis {
 		// Term page enqueue.
 		wp_enqueue_script(
 			'yoast-acf-analysis-term',
-			plugins_url( '/js/yoast-acf-analysis.js', __FILE__ ),
+			plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
 			array(
 				'jquery',
 				'wp-seo-term-scraper',
@@ -219,6 +210,38 @@ class Yoast_ACF_Analysis {
 		}
 
 		return trim( $output );
+	}
+
+	/**
+	 * Show the notices that are queued
+	 *
+	 * @param array $notice_functions Array of functions to call.
+	 */
+	private function show_notices( $notice_functions ) {
+		foreach ( $notice_functions as $function ) {
+			add_action( 'admin_notices', array( $this, $function ) );
+		}
+	}
+
+	/**
+	 * Deactivate this plugin
+	 */
+	private function deactivate() {
+		$file = plugin_basename( YOAST_ACF_ANALYSIS_FILE );
+		deactivate_plugins( $file, false, is_network_admin() );
+
+		// Add to recently active plugins list.
+		if ( ! is_network_admin() ) {
+			update_option( 'recently_activated', array( $file => $_SERVER['REQUEST_TIME'] ) + (array) get_option( 'recently_activated' ) );
+		}
+		else {
+			update_site_option( 'recently_activated', array( $file => $_SERVER['REQUEST_TIME'] ) + (array) get_site_option( 'recently_activated' ) );
+		}
+
+		// Prevent trying again on page reload.
+		if ( isset( $_GET['activate'] ) ) {
+			unset( $_GET['activate'] );
+		}
 	}
 }
 
