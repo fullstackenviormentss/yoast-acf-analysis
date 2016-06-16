@@ -86,7 +86,7 @@ class Yoast_ACF_Analysis {
 	 * Notify that we need ACF to be installed and active.
 	 */
 	public function acf_not_active_notification() {
-		$message = __( 'ACF Yoast Analysis requires Advanced Custom Fields (free or pro) to be installed and activated.', 'yoast-acf-analysis' );
+		$message = __( 'Yoast SEO: ACF Analysis requires Advanced Custom Fields (free or pro) to be installed and activated.', 'yoast-acf-analysis' );
 
 		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 	}
@@ -95,7 +95,7 @@ class Yoast_ACF_Analysis {
 	 * Notify that we need Yoast SEO for WordPress to be installed and active.
 	 */
 	public function wordpress_seo_requirements_not_met() {
-		$message = __( 'ACF Yoast Analysis requires Yoast SEO for WordPress 3.1+ to be installed and activated.', 'yoast-acf-analysis' );
+		$message = __( 'Yoast SEO: ACF Analysis requires Yoast SEO for WordPress 3.1+ to be installed and activated.', 'yoast-acf-analysis' );
 
 		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 	}
