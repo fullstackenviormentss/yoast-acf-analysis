@@ -114,27 +114,31 @@ class Yoast_ACF_Analysis {
 	 * Enqueue JavaScript file to feed data to Yoast Content Analyses.
 	 */
 	public function enqueue_scripts() {
-		if ( wp_script_is( 'yoast-seo-post-scraper', 'enqueued' ) ) {
+
+		// If the Asset Manager exists then we need to use a different prefix.
+		$script_prefix = ( class_exists( 'WPSEO_Admin_Asset_Manager' ) ? 'yoast-seo' : 'wp-seo' );
+
+		if ( wp_script_is( $script_prefix . '-post-scraper', 'enqueued' ) ) {
 			// Post page enqueue.
 			wp_enqueue_script(
-				'yoast-acf-analysis-post',
+				$script_prefix . '-analysis-post',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
 				array(
 					'jquery',
-					'yoast-seo-post-scraper',
+					$script_prefix . '-post-scraper',
 				),
 				self::VERSION
 			);
 		}
 
-		if ( wp_script_is( 'yoast-seo-term-scraper', 'enqueued' ) ) {
+		if ( wp_script_is( $script_prefix . '-term-scraper', 'enqueued' ) ) {
 			// Term page enqueue.
 			wp_enqueue_script(
-				'yoast-acf-analysis-term',
+				$script_prefix . '-analysis-term',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
 				array(
 					'jquery',
-					'yoast-seo-term-scraper',
+					$script_prefix . '-term-scraper',
 				),
 				self::VERSION
 			);
