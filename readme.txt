@@ -1,21 +1,21 @@
 === Yoast ACF Analysis ===
-Contributors: marcusforsberg, joostdevalk, atimmer, omarreiss, jipmoors
+Contributors: kraftner, marcusforsberg, joostdevalk, atimmer, omarreiss, jipmoors
 Tags: yoast, seo, acf, advanced custom fields, analysis, search engine optimization, seo score
 Donate link: https://forsberg.ax
 Requires at least: 4.3.1
-Tested up to: 4.5
+Tested up to: 4.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Version: 1.2.0
+Version: 2.0.0-dev
 
-Adds the content of all ACF fields to the Yoast SEO content analysis.
+WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
 
 == Description ==
 [Yoast SEO for WordPress](https://yoast.com/wordpress/plugins/) content and SEO analysis does not take in to account the content of a post's [Advanced Custom Fields](http://www.advancedcustomfields.com/). This plugin uses the plugin system of Yoast SEO for WordPress 3.1+ to hook into the analyser in order to add ACF content to the SEO analysis.
 
 This had previously been done by the [WordPress SEO ACF Content Analysis](https://wordpress.org/plugins/wp-seo-acf-content-analysis/) plugin but that no longer works with Yoast 3.0. Kudos to [ryuheixys](https://profiles.wordpress.org/ryuheixys/), the author of that plugin, for the original idea.
 
-Please note that the plugin does not work with WYSIWYG fields for ACF yet, we're working on this. 
+This Plugin is compatible with the free ACF 4 Version as well as with the PRO Version 5. Please be aware that it ignores Pro Add-Ons for Version 4. In that case please upgrade to ACF PRO Version 5.
 
 > If you have issues, please [submit them on GitHub](https://github.com/Yoast/yoast-acf-analysis/issues)
 

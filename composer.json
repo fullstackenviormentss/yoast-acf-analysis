@@ -1,0 +1,8 @@
+{
+    "name": "yoast/yoast-acf-analysis",
+    "description": "Adds the content of all ACF fields to the Yoast SEO score analysis.",
+    "type": "wordpress-plugin",
+    "license": "GPL-3.0",
+    "minimum-stability": "dev",
+    "require": {}
+}
