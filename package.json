@@ -31,7 +31,11 @@
   },
   "homepage": "https://github.com/kraftner/yoast-acf-analysis#readme",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^4.0.1"
+    "browserify": "^14.3.0",
+    "watchify": "^3.9.0"
+  },
+  "scripts": {
+    "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
+    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose"
   }
 }
