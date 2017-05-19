@@ -40,17 +40,23 @@ class Yoast_ACF_Analysis {
 			Yoast_ACF_Analysis_Registry::instance()->add( 'config', $this->get_config() );
 		}
 
+		$frontend = new Yoast_ACF_Analysis_Frontend();
+		$frontend->init();
+
+		/**
+		 * Disable this as long as the main plugin has this disabled
+		 * @see https://github.com/Yoast/wordpress-seo/issues/4532
+		 */
+		/*
 		if ( is_null( Yoast_ACF_Analysis_Registry::instance()->get( 'scraper_store' ) ) ) {
 			$scraper_store = new Yoast_ACF_Analysis_Scraper_Store;
 			$scraper_store->init();
 			Yoast_ACF_Analysis_Registry::instance()->add( 'scraper_store', $scraper_store );
 		}
 
-		$frontend = new Yoast_ACF_Analysis_Frontend();
-		$frontend->init();
-
 		$recalculation = new Yoast_ACF_Analysis_Recalculation();
 		$recalculation->init( new Class_Yoast_ACF_Analysis_Collector() );
+		*/
 	}
 
 	/**
