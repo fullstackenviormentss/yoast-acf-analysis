@@ -28,7 +28,7 @@ class Yoast_ACF_Analysis_Frontend {
 			plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
 			array(
 				'jquery',
-				'wp-seo-post-scraper',
+				'yoast-seo-post-scraper',
 				'underscore'
 			),
 			$this->plugin_data['Version']
@@ -40,7 +40,7 @@ class Yoast_ACF_Analysis_Frontend {
 			plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
 			array(
 				'jquery',
-				'wp-seo-term-scraper',
+				'yoast-seo-term-scraper',
 			),
 			$this->plugin_data['Version']
 		);

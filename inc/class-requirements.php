@@ -27,7 +27,7 @@ class Yoast_ACF_Analysis_Requirements {
 			} else {
 				// Compare if version is >= 3.0
 				if ( defined( 'WPSEO_VERSION' ) ) {
-					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.1', '<' ) ) {
+					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.2', '<' ) ) {
 						add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
 						$deactivate = true;
 					}
