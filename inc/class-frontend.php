@@ -43,8 +43,9 @@ class Yoast_ACF_Analysis_Frontend {
 			wp_localize_script( 'yoast-acf-analysis-post', 'YoastACFAnalysisConfig', $config );
 		}
 
+		// Term page enqueue.
 		if( 'term.php' === $pagenow ){
-			// Term page enqueue.
+
 			wp_enqueue_script(
 				'yoast-acf-analysis-term',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),

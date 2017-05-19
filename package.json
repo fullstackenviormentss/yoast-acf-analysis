@@ -36,6 +36,6 @@
   },
   "scripts": {
     "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
-    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose"
+    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose --debug"
   }
 }
