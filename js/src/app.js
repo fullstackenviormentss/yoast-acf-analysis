@@ -21,12 +21,15 @@ App.prototype.bindListeners = function(){
     }else{
         var fieldSelectors = config.fieldSelectors.slice(0);
 
+        // Ignore Wysiwyg fields because they trigger a refresh in Yoast SEO itself
         fieldSelectors = _.without(fieldSelectors, 'textarea[id^=wysiwyg-acf]');
 
         var _self = this;
 
         jQuery(document).on('acf/setup_fields', function(){
             var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
+            //This would cause faster updates while typing
+            //fields.on('change input', _self.maybeRefresh.bind(_self) );
             fields.on('change', _self.maybeRefresh.bind(_self) );
             //TODO: Changing the alt text of an image needs to clear the attachment cache
         });
