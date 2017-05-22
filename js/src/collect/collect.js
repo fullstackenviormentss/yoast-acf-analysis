@@ -50,7 +50,7 @@ Collect.prototype.append = function(data){
 Collect.prototype.getData = function(){
 
     if(helper.acf_version >= 5){
-        return require( "./collect-v5.js" );
+        return require( "./collect-v5.js" )();
     }else{
         return require( "./collect-v4.js" );
     }
