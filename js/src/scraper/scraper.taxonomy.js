@@ -34,8 +34,6 @@ Scraper.prototype.scrape = function(fields){
 
         if(terms.length>0){
             field.content = '<ul>\n<li>' + terms.join('</li>\n<li>') + '</li>\n</ul>';
-        }else{
-            field.content = '';
         }
 
         return field;

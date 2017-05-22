@@ -193,7 +193,7 @@ module.exports = field_data;
 module.exports = function(){
     return _.map(acf.get_fields(), function(field){
 
-        var field_data = acf.get_data(jQuery(field));
+        var field_data = jQuery.extend( true, {}, acf.get_data(jQuery(field)) );
         field_data.$el = jQuery(field);
         return field_data;
 
@@ -544,8 +544,6 @@ Scraper.prototype.scrape = function(fields){
 
         if(terms.length>0){
             field.content = '<ul>\n<li>' + terms.join('</li>\n<li>') + '</li>\n</ul>';
-        }else{
-            field.content = '';
         }
 
         return field;
