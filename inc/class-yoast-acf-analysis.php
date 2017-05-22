@@ -107,7 +107,7 @@ class Yoast_ACF_Analysis {
 		if( -1 === version_compare( get_option('acf_version'), 5) ){
 
 			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5
-			$acf_config['blacklist'] = array_diff($acf_config['blacklist'], array(
+			$acf_config['blacklist'] = array_merge($acf_config['blacklist'], array(
 				'gallery',
 				'repeater',
 				'flexible_content'
@@ -125,7 +125,7 @@ class Yoast_ACF_Analysis {
 
 		}else if( defined( 'DOING_AJAX' ) && DOING_AJAX ){
 
-			$acf_config['blacklist'] = array_diff($acf_config['blacklist'], array(
+			$acf_config['blacklist'] = array_merge($acf_config['blacklist'], array(
 				'repeater',
 				'flexible_content'
 			));

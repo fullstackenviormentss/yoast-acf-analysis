@@ -177,7 +177,7 @@ var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
 
 fields.each(function() {
 
-    var $el = jQuery(this).closest('.field');
+    var $el = jQuery(this).parents('.field').last();
 
     field_data.push({
         $el     : $el,
