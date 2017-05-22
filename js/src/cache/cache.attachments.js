@@ -24,6 +24,26 @@ var refresh = function(attachment_ids){
 
 };
 
+var get = function( id ){
+
+    var attachment = cache.get(id, 'attachment');
+
+    if(!attachment) return false;
+
+    var changedAttachment = wp.media.attachment( id );
+
+    if( changedAttachment.has('alt') ){
+        attachment.alt = changedAttachment.get('alt');
+    }
+
+    if( changedAttachment.has('title') ){
+        attachment.title = changedAttachment.get('title');
+    }
+
+    return attachment;
+};
+
 module.exports = {
-    refresh: refresh
+    refresh: refresh,
+    get: get
 };

@@ -1,5 +1,4 @@
 var attachmentCache = require( "./../cache/cache.attachments.js" );
-var cache = require( "./../cache/cache.js" );
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -22,9 +21,9 @@ Scraper.prototype.scrape = function(fields){
 
         attachment_ids.push(attachment_id);
 
-        if(cache.get(attachment_id, 'attachment')){
+        if(attachmentCache.get(attachment_id, 'attachment')){
 
-            var attachment = cache.get(attachment_id, 'attachment');
+            var attachment = attachmentCache.get(attachment_id, 'attachment');
 
             field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';
 

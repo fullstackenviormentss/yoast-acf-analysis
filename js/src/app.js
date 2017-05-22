@@ -31,7 +31,9 @@ App.prototype.bindListeners = function(){
             //This would cause faster updates while typing
             //fields.on('change input', _self.maybeRefresh.bind(_self) );
             fields.on('change', _self.maybeRefresh.bind(_self) );
-            //TODO: Changing the alt text of an image needs to clear the attachment cache
+
+            //Also refresh on media close as attachment data might have changed
+            wp.media.frame.on('close', _self.maybeRefresh.bind(_self) );
         });
     }
 

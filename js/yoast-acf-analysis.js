@@ -32,7 +32,9 @@ App.prototype.bindListeners = function(){
             //This would cause faster updates while typing
             //fields.on('change input', _self.maybeRefresh.bind(_self) );
             fields.on('change', _self.maybeRefresh.bind(_self) );
-            //TODO: Changing the alt text of an image needs to clear the attachment cache
+
+            //Also refresh on media close as attachment data might have changed
+            wp.media.frame.on('close', _self.maybeRefresh.bind(_self) );
         });
     }
 
@@ -83,8 +85,28 @@ var refresh = function(attachment_ids){
 
 };
 
+var get = function( id ){
+
+    var attachment = cache.get(id, 'attachment');
+
+    if(!attachment) return false;
+
+    var changedAttachment = wp.media.attachment( id );
+
+    if( changedAttachment.has('alt') ){
+        attachment.alt = changedAttachment.get('alt');
+    }
+
+    if( changedAttachment.has('title') ){
+        attachment.title = changedAttachment.get('title');
+    }
+
+    return attachment;
+};
+
 module.exports = {
-    refresh: refresh
+    refresh: refresh,
+    get: get
 };
 },{"./cache.js":3}],3:[function(require,module,exports){
 /* global _ */
@@ -393,7 +415,6 @@ Scraper.prototype.scrape = function(fields){
 module.exports = Scraper;
 },{"./../scraper-store.js":10}],12:[function(require,module,exports){
 var attachmentCache = require( "./../cache/cache.attachments.js" );
-var cache = require( "./../cache/cache.js" );
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -421,9 +442,9 @@ Scraper.prototype.scrape = function(fields){
             attachment_ids.push(attachment_id);
 
             //If we have the attachment data in the cache we can return a useful value
-            if(cache.get(attachment_id, 'attachment')){
+            if(attachmentCache.get(attachment_id, 'attachment')){
 
-                var attachment = cache.get(attachment_id, 'attachment');
+                var attachment = attachmentCache.get(attachment_id, 'attachment');
 
                 field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';
 
@@ -441,9 +462,8 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../cache/cache.attachments.js":2,"./../cache/cache.js":3,"./../scraper-store.js":10}],13:[function(require,module,exports){
+},{"./../cache/cache.attachments.js":2,"./../scraper-store.js":10}],13:[function(require,module,exports){
 var attachmentCache = require( "./../cache/cache.attachments.js" );
-var cache = require( "./../cache/cache.js" );
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -466,9 +486,9 @@ Scraper.prototype.scrape = function(fields){
 
         attachment_ids.push(attachment_id);
 
-        if(cache.get(attachment_id, 'attachment')){
+        if(attachmentCache.get(attachment_id, 'attachment')){
 
-            var attachment = cache.get(attachment_id, 'attachment');
+            var attachment = attachmentCache.get(attachment_id, 'attachment');
 
             field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';
 
@@ -485,7 +505,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../cache/cache.attachments.js":2,"./../cache/cache.js":3,"./../scraper-store.js":10}],14:[function(require,module,exports){
+},{"./../cache/cache.attachments.js":2,"./../scraper-store.js":10}],14:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
