@@ -43,6 +43,15 @@ class Yoast_ACF_Analysis {
 		$frontend = new Yoast_ACF_Analysis_Frontend();
 		$frontend->init();
 
+		//Require test fields
+		if( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ){
+			if( -1 === version_compare( get_option('acf_version'), 5) ){
+				require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf4.php' );
+			}else{
+				require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf5.php' );
+			}
+		}
+
 		/**
 		 * Disable this as long as the main plugin has this disabled
 		 * @see https://github.com/Yoast/wordpress-seo/issues/4532
