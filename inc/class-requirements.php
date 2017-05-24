@@ -37,12 +37,6 @@ class Yoast_ACF_Analysis_Requirements {
 			// Deactivate when we cannot do the job we are hired to do.
 			if ( $deactivate ) {
 				deactivate_plugins( plugin_basename( YOAST_ACF_ANALYSIS_FILE ) );
-
-				//TODO: Doesn't this interfere with activation of other plugins?
-				if ( isset( $_GET['activate'] ) ) {
-					unset( $_GET['activate'] );
-				}
-
 				return false;
 			}
 
