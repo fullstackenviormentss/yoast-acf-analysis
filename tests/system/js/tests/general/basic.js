@@ -31,6 +31,8 @@ module.exports = {
 
     'Text Field' : function (browser) {
         simpleField( browser, '.field_type-text input, .acf-field-text input' );
+
+        //TODO: Test Text Field set as headline
     },
 
     'Textarea Field' : function (browser) {
