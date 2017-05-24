@@ -119,8 +119,8 @@ class Yoast_ACF_Analysis {
 				"input[type=email][id^=acf]", //Email
 				"input[type=url][id^=acf]", //URL
 				"textarea[id^=wysiwyg-acf]", //WYSIWYG
-				"input[type=hidden].acf-image-value" //Image
-				//TODO: Add Taxonomy (needs changes in scraper too)
+				"input[type=hidden].acf-image-value", //Image
+				".acf-taxonomy-field", //Taxonomy
 			];
 
 		}else if( defined( 'DOING_AJAX' ) && DOING_AJAX ){
