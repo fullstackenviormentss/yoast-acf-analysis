@@ -25,7 +25,7 @@ class Yoast_ACF_Analysis_Requirements {
 				add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
 				$deactivate = true;
 			} else {
-				// Compare if version is >= 3.0
+				// Compare if version is >= 3.2
 				if ( defined( 'WPSEO_VERSION' ) ) {
 					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.2', '<' ) ) {
 						add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
@@ -64,7 +64,7 @@ class Yoast_ACF_Analysis_Requirements {
 	 * Notify that we need Yoast SEO for WordPress to be installed and active.
 	 */
 	public function wordpress_seo_requirements_not_met() {
-		$message = __( 'ACF Yoast Analysis requires Yoast SEO for WordPress 3.1+ to be installed and activated.', 'yoast-acf-analysis' );
+		$message = __( 'ACF Yoast Analysis requires Yoast SEO for WordPress 3.2+ to be installed and activated.', 'yoast-acf-analysis' );
 
 		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 	}
