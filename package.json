@@ -4,7 +4,12 @@
   "description": "Adds the content of all ACF fields to the Yoast SEO score analysis.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
+    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose --debug",
+    "chromedriver": "xvfb-run node_modules/.bin/chromedriver",
+    "test": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch)",
+    "test-acf4": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --group general --group acf4)",
+    "test-acf5pro": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch  --group general --group acf5)"
   },
   "repository": {
     "type": "git",
@@ -32,10 +37,8 @@
   "homepage": "https://github.com/kraftner/yoast-acf-analysis#readme",
   "devDependencies": {
     "browserify": "^14.3.0",
+    "chromedriver": "^2.29.0",
+    "nightwatch": "^0.9.15",
     "watchify": "^3.9.0"
-  },
-  "scripts": {
-    "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
-    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose --debug"
   }
 }
