@@ -1,11 +1,10 @@
 <?php
 /**
  * Plugin Name: Yoast SEO: ACF Analysis
- * Plugin URI: https://forsberg.ax
+ * Plugin URI: https://wordpress.org/plugins/yoast-seo-acf-analysis/
  * Description: WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
  * Version: 2.0.0-dev
  * Author: Thomas Kräftner, Marcus Forsberg & Team Yoast
- * Author URI: https://forsberg.ax
  * License: GPL v3
  */
 

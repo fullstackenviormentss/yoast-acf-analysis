@@ -1,8 +1,47 @@
 {
-    "name": "yoast/yoast-acf-analysis",
-    "description": "Adds the content of all ACF fields to the Yoast SEO score analysis.",
-    "type": "wordpress-plugin",
-    "license": "GPL-3.0",
-    "minimum-stability": "dev",
-    "require": {}
+  "name": "yoast/yoast-acf-analysis",
+  "description": "WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.",
+  "keywords": [
+    "yoast",
+    "seo",
+    "acf",
+    "advanced",
+    "custom",
+    "fields",
+    "analysis",
+    "search",
+    "engine",
+    "optimization",
+    "seo",
+    "score"
+  ],
+  "type": "wordpress-plugin",
+  "homepage": "https://wordpress.org/plugins/yoast-seo-acf-analysis/",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Thomas Kräftner",
+      "email": "thomas@kraftner.com",
+      "homepage": "http://kraftner.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Marcus Forsberg",
+      "homepage": "https://forsberg.ax",
+      "role": "Developer"
+    },
+    {
+      "name": "Team Yoast",
+      "email": "support@yoast.com",
+      "homepage": "https://yoast.com"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/Yoast/yoast-acf-analysis/issues",
+    "forum": "https://wordpress.org/support/plugin/yoast-seo-acf-analysis",
+    "source": "https://github.com/Yoast/yoast-acf-analysis"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {}
 }

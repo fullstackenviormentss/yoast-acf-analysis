@@ -1,9 +1,8 @@
 === Yoast ACF Analysis ===
 Contributors: kraftner, marcusforsberg, joostdevalk, atimmer, omarreiss, jipmoors
 Tags: yoast, seo, acf, advanced custom fields, analysis, search engine optimization, seo score
-Donate link: https://forsberg.ax
 Requires at least: 4.3.1
-Tested up to: 4.6
+Tested up to: 4.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Version: 2.0.0-dev

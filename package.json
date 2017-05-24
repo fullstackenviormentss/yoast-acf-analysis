@@ -1,20 +1,7 @@
 {
   "name": "yoast-acf-analysis",
   "version": "2.0.0-dev",
-  "description": "Adds the content of all ACF fields to the Yoast SEO score analysis.",
-  "main": "index.js",
-  "scripts": {
-    "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
-    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose --debug",
-    "chromedriver": "xvfb-run node_modules/.bin/chromedriver",
-    "test": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch)",
-    "test-acf4": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --group general --group acf4)",
-    "test-acf5pro": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch  --group general --group acf5)"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kraftner/yoast-acf-analysis.git"
-  },
+  "description": "WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.",
   "keywords": [
     "yoast",
     "seo",
@@ -29,12 +16,22 @@
     "seo",
     "score"
   ],
-  "author": "Thomas Kräftner, Marcus Forsberg & Team Yoast",
-  "license": "GPL-3.0",
+  "homepage": "https://wordpress.org/plugins/yoast-seo-acf-analysis/",
   "bugs": {
-    "url": "https://github.com/kraftner/yoast-acf-analysis/issues"
+    "url" : "https://github.com/Yoast/yoast-acf-analysis/issues",
+    "email" : "support@yoast.com"
   },
-  "homepage": "https://github.com/kraftner/yoast-acf-analysis#readme",
+  "license": "GPL-3.0",
+  "repository": "Yoast/yoast-acf-analysis",
+  "scripts": {
+    "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
+    "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose --debug",
+    "chromedriver": "xvfb-run node_modules/.bin/chromedriver",
+    "test": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch)",
+    "test-acf4": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --group general --group acf4)",
+    "test-acf5pro": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch  --group general --group acf5)"
+  },
+  "dependencies" : {},
   "devDependencies": {
     "browserify": "^14.3.0",
     "chromedriver": "^2.29.0",
