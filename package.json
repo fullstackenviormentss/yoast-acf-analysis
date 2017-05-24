@@ -27,9 +27,9 @@
     "build": "browserify js/src/main.js -o js/yoast-acf-analysis.js",
     "watch": "watchify js/src/main.js -o js/yoast-acf-analysis.js --poll --verbose --debug",
     "chromedriver": "xvfb-run node_modules/.bin/chromedriver",
-    "test": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch)",
-    "test-acf4": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --group general --group acf4)",
-    "test-acf5pro": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch  --group general --group acf5)"
+    "test": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --retries 3)",
+    "test-acf4": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --retries 3 --group general --group acf4)",
+    "test-acf5pro": "(cd tests/system/js/ && exec ../../../node_modules/.bin/nightwatch --retries 3  --group general --group acf5)"
   },
   "dependencies" : {},
   "devDependencies": {
