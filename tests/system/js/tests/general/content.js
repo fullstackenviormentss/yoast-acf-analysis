@@ -72,7 +72,7 @@ module.exports = {
         // Insert Attachment (closes Modal)
         browser.click(".media-modal .media-toolbar-primary .media-button-select");
 
-        browser.pause( 5000 );
+        browser.pause( 8000 );
 
         logContains( browser, 'alt=\\"' + hashTitle + '\\" title=\\"' + hashAlt + '\\"', browser.assert.ok );
 
