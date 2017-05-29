@@ -1,6 +1,6 @@
 <?php
 
-
+//TODO: Rename class to remove "Class_"
 class Class_Yoast_ACF_Analysis_Collector {
 
 	/**
