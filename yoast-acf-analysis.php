@@ -26,6 +26,14 @@ require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-recalculation.php
 require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-registry.php' );
 require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-scraper-store.php' );
 
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-configuration.php' );
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-string-store.php' );
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-field-selectors.php' );
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-type-blacklist.php' );
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/class-configuration-default.php' );
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/class-field-selectors-default.php' );
+require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/class-type-blacklist-default.php' );
+
 require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/interface-scraper.php' );
 require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-email.php' );
 require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-gallery.php' );

@@ -27,6 +27,10 @@ class Yoast_ACF_Analysis {
 
 		if ( $dependencies_are_met ) {
 			$this->boot();
+
+			if( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ){
+				$this->boot_dev();
+			}
 		}
 
 	}
@@ -37,20 +41,26 @@ class Yoast_ACF_Analysis {
 	public function boot(){
 
 		if ( is_null( Yoast_ACF_Analysis_Registry::instance()->get( 'config' ) ) ) {
-			Yoast_ACF_Analysis_Registry::instance()->add( 'config', $this->get_config() );
+
+			$default_configuration = new Yoast_ACF_Analysis_Configuration_Default( $this->get_blacklist(), $this->get_field_selectors() );
+
+			$configuration = apply_filters(
+				Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/config',
+				$default_configuration
+			);
+
+			if( ! ($configuration instanceof Yoast_ACF_Analysis_Configuration) ){
+				$configuration = $default_configuration;
+			}
+
+			Yoast_ACF_Analysis_Registry::instance()->add( 'config', $configuration );
+
 		}
+
+		$this->add_headline_config();
 
 		$frontend = new Yoast_ACF_Analysis_Frontend();
 		$frontend->init();
-
-		//Require test fields
-		if( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ){
-			if( -1 === version_compare( get_option('acf_version'), 5) ){
-				require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf4.php' );
-			}else{
-				require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf5.php' );
-			}
-		}
 
 		/**
 		 * Disable this as long as the main plugin has this disabled
@@ -68,80 +78,97 @@ class Yoast_ACF_Analysis {
 		*/
 	}
 
-	/**
-	 * Returns the plugin configuration. Can be filtered with 'yoast_acf_config'
-	 *
-	 * @return array
-	 */
-	public function get_config() {
+	public function boot_dev(){
 
-		$acf_config = array(
-			'acfVersion' => get_option('acf_version'),
-			'blacklist'   => array(
-				'number',
-				'password',
+		if( -1 === version_compare( get_option('acf_version'), 5) ){
+			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf4.php' );
+		}else{
+			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf5.php' );
+		}
 
-				'file',
+	}
 
-				'select',
-				'checkbox',
-				'radio',
-				'true_false',
+	protected function add_headline_config(){
 
-				'post_object',
-				'page_link',
-				'relationship',
-				'user',
+		add_filter( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/scraper_config', function( $scraper_config ){
 
-				'date_picker',
-				'color_picker',
+			$scraper_config['text'] = array(
+				'headlines' => apply_filters( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/headlines', array() )
+			);
 
-				'message',
-				'tab',
-				'repeater',
-				'flexible_content'
-			),
-			'debug'       => ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG === true ),
-			'scraper'      => array(
-				'text' => array(
-					'headlines' => array()
-				)
-			),
-			'pluginName'  => 'yoast-acf-analysis',
-			'refreshRate' => 1000
+			return $scraper_config;
+
+		} );
+
+	}
+
+	protected function get_field_selectors(){
+
+		$field_selectors = new Yoast_ACF_Analysis_Field_Selectors_Default();
+
+		$default_field_selectors = array(
+			"input[type=text][id^=acf]", //Text
+			"textarea[id^=acf]", //Textarea
+			"input[type=email][id^=acf]", //Email
+			"input[type=url][id^=acf]", //URL
+			"textarea[id^=wysiwyg-acf]", //WYSIWYG
+			"input[type=hidden].acf-image-value", //Image
+			".acf-taxonomy-field", //Taxonomy
 		);
 
-		$acf_config = apply_filters( 'yoast_acf_config', $acf_config );
+		foreach( $default_field_selectors as $field_selector ){
+			$field_selectors->add( $field_selector );
+		}
+
+		return $field_selectors;
+	}
+
+	/**
+	 * @return Yoast_ACF_Analysis_Blacklist_Default
+	 */
+	protected function get_blacklist(){
+
+		$blacklist = new Yoast_ACF_Analysis_Blacklist_Default();
+
+		$default_blacklist = array(
+			'number',
+			'password',
+
+			'file',
+
+			'select',
+			'checkbox',
+			'radio',
+			'true_false',
+
+			'post_object',
+			'page_link',
+			'relationship',
+			'user',
+
+			'date_picker',
+			'color_picker',
+
+			'message',
+			'tab',
+			'repeater',
+			'flexible_content'
+		);
+
+		foreach( $default_blacklist as $type ){
+			$blacklist->add( $type);
+		}
 
 		if( -1 === version_compare( get_option('acf_version'), 5) ){
 
 			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5
-			$acf_config['blacklist'] = array_merge($acf_config['blacklist'], array(
-				'gallery',
-				'repeater',
-				'flexible_content'
-			));
-
-			$acf_config['fieldSelectors'] = [
-				"input[type=text][id^=acf]", //Text
-				"textarea[id^=acf]", //Textarea
-				"input[type=email][id^=acf]", //Email
-				"input[type=url][id^=acf]", //URL
-				"textarea[id^=wysiwyg-acf]", //WYSIWYG
-				"input[type=hidden].acf-image-value", //Image
-				".acf-taxonomy-field", //Taxonomy
-			];
-
-		}else if( defined( 'DOING_AJAX' ) && DOING_AJAX ){
-
-			$acf_config['blacklist'] = array_merge($acf_config['blacklist'], array(
-				'repeater',
-				'flexible_content'
-			));
+			$blacklist->remove( 'gallery' );
+			$blacklist->remove( 'repeater' );
+			$blacklist->remove( 'flexible_content' );
 
 		}
 
-		return $acf_config;
+		return $blacklist;
 
 	}
 

@@ -24,6 +24,7 @@ class Yoast_ACF_Analysis_Frontend {
 
 		global $pagenow;
 
+		/* @var $config Yoast_ACF_Analysis_Configuration */
 		$config = Yoast_ACF_Analysis_Registry::instance()->get( 'config' );
 
 		// Post page enqueue.
@@ -40,7 +41,7 @@ class Yoast_ACF_Analysis_Frontend {
 				$this->plugin_data['Version']
 			);
 
-			wp_localize_script( 'yoast-acf-analysis-post', 'YoastACFAnalysisConfig', $config );
+			wp_localize_script( 'yoast-acf-analysis-post', 'YoastACFAnalysisConfig', $config->toArray() );
 		}
 
 		// Term page enqueue.
@@ -56,7 +57,7 @@ class Yoast_ACF_Analysis_Frontend {
 				$this->plugin_data['Version']
 			);
 
-			wp_localize_script( 'yoast-acf-analysis-term', 'YoastACFAnalysisConfig', $config );
+			wp_localize_script( 'yoast-acf-analysis-term', 'YoastACFAnalysisConfig', $config->toArray() );
 		}
 
 	}
