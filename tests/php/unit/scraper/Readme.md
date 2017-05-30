@@ -1,0 +1,1 @@
+As the bulk scraper is currently disabled in Yoast SEO no effort is put into writing tests for the corresponding scraper classes.
