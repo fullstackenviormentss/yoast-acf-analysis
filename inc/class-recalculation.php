@@ -4,11 +4,11 @@
 class Yoast_ACF_Analysis_Recalculation {
 
 	/**
-	 * @var Class_Yoast_ACF_Analysis_Collector
+	 * @var Yoast_ACF_Analysis_Collector
 	 */
 	protected $collector;
 
-	public function init( Class_Yoast_ACF_Analysis_Collector $collector ) {
+	public function init( Yoast_ACF_Analysis_Collector $collector ) {
 
 		$this->collector = $collector;
 

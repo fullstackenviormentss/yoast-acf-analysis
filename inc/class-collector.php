@@ -1,7 +1,6 @@
 <?php
 
-//TODO: Rename class to remove "Class_"
-class Class_Yoast_ACF_Analysis_Collector {
+class Yoast_ACF_Analysis_Collector {
 
 	/**
 	 * Gets all fields for a post and hands them to scrapers.

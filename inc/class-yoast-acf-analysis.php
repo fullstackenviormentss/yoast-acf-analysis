@@ -74,7 +74,7 @@ class Yoast_ACF_Analysis {
 		}
 
 		$recalculation = new Yoast_ACF_Analysis_Recalculation();
-		$recalculation->init( new Class_Yoast_ACF_Analysis_Collector() );
+		$recalculation->init( new Yoast_ACF_Analysis_Collector() );
 		*/
 	}
 
