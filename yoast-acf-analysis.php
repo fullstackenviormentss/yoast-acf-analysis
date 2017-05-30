@@ -16,33 +16,17 @@ if ( ! defined( 'YOAST_ACF_ANALYSIS_FILE' ) ) {
 	define( 'YOAST_ACF_ANALYSIS_FILE', __FILE__ );
 }
 
-//TODO: Autoloading instead of this mess
-
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-yoast-acf-analysis.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-collector.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-requirements.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-frontend.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-recalculation.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-registry.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/class-scraper-store.php' );
-
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-configuration.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-string-store.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-field-selectors.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/interface-type-blacklist.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/class-configuration-default.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/class-field-selectors-default.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/configuration/class-type-blacklist-default.php' );
-
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/interface-scraper.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-email.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-gallery.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-image.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-nested.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-taxonomy.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-text.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-unknown.php' );
-require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/inc/scraper/class-scraper-url.php' );
+//https://getcomposer.org/doc/00-intro.md#system-requirements
+if ( version_compare( PHP_VERSION, '5.3.2', '<' ) && file_exists( YOAST_ACF_ANALYSIS_FILE . '/vendor/autoload.php' ) ) {
+	add_action(
+		'admin_notices',
+		create_function( '', "echo '<div class=\"error\"><p>".__('Plugin Name requires PHP 5.3.2+ to function properly. Please upgrade PHP.', 'yoast-acf-analysis') ."</p></div>';" )
+	);
+	return;
+} else {
+	require dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload.php';
+}
 
 $yoast_acf_analysis = new Yoast_ACF_Analysis();
 $yoast_acf_analysis->init();
+unset($yoast_acf_analysis);

@@ -49,12 +49,14 @@
     "brain/monkey": "2.*",
     "phpunit/phpunit": "5.*"
   },
+  "autoload": {
+    "classmap": [ "inc" ]
+  },
   "autoload-dev": {
     "psr-4": {
       "Yoast\\AcfAnalysis\\Tests\\": "tests/php/unit",
       "Yoast\\AcfAnalysis\\Tests\\Configuration\\": "tests/php/unit/configuration"
-    },
-    "classmap": [ "inc" ]
+    }
   },
   "scripts": {
     "test": "vendor/bin/phpunit --configuration tests/php/phpunit.xml.dist --colors=always"
