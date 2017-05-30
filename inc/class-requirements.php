@@ -3,6 +3,8 @@
 
 class Yoast_ACF_Analysis_Requirements {
 
+	const MIN_WPSEO_VERSION = 3.2;
+
 	/**
 	 * Add notifications to admin if plugins ACF or WordPress SEO are not present, deactivates plugin if so.
 	 *
@@ -22,13 +24,13 @@ class Yoast_ACF_Analysis_Requirements {
 
 			// Yoast SEO for WordPress
 			if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) && ! is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) {
-				add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
+				add_action( 'admin_notices', array( $this, 'yoast_seo_requirements_not_met' ) );
 				$deactivate = true;
 			} else {
-				// Compare if version is >= 3.2
+				// Compare if version is >= self::MIN_WPSEO_VERSION
 				if ( defined( 'WPSEO_VERSION' ) ) {
-					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), '3.2', '<' ) ) {
-						add_action( 'admin_notices', array( $this, 'wordpress_seo_requirements_not_met' ) );
+					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), self::MIN_WPSEO_VERSION, '<' ) ) {
+						add_action( 'admin_notices', array( $this, 'yoast_seo_requirements_not_met' ) );
 						$deactivate = true;
 					}
 				}
@@ -57,8 +59,11 @@ class Yoast_ACF_Analysis_Requirements {
 	/**
 	 * Notify that we need Yoast SEO for WordPress to be installed and active.
 	 */
-	public function wordpress_seo_requirements_not_met() {
-		$message = __( 'ACF Yoast Analysis requires Yoast SEO for WordPress 3.2+ to be installed and activated.', 'yoast-acf-analysis' );
+	public function yoast_seo_requirements_not_met() {
+		$message = sprintf(
+			__( 'ACF Yoast Analysis requires Yoast SEO for WordPress %s+ to be installed and activated.', 'yoast-acf-analysis' ),
+			self::MIN_WPSEO_VERSION
+		);
 
 		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 	}
