@@ -83,9 +83,9 @@ class Yoast_ACF_Analysis {
 	public function boot_dev() {
 
 		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf4.php' );
+			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf4.php' );
 		} else {
-			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf5.php' );
+			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf5.php' );
 		}
 
 	}

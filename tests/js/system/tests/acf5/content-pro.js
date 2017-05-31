@@ -3,7 +3,7 @@ var logContains = require('../../helpers/logContains');
 var dummyContent = require('../../helpers/dummyContent');
 
 module.exports = {
-    tags: ['acf4', 'acf5', 'content'],
+    tags: ['acf5', 'pro', 'content'],
 
     before: function (browser) {
         var page = browser.page.WordPressHelper();
@@ -15,54 +15,14 @@ module.exports = {
         page.newPost();
     },
 
-    'WYSIWYG Field': function (browser) {
-
-        var hash = dummyContent.hash();
-
-        var insertIntoTinyMCE = function(result) {
-            browser.execute(function(id, hash) {
-                tinyMCE.get( id ).execCommand( 'mceInsertContent', false, hash );
-            }, [result.value,hash]);
-        };
-
-        browser.element('css selector', '.acf-field-wysiwyg textarea', function(res) {
-            if( 0 === res.status ){
-                browser.getAttribute(".acf-field-wysiwyg textarea", "id", insertIntoTinyMCE);
-            }
-        });
-
-        browser.element('css selector', '.field_type-wysiwyg textarea', function(res) {
-            if( 0 === res.status ){
-                browser.getAttribute(".field_type-wysiwyg textarea", "id", insertIntoTinyMCE);
-            }
-        });
-
-        browser.pause( 4000 );
-
-        logContains( browser, hash, browser.assert.ok );
-
-        browser.expect.element('#snippet_meta').text.to.contain( hash );
-
-    },
-
-    'Image Field': function (browser) {
+    'Gallery Field': function (browser) {
 
         var hashTitle = dummyContent.hash();
         var hashAlt = dummyContent.hash();
 
-        browser.element('css selector', '.field_type-image .button', function(res) {
-            if( 0 === res.status ){
-                //Open Modal
-                browser.click('.field_type-image .button');
-            }
-        });
-
-        browser.element('css selector', '.acf-field-image .acf-button', function(res) {
-            if( 0 === res.status ){
-                //Open Modal
-                browser.click('.acf-field-image .acf-button');
-            }
-        });
+        //Open Modal
+        browser.waitForElementVisible('.acf-field-gallery .acf-gallery-add', 10000);
+        browser.click(".acf-field-gallery .acf-gallery-add");
 
         // Select Attachment
         browser.waitForElementVisible('.media-modal .attachment', 10000);
@@ -88,7 +48,7 @@ module.exports = {
         // Insert Attachment (closes Modal)
         browser.click(".media-modal .media-toolbar-primary .media-button-select");
 
-        browser.pause( 10000 );
+        browser.pause( 15000 );
 
         logContains( browser, 'alt=\\"' + hashTitle + '\\" title=\\"' + hashAlt + '\\"', browser.assert.ok );
 
