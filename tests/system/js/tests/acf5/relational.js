@@ -18,7 +18,7 @@ module.exports = {
 
         var selector = '.acf-taxonomy-field[data-type="checkbox"][data-taxonomy="category"] li[data-id="1"] ';
 
-        browser.waitForElementVisible( selector, 1000 );
+        browser.waitForElementVisible( selector, 10000 );
 
         browser.click( selector + 'input[type=checkbox]' );
 
@@ -36,15 +36,15 @@ module.exports = {
 
         var selector = '.acf-taxonomy-field[data-type="multi_select"][data-taxonomy="category"] .select2-input ';
 
-        browser.waitForElementVisible( selector, 1000 );
+        browser.waitForElementVisible( selector, 10000 );
 
         browser.setValue( selector, [ browser.Keys.SPACE ] );
 
-        browser.pause( 1000 );
+        browser.waitForElementVisible( '.select2-result:first-child', 10000 );
 
         browser.setValue( selector, [ browser.Keys.ENTER ] );
 
-        browser.pause( 2000 );
+        browser.waitForElementVisible( '.acf-taxonomy-field .select2-search-choice', 10000 );
 
         browser.execute(
             function() {
@@ -52,6 +52,7 @@ module.exports = {
             },
             [],
             function( result ){
+                this.pause( 3000 );
                 logContains( browser, 'li>' + result.value , browser.assert.ok );
             }
         );
