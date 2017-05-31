@@ -7,8 +7,6 @@
         <!-- Catches way too many things, like vars and file headers. -->
         <exclude name="Generic.Commenting.DocComment.MissingShort" />
 
-        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-
         <!-- Namespacing hooks sound reasonable. -->
         <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
     </rule>
@@ -28,8 +26,8 @@
     </rule>
 
     <exclude-pattern>inc/scraper</exclude-pattern>
-    <exclude-pattern>inc/class-collector.php</exclude-pattern>
-    <exclude-pattern>inc/class-recalculation.php</exclude-pattern>
-    <exclude-pattern>inc/class-scraper-store.php</exclude-pattern>
+    <exclude-pattern>inc/class-yoast-acf-analysis-collector.php</exclude-pattern>
+    <exclude-pattern>inc/class-yoast-acf-analysis-recalculation.php</exclude-pattern>
+    <exclude-pattern>inc/class-yoast-acf-analysis-scraper-store.php</exclude-pattern>
 
 </ruleset>

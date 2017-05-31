@@ -2,9 +2,9 @@
 
 
 /**
- * Class Yoast_ACF_Analysis_Blacklist_Default
+ * Class Yoast_ACF_Analysis_Type_Blacklist_Default
  */
-class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Blacklist {
+class Yoast_ACF_Analysis_Type_Blacklist_Default implements Yoast_ACF_Analysis_Type_Blacklist {
 
 	/** @var array */
 	private $types = array();

@@ -24,7 +24,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 			->andReturn( $version );
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
-			new \Yoast_ACF_Analysis_Blacklist_Default(),
+			new \Yoast_ACF_Analysis_Type_Blacklist_Default(),
 			new \Yoast_ACF_Analysis_Field_Selectors_Default()
 		);
 
@@ -49,14 +49,14 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 
 		Functions\expect('get_option')->once()->andReturn();
 
-		$blacklist = new \Yoast_ACF_Analysis_Blacklist_Default();
+		$blacklist = new \Yoast_ACF_Analysis_Type_Blacklist_Default();
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
 			$blacklist,
 			new \Yoast_ACF_Analysis_Field_Selectors_Default()
 		);
 
-		$blacklist2 = new \Yoast_ACF_Analysis_Blacklist_Default();
+		$blacklist2 = new \Yoast_ACF_Analysis_Type_Blacklist_Default();
 		$blacklist2->add( $blacklistedType );
 
 		Filters\expectApplied( \Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/blacklist' )
@@ -74,7 +74,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 
 		Functions\expect('get_option')->once()->andReturn();
 
-		$blacklist = new \Yoast_ACF_Analysis_Blacklist_Default();
+		$blacklist = new \Yoast_ACF_Analysis_Type_Blacklist_Default();
 		$blacklist->add( $blacklistedType );
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
@@ -107,7 +107,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 			->andReturn( 9999 );
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
-			new \Yoast_ACF_Analysis_Blacklist_Default(),
+			new \Yoast_ACF_Analysis_Type_Blacklist_Default(),
 			new \Yoast_ACF_Analysis_Field_Selectors_Default()
 		);
 

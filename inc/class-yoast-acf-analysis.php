@@ -145,11 +145,11 @@ class Yoast_ACF_Analysis {
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_Blacklist_Default
+	 * @return Yoast_ACF_Analysis_Type_Blacklist_Default
 	 */
 	protected function get_blacklist() {
 
-		$blacklist = new Yoast_ACF_Analysis_Blacklist_Default();
+		$blacklist = new Yoast_ACF_Analysis_Type_Blacklist_Default();
 
 		$default_blacklist = array(
 			'number',
