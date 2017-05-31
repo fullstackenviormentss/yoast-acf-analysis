@@ -65,8 +65,7 @@ class Yoast_ACF_Analysis {
 		 * Disable this as long as the main plugin has this disabled
 		 *
 		 * @see https://github.com/Yoast/wordpress-seo/issues/4532
-		 */
-		/*
+		 *
 		if ( is_null( Yoast_ACF_Analysis_Registry::instance()->get( 'scraper_store' ) ) ) {
 			$scraper_store = new Yoast_ACF_Analysis_Scraper_Store;
 			$scraper_store->init();
@@ -78,6 +77,9 @@ class Yoast_ACF_Analysis {
 		*/
 	}
 
+	/**
+	 * Boot the plugin for dev environment
+	 */
 	public function boot_dev() {
 
 		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
@@ -88,6 +90,9 @@ class Yoast_ACF_Analysis {
 
 	}
 
+	/**
+	 * Filter the Scraper Configuration to add the headlines configuration for the text scraper
+	 */
 	protected function add_headline_config() {
 
 		add_filter( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/scraper_config', function( $scraper_config ) {
@@ -102,18 +107,34 @@ class Yoast_ACF_Analysis {
 
 	}
 
+	/**
+	 * @return Yoast_ACF_Analysis_Field_Selectors_Default
+	 */
 	protected function get_field_selectors() {
 
 		$field_selectors = new Yoast_ACF_Analysis_Field_Selectors_Default();
 
 		$default_field_selectors = array(
-			'input[type=text][id^=acf]', // Text
-			'textarea[id^=acf]', // Textarea
-			'input[type=email][id^=acf]', // Email
-			'input[type=url][id^=acf]', // URL
-			'textarea[id^=wysiwyg-acf]', // WYSIWYG
-			'input[type=hidden].acf-image-value', // Image
-			'.acf-taxonomy-field', // Taxonomy
+			// Text.
+			'input[type=text][id^=acf]',
+
+			// Textarea.
+			'textarea[id^=acf]',
+
+			// Email.
+			'input[type=email][id^=acf]',
+
+			// URL.
+			'input[type=url][id^=acf]',
+
+			// WYSIWYG.
+			'textarea[id^=wysiwyg-acf]',
+
+			// Image.
+			'input[type=hidden].acf-image-value',
+
+			// Taxonomy.
+			'.acf-taxonomy-field',
 		);
 
 		foreach ( $default_field_selectors as $field_selector ) {
@@ -161,7 +182,7 @@ class Yoast_ACF_Analysis {
 
 		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
 
-			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5
+			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );

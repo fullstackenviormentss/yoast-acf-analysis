@@ -38,6 +38,6 @@ interface Yoast_ACF_Analysis_Configuration {
 	/**
 	 * @return array
 	 */
-	public function toArray();
+	public function to_array();
 
 }

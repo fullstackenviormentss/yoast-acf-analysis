@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ruleset name="Yoast SEO ACF Analysis">
+    <description>Yoast SEO ACF Analysis Coding Standards</description>
+
+    <!-- ##### WordPress sniffs #####-->
+    <rule ref="WordPress">
+        <!-- Catches way too many things, like vars and file headers. -->
+        <exclude name="Generic.Commenting.DocComment.MissingShort" />
+
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+
+        <!-- Namespacing hooks sound reasonable. -->
+        <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
+    </rule>
+
+    <!-- The commented out code is kept intentionally -->
+    <rule ref="Squiz.PHP.CommentedOutCode.Found">
+        <exclude-pattern>inc/class-yoast-acf-analysis.php</exclude-pattern>
+    </rule>
+
+    <!-- exclude the 'empty' index files from some documentation checks -->
+    <rule ref="Squiz.Commenting.FileComment">
+        <exclude-pattern>*/index.php</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Commenting">
+        <exclude name="Squiz.Commenting.FileComment.Missing" />
+    </rule>
+
+    <exclude-pattern>inc/scraper</exclude-pattern>
+    <exclude-pattern>inc/class-collector.php</exclude-pattern>
+    <exclude-pattern>inc/class-recalculation.php</exclude-pattern>
+    <exclude-pattern>inc/class-scraper-store.php</exclude-pattern>
+
+</ruleset>

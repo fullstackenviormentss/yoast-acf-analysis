@@ -1,11 +1,17 @@
 <?php
 
 
+/**
+ * Class Yoast_ACF_Analysis_Frontend
+ */
 class Yoast_ACF_Analysis_Frontend {
 
 	/** @var array Plugin information. */
 	private $plugin_data = null;
 
+	/**
+	 * Initialize.
+	 */
 	public function init() {
 
 		$this->plugin_data = get_plugin_data( dirname( YOAST_ACF_ANALYSIS_FILE ) );
@@ -41,7 +47,7 @@ class Yoast_ACF_Analysis_Frontend {
 				$this->plugin_data['Version']
 			);
 
-			wp_localize_script( 'yoast-acf-analysis-post', 'YoastACFAnalysisConfig', $config->toArray() );
+			wp_localize_script( 'yoast-acf-analysis-post', 'YoastACFAnalysisConfig', $config->to_array() );
 		}
 
 		// Term page enqueue.
@@ -57,7 +63,7 @@ class Yoast_ACF_Analysis_Frontend {
 				$this->plugin_data['Version']
 			);
 
-			wp_localize_script( 'yoast-acf-analysis-term', 'YoastACFAnalysisConfig', $config->toArray() );
+			wp_localize_script( 'yoast-acf-analysis-term', 'YoastACFAnalysisConfig', $config->to_array() );
 		}
 
 	}

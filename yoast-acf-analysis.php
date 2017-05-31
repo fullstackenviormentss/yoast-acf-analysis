@@ -1,5 +1,9 @@
 <?php
 /**
+ * @package YoastACFAnalysis
+ */
+
+/**
  * Plugin Name: Yoast SEO: ACF Analysis
  * Plugin URI: https://wordpress.org/plugins/yoast-seo-acf-analysis/
  * Description: WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
@@ -16,7 +20,11 @@ if ( ! defined( 'YOAST_ACF_ANALYSIS_FILE' ) ) {
 	define( 'YOAST_ACF_ANALYSIS_FILE', __FILE__ );
 }
 
-// https://getcomposer.org/doc/00-intro.md#system-requirements
+/**
+ * Composer only supports PHP 5.3.2+
+ *
+ * @see https://getcomposer.org/doc/00-intro.md#system-requirements
+ */
 if ( version_compare( PHP_VERSION, '5.3.2', '<' ) && file_exists( YOAST_ACF_ANALYSIS_FILE . '/vendor/autoload.php' ) ) {
 	add_action(
 		'admin_notices',

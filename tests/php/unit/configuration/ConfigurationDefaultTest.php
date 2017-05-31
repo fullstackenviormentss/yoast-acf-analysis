@@ -38,7 +38,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 				'refreshRate'     => 1000,
 				'fieldSelectors'  => []
 			],
-			$configuration->toArray()
+			$configuration->to_array()
 		);
 
 	}
@@ -64,7 +64,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 			->with( $blacklist )
 			->andReturn( $blacklist2 );
 
-		$this->assertSame( [ $blacklistedType ], $configuration->toArray()['blacklist'] );
+		$this->assertSame( [ $blacklistedType ], $configuration->to_array()['blacklist'] );
 
 	}
 
@@ -87,7 +87,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 			->with( $blacklist )
 			->andReturn( '' );
 
-		$this->assertSame( [ $blacklistedType ], $configuration->toArray()['blacklist'] );
+		$this->assertSame( [ $blacklistedType ], $configuration->to_array()['blacklist'] );
 
 	}
 
@@ -111,7 +111,7 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 			new \Yoast_ACF_Analysis_Field_Selectors_Default()
 		);
 
-		$this->assertSame( 9999 , $configuration->toArray()['refreshRate'] );
+		$this->assertSame( 9999 , $configuration->to_array()['refreshRate'] );
 
 	}
 

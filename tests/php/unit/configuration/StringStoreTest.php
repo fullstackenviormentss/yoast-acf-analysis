@@ -13,7 +13,7 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testEmpty(){
 		$store = $this->getStore();
-		$this->assertEmpty( $store->toArray() );
+		$this->assertEmpty( $store->to_array() );
 	}
 
 	public function testAdd(){
@@ -23,7 +23,7 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store = $this->getStore();
 		$store->add( $type );
 
-		$this->assertSame( [ $type ],  $store->toArray() );
+		$this->assertSame( [ $type ],  $store->to_array() );
 
 	}
 
@@ -35,7 +35,7 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store->add( $type );
 		$store->add( $type );
 
-		$this->assertSame( [ $type ],  $store->toArray() );
+		$this->assertSame( [ $type ],  $store->to_array() );
 
 	}
 
@@ -48,7 +48,7 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store->add( $typeA );
 		$store->add( $typeB );
 
-		$this->assertSame( [ $typeA, $typeB ],  $store->toArray() );
+		$this->assertSame( [ $typeA, $typeB ],  $store->to_array() );
 
 	}
 
@@ -61,7 +61,7 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store->add( $typeA );
 		$store->add( $typeB );
 
-		$this->assertSame( [ $typeB, $typeA ],  $store->toArray() );
+		$this->assertSame( [ $typeB, $typeA ],  $store->to_array() );
 
 	}
 
@@ -70,7 +70,7 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store = $this->getStore();
 
 		$this->assertFalse( $store->add( 999 ) );
-		$this->assertEmpty( $store->toArray() );
+		$this->assertEmpty( $store->to_array() );
 
 	}
 
@@ -84,15 +84,15 @@ abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store->add( $typeA );
 		$store->add( $typeB );
 
-		$this->assertSame( [ $typeA, $typeB ],  $store->toArray() );
+		$this->assertSame( [ $typeA, $typeB ],  $store->to_array() );
 
 		$store->remove( $typeA );
 
-		$this->assertSame( [ $typeB ],  $store->toArray() );
+		$this->assertSame( [ $typeB ],  $store->to_array() );
 
 		$store->remove( $typeB );
 
-		$this->assertEmpty( $store->toArray() );
+		$this->assertEmpty( $store->to_array() );
 
 	}
 

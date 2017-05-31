@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * Class Yoast_ACF_Analysis_Configuration_Default
+ */
 class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Configuration {
 
 	/**
@@ -13,6 +16,10 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 	 */
 	private $field_selectors;
 
+	/**
+	 * @param Yoast_ACF_Analysis_Type_Blacklist  $blacklist       Blacklist Configuration Object.
+	 * @param Yoast_ACF_Analysis_Field_Selectors $field_selectors Field Selectors Configuration Object.
+	 */
 	function __construct( Yoast_ACF_Analysis_Type_Blacklist $blacklist, Yoast_ACF_Analysis_Field_Selectors $field_selectors ) {
 		$this->blacklist = $blacklist;
 		$this->field_selectors = $field_selectors;
@@ -87,16 +94,16 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 	/**
 	 * @return array
 	 */
-	public function toArray() {
+	public function to_array() {
 
 		return array(
 			'acfVersion'      => $this->acf_version(),
-			'blacklist'       => $this->blacklist()->toArray(),
+			'blacklist'       => $this->blacklist()->to_array(),
 			'debug'           => $this->debug(),
 			'scraper'         => $this->scraper_config(),
 			'pluginName'      => self::PLUGIN_NAME,
 			'refreshRate'     => $this->refresh_rate(),
-			'fieldSelectors'  => $this->field_selectors()->toArray(),
+			'fieldSelectors'  => $this->field_selectors()->to_array(),
 		);
 
 	}

@@ -1,12 +1,16 @@
 <?php
 
 
+/**
+ * Class Yoast_ACF_Analysis_Field_Selectors_Default
+ */
 class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_Field_Selectors {
 
+	/** @var array */
 	private $field_selectors = array();
 
 	/**
-	 * @param string $type
+	 * @param string $type CSS Selectors.
 	 *
 	 * @return bool
 	 */
@@ -16,7 +20,7 @@ class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_F
 			return false;
 		}
 
-		if ( ! in_array( $type, $this->field_selectors ) ) {
+		if ( ! in_array( $type, $this->field_selectors, true ) ) {
 			$this->field_selectors[] = $type;
 			sort( $this->field_selectors );
 		}
@@ -25,7 +29,7 @@ class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_F
 	}
 
 	/**
-	 * @param string $type
+	 * @param string $type CSS Selectors.
 	 *
 	 * @return bool
 	 */
@@ -35,7 +39,7 @@ class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_F
 			return false;
 		}
 
-		if ( in_array( $type, $this->field_selectors ) ) {
+		if ( in_array( $type, $this->field_selectors, true ) ) {
 			$this->field_selectors = array_values(
 				array_diff(
 					$this->field_selectors, [ $type ]
@@ -52,7 +56,7 @@ class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_F
 	/**
 	 * @return array
 	 */
-	public function toArray() {
+	public function to_array() {
 		return $this->field_selectors;
 	}
 

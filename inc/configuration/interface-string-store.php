@@ -4,14 +4,14 @@
 interface Yoast_ACF_Analysis_String_Store {
 
 	/**
-	 * @param string $type
+	 * @param string $type Store index.
 	 *
 	 * @return bool
 	 */
 	public function add( $type );
 
 	/**
-	 * @param string $type
+	 * @param string $type Store index.
 	 *
 	 * @return bool
 	 */
@@ -20,6 +20,6 @@ interface Yoast_ACF_Analysis_String_Store {
 	/**
 	 * @return array
 	 */
-	public function toArray();
+	public function to_array();
 
 }

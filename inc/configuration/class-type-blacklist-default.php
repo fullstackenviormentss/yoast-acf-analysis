@@ -1,12 +1,16 @@
 <?php
 
 
+/**
+ * Class Yoast_ACF_Analysis_Blacklist_Default
+ */
 class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Blacklist {
 
+	/** @var array */
 	private $types = array();
 
 	/**
-	 * @param string $type
+	 * @param string $type Field type as named by ACF.
 	 *
 	 * @return bool
 	 */
@@ -16,7 +20,7 @@ class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Bl
 			return false;
 		}
 
-		if ( ! in_array( $type, $this->types ) ) {
+		if ( ! in_array( $type, $this->types, true ) ) {
 			$this->types[] = $type;
 			sort( $this->types );
 		}
@@ -25,7 +29,7 @@ class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Bl
 	}
 
 	/**
-	 * @param string $type
+	 * @param string $type Field type as named by ACF.
 	 *
 	 * @return bool
 	 */
@@ -35,7 +39,7 @@ class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Bl
 			return false;
 		}
 
-		if ( in_array( $type, $this->types ) ) {
+		if ( in_array( $type, $this->types, true ) ) {
 			$this->types = array_values(
 				array_diff(
 					$this->types, [ $type ]
@@ -52,7 +56,7 @@ class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Bl
 	/**
 	 * @return array
 	 */
-	public function toArray() {
+	public function to_array() {
 		return $this->types;
 	}
 

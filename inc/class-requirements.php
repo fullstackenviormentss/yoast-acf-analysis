@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * Class Yoast_ACF_Analysis_Requirements
+ */
 class Yoast_ACF_Analysis_Requirements {
 
 	const MIN_WPSEO_VERSION = 3.2;
@@ -12,22 +15,21 @@ class Yoast_ACF_Analysis_Requirements {
 	 */
 	public function check() {
 
-		// Require ACF and Yoast
+		// Require ACF and Yoast.
 		if ( current_user_can( 'activate_plugins' ) ) {
 			$deactivate = false;
 
-			// ACF
+			// ACF.
 			if ( ! is_plugin_active( 'advanced-custom-fields/acf.php' ) && ! is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
 				add_action( 'admin_notices', array( $this, 'acf_requirements_not_met' ) );
 				$deactivate = true;
 			}
 
-			// Yoast SEO for WordPress
+			// Yoast SEO for WordPress.
 			if ( ! is_plugin_active( 'wordpress-seo/wp-seo.php' ) && ! is_plugin_active( 'wordpress-seo-premium/wp-seo-premium.php' ) ) {
 				add_action( 'admin_notices', array( $this, 'yoast_seo_requirements_not_met' ) );
 				$deactivate = true;
 			} else {
-				// Compare if version is >= self::MIN_WPSEO_VERSION
 				if ( defined( 'WPSEO_VERSION' ) ) {
 					if ( version_compare( substr( WPSEO_VERSION, 0, 3 ), self::MIN_WPSEO_VERSION, '<' ) ) {
 						add_action( 'admin_notices', array( $this, 'yoast_seo_requirements_not_met' ) );
@@ -61,6 +63,7 @@ class Yoast_ACF_Analysis_Requirements {
 	 */
 	public function yoast_seo_requirements_not_met() {
 		$message = sprintf(
+			/* translators: Plugin Version */
 			__( 'ACF Yoast Analysis requires Yoast SEO for WordPress %s+ to be installed and activated.', 'yoast-acf-analysis' ),
 			self::MIN_WPSEO_VERSION
 		);
