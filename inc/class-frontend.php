@@ -12,7 +12,7 @@ class Yoast_ACF_Analysis_Frontend {
 
 		add_filter( 'admin_enqueue_scripts', array(
 			$this,
-			'enqueue_scripts'
+			'enqueue_scripts',
 		) );
 
 	}
@@ -28,7 +28,7 @@ class Yoast_ACF_Analysis_Frontend {
 		$config = Yoast_ACF_Analysis_Registry::instance()->get( 'config' );
 
 		// Post page enqueue.
-		if( 'post.php' === $pagenow || 'post-new.php' === $pagenow ){
+		if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) {
 
 			wp_enqueue_script(
 				'yoast-acf-analysis-post',
@@ -36,7 +36,7 @@ class Yoast_ACF_Analysis_Frontend {
 				array(
 					'jquery',
 					'yoast-seo-post-scraper',
-					'underscore'
+					'underscore',
 				),
 				$this->plugin_data['Version']
 			);
@@ -45,7 +45,7 @@ class Yoast_ACF_Analysis_Frontend {
 		}
 
 		// Term page enqueue.
-		if( 'term.php' === $pagenow ){
+		if ( 'term.php' === $pagenow ) {
 
 			wp_enqueue_script(
 				'yoast-acf-analysis-term',
@@ -62,4 +62,4 @@ class Yoast_ACF_Analysis_Frontend {
 
 	}
 
-} 
+}

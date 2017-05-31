@@ -13,8 +13,8 @@ class Yoast_ACF_Analysis_Scraper_Unknown implements Yoast_ACF_Analysis_Scraper {
 	 * @return array
 	 */
 	public function scrape( $field ) {
-		unset($field['value']);
+		unset( $field['value'] );
 		return $field;
 	}
 
-} 
+}

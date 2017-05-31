@@ -12,4 +12,4 @@ interface Yoast_ACF_Analysis_Scraper {
 	 */
 	public function scrape( $field );
 
-} 
+}

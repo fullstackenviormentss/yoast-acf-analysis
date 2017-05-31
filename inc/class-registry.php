@@ -23,4 +23,4 @@ class Yoast_ACF_Analysis_Registry {
 		return array_key_exists( $id, $this->storage ) ? $this->storage[ $id ] : null;
 	}
 
-} 
+}

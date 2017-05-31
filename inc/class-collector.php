@@ -12,35 +12,33 @@ class Yoast_ACF_Analysis_Collector {
 	 */
 	function append( $content, $post_id ) {
 
-		//Get all fields from ACF. The function signature for `get_field_objects` has changed between v4 and v5
-		if( -1 === version_compare(Yoast_ACF_Analysis_Registry::instance()->get( 'config' )['acfVersion'], 5) ){
+		// Get all fields from ACF. The function signature for `get_field_objects` has changed between v4 and v5
+		if ( -1 === version_compare( Yoast_ACF_Analysis_Registry::instance()->get( 'config' )['acfVersion'], 5 ) ) {
 			$field_data = get_field_objects( $post_id, array(
-				'format_value'	=>	false
+				'format_value'	=> false,
 			) );
-		}else{
+		} else {
 			$field_data = get_field_objects( $post_id, false );
 		}
 
-
-		//Bail out early if no fields
+		// Bail out early if no fields
 		if ( $field_data === false ) {
 			return $content;
 		}
 
-		//Remove all blacklisted fields
+		// Remove all blacklisted fields
 		$field_data = array_filter( $field_data, array( $this, 'filter_blacklist' ) );
 
-		//Pass all fields to the scraping function
-		$field_data = $this->scrape($field_data);
+		// Pass all fields to the scraping function
+		$field_data = $this->scrape( $field_data );
 
-		//Append data to $content
+		// Append data to $content
 		foreach ( $field_data as $field ) {
 
-			//We only want string values
-			if ( isset($field['value']) && 'string' === gettype( $field['value'] ) ) {
+			// We only want string values
+			if ( isset( $field['value'] ) && 'string' === gettype( $field['value'] ) ) {
 				$content .= "\n" . $field['value'];
 			}
-
 		}
 
 		return $content;
@@ -53,7 +51,7 @@ class Yoast_ACF_Analysis_Collector {
 	 *
 	 * @return array
 	 */
-	protected function scrape( $field_data ){
+	protected function scrape( $field_data ) {
 		$store = Yoast_ACF_Analysis_Registry::instance()->get( 'scraper_store' );
 
 		foreach ( $field_data as &$field ) {
@@ -79,4 +77,4 @@ class Yoast_ACF_Analysis_Collector {
 
 	}
 
-} 
+}

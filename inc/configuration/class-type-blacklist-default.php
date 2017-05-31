@@ -12,11 +12,11 @@ class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Bl
 	 */
 	public function add( $type ) {
 
-		if( !is_string( $type ) ){
+		if ( ! is_string( $type ) ) {
 			return false;
 		}
 
-		if( !in_array( $type, $this->types ) ){
+		if ( ! in_array( $type, $this->types ) ) {
 			$this->types[] = $type;
 			sort( $this->types );
 		}
@@ -31,18 +31,18 @@ class Yoast_ACF_Analysis_Blacklist_Default implements Yoast_ACF_Analysis_Type_Bl
 	 */
 	public function remove( $type ) {
 
-		if( !is_string( $type ) ){
+		if ( ! is_string( $type ) ) {
 			return false;
 		}
 
-		if( in_array( $type, $this->types ) ){
+		if ( in_array( $type, $this->types ) ) {
 			$this->types = array_values(
 				array_diff(
 					$this->types, [ $type ]
 				)
 			);
 			sort( $this->types );
-		}else{
+		} else {
 			return false;
 		}
 

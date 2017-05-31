@@ -16,11 +16,11 @@ if ( ! defined( 'YOAST_ACF_ANALYSIS_FILE' ) ) {
 	define( 'YOAST_ACF_ANALYSIS_FILE', __FILE__ );
 }
 
-//https://getcomposer.org/doc/00-intro.md#system-requirements
+// https://getcomposer.org/doc/00-intro.md#system-requirements
 if ( version_compare( PHP_VERSION, '5.3.2', '<' ) && file_exists( YOAST_ACF_ANALYSIS_FILE . '/vendor/autoload.php' ) ) {
 	add_action(
 		'admin_notices',
-		create_function( '', "echo '<div class=\"error\"><p>".__('Plugin Name requires PHP 5.3.2+ to function properly. Please upgrade PHP.', 'yoast-acf-analysis') ."</p></div>';" )
+		create_function( '', "echo '<div class=\"error\"><p>" . __( 'Plugin Name requires PHP 5.3.2+ to function properly. Please upgrade PHP.', 'yoast-acf-analysis' ) . "</p></div>';" )
 	);
 	return;
 } else {
@@ -29,4 +29,4 @@ if ( version_compare( PHP_VERSION, '5.3.2', '<' ) && file_exists( YOAST_ACF_ANAL
 
 $yoast_acf_analysis = new Yoast_ACF_Analysis();
 $yoast_acf_analysis->init();
-unset($yoast_acf_analysis);
+unset( $yoast_acf_analysis );

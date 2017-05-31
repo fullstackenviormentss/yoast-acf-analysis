@@ -32,7 +32,7 @@ class Yoast_ACF_Analysis_Scraper_Text implements Yoast_ACF_Analysis_Scraper {
 		$level = $this->get_level( $field );
 
 		if ( $level ) {
-			$field['value'] = sprintf( '<h%1$d>%2$s</h%1$d>', $level, wp_kses_post($field['value']) );
+			$field['value'] = sprintf( '<h%1$d>%2$s</h%1$d>', $level, wp_kses_post( $field['value'] ) );
 		}
 
 		return $field;
@@ -59,7 +59,7 @@ class Yoast_ACF_Analysis_Scraper_Text implements Yoast_ACF_Analysis_Scraper {
 			$level = intval( $level, 10 );
 		}
 
-		//Headlines only exist from h1 to h6
+		// Headlines only exist from h1 to h6
 		if ( $level < 1 || $level > 6 ) {
 			$level = false;
 		}

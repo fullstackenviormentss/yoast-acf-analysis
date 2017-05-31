@@ -9,30 +9,28 @@ class Yoast_ACF_Analysis_Scraper_Store {
 	public function init() {
 		$this->scraper_classes = array(
 
-			//Basic
+			// Basic
 			'text'             => 'Yoast_ACF_Analysis_Scraper_Text',
 			'textarea'         => 'Yoast_ACF_Analysis_Scraper_Text',
 			'email'            => 'Yoast_ACF_Analysis_Scraper_Email',
 			'url'              => 'Yoast_ACF_Analysis_Scraper_URL',
 
-			//Content
+			// Content
 			'wysiwyg'          => 'Yoast_ACF_Analysis_Scraper_Text',
-			//TODO: Add oembed handler
+			// TODO: Add oembed handler
 			'image'            => 'Yoast_ACF_Analysis_Scraper_Image',
-			'gallery'          => 'Yoast_ACF_Analysis_Scraper_Gallery', //Pro Only
+			'gallery'          => 'Yoast_ACF_Analysis_Scraper_Gallery', // Pro Only
 
-			//Choice
-			//TODO: select, checkbox, radio
-
-			//Relational
+			// Choice
+			// TODO: select, checkbox, radio
+			// Relational
 			'taxonomy'         => 'Yoast_ACF_Analysis_Scraper_Taxonomy',
 
-			//jQuery
-			//TODO: google_map, date_picker, color_picker
-
-			//Layout
-			'repeater'         => 'Yoast_ACF_Analysis_Scraper_Nested', //Pro Only
-			'flexible_content' => 'Yoast_ACF_Analysis_Scraper_Nested', //Pro Only
+			// jQuery
+			// TODO: google_map, date_picker, color_picker
+			// Layout
+			'repeater'         => 'Yoast_ACF_Analysis_Scraper_Nested', // Pro Only
+			'flexible_content' => 'Yoast_ACF_Analysis_Scraper_Nested', // Pro Only
 
 		);
 	}
@@ -44,16 +42,15 @@ class Yoast_ACF_Analysis_Scraper_Store {
 
 		if ( $this->has_scraper( $type ) ) {
 			return $this->scrapers[ $type ];
-		} else if ( isset( $this->scraper_classes[ $type ] ) ) {
-			$scraper = new $this->scraper_classes[$type]();
+		} elseif ( isset( $this->scraper_classes[ $type ] ) ) {
+			$scraper = new $this->scraper_classes[ $type ]();
 			$scraper->init();
 
 			return $this->set_scraper( $scraper, $type );
 		} else {
-			//If we do not have a scraper just pass the fields through so it will be filtered out by the app.
+			// If we do not have a scraper just pass the fields through so it will be filtered out by the app.
 			return $this->set_scraper( new Yoast_ACF_Analysis_Scraper_Unknown(), $type );
 		}
-
 
 	}
 
@@ -74,4 +71,4 @@ class Yoast_ACF_Analysis_Scraper_Store {
 
 	}
 
-} 
+}

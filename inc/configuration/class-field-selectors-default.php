@@ -12,11 +12,11 @@ class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_F
 	 */
 	public function add( $type ) {
 
-		if( !is_string( $type ) ){
+		if ( ! is_string( $type ) ) {
 			return false;
 		}
 
-		if( !in_array( $type, $this->field_selectors ) ){
+		if ( ! in_array( $type, $this->field_selectors ) ) {
 			$this->field_selectors[] = $type;
 			sort( $this->field_selectors );
 		}
@@ -31,18 +31,18 @@ class Yoast_ACF_Analysis_Field_Selectors_Default implements Yoast_ACF_Analysis_F
 	 */
 	public function remove( $type ) {
 
-		if( !is_string( $type ) ){
+		if ( ! is_string( $type ) ) {
 			return false;
 		}
 
-		if( in_array( $type, $this->field_selectors ) ){
+		if ( in_array( $type, $this->field_selectors ) ) {
 			$this->field_selectors = array_values(
 				array_diff(
 					$this->field_selectors, [ $type ]
 				)
 			);
 			sort( $this->field_selectors );
-		}else{
+		} else {
 			return false;
 		}
 

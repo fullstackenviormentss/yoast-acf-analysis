@@ -4,7 +4,6 @@
  * Class Yoast_ACF_Analysis
  *
  * Adds ACF data to the content analyses of WordPress SEO
- *
  */
 class Yoast_ACF_Analysis {
 
@@ -28,7 +27,7 @@ class Yoast_ACF_Analysis {
 		if ( $dependencies_are_met ) {
 			$this->boot();
 
-			if( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ){
+			if ( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
 				$this->boot_dev();
 			}
 		}
@@ -38,7 +37,7 @@ class Yoast_ACF_Analysis {
 	/**
 	 * Boot the plugin
 	 */
-	public function boot(){
+	public function boot() {
 
 		if ( is_null( Yoast_ACF_Analysis_Registry::instance()->get( 'config' ) ) ) {
 
@@ -49,7 +48,7 @@ class Yoast_ACF_Analysis {
 				$default_configuration
 			);
 
-			if( ! ($configuration instanceof Yoast_ACF_Analysis_Configuration) ){
+			if ( ! ($configuration instanceof Yoast_ACF_Analysis_Configuration) ) {
 				$configuration = $default_configuration;
 			}
 
@@ -64,6 +63,7 @@ class Yoast_ACF_Analysis {
 
 		/**
 		 * Disable this as long as the main plugin has this disabled
+		 *
 		 * @see https://github.com/Yoast/wordpress-seo/issues/4532
 		 */
 		/*
@@ -78,22 +78,22 @@ class Yoast_ACF_Analysis {
 		*/
 	}
 
-	public function boot_dev(){
+	public function boot_dev() {
 
-		if( -1 === version_compare( get_option('acf_version'), 5) ){
+		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
 			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf4.php' );
-		}else{
+		} else {
 			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/system/js/data/acf5.php' );
 		}
 
 	}
 
-	protected function add_headline_config(){
+	protected function add_headline_config() {
 
-		add_filter( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/scraper_config', function( $scraper_config ){
+		add_filter( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/scraper_config', function( $scraper_config ) {
 
 			$scraper_config['text'] = array(
-				'headlines' => apply_filters( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/headlines', array() )
+				'headlines' => apply_filters( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/headlines', array() ),
 			);
 
 			return $scraper_config;
@@ -102,21 +102,21 @@ class Yoast_ACF_Analysis {
 
 	}
 
-	protected function get_field_selectors(){
+	protected function get_field_selectors() {
 
 		$field_selectors = new Yoast_ACF_Analysis_Field_Selectors_Default();
 
 		$default_field_selectors = array(
-			"input[type=text][id^=acf]", //Text
-			"textarea[id^=acf]", //Textarea
-			"input[type=email][id^=acf]", //Email
-			"input[type=url][id^=acf]", //URL
-			"textarea[id^=wysiwyg-acf]", //WYSIWYG
-			"input[type=hidden].acf-image-value", //Image
-			".acf-taxonomy-field", //Taxonomy
+			'input[type=text][id^=acf]', // Text
+			'textarea[id^=acf]', // Textarea
+			'input[type=email][id^=acf]', // Email
+			'input[type=url][id^=acf]', // URL
+			'textarea[id^=wysiwyg-acf]', // WYSIWYG
+			'input[type=hidden].acf-image-value', // Image
+			'.acf-taxonomy-field', // Taxonomy
 		);
 
-		foreach( $default_field_selectors as $field_selector ){
+		foreach ( $default_field_selectors as $field_selector ) {
 			$field_selectors->add( $field_selector );
 		}
 
@@ -126,7 +126,7 @@ class Yoast_ACF_Analysis {
 	/**
 	 * @return Yoast_ACF_Analysis_Blacklist_Default
 	 */
-	protected function get_blacklist(){
+	protected function get_blacklist() {
 
 		$blacklist = new Yoast_ACF_Analysis_Blacklist_Default();
 
@@ -152,14 +152,14 @@ class Yoast_ACF_Analysis {
 			'message',
 			'tab',
 			'repeater',
-			'flexible_content'
+			'flexible_content',
 		);
 
-		foreach( $default_blacklist as $type ){
-			$blacklist->add( $type);
+		foreach ( $default_blacklist as $type ) {
+			$blacklist->add( $type );
 		}
 
-		if( -1 === version_compare( get_option('acf_version'), 5) ){
+		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
 
 			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5
 			$blacklist->remove( 'gallery' );

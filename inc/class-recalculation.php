@@ -14,19 +14,19 @@ class Yoast_ACF_Analysis_Recalculation {
 
 		add_filter( 'wpseo_post_content_for_recalculation', array(
 			$this,
-			'add_recalculation_data_to_post_content'
+			'add_recalculation_data_to_post_content',
 		), 10, 2 );
 
 		add_filter( 'wpseo_term_description_for_recalculation', array(
 			$this,
-			'add_recalculation_data_to_term_content'
+			'add_recalculation_data_to_term_content',
 		), 10, 2 );
 	}
 
 	/**
 	 * Add ACF data to post content
 	 *
-	 * @param string $content String of the content to add data to.
+	 * @param string  $content String of the content to add data to.
 	 * @param WP_Post $post Item the content belongs to.
 	 *
 	 * @return string Content with added ACF data.
@@ -44,7 +44,7 @@ class Yoast_ACF_Analysis_Recalculation {
 	/**
 	 * Add custom fields to term content
 	 *
-	 * @param string $content String of the content to add data to.
+	 * @param string  $content String of the content to add data to.
 	 * @param WP_Term $term The term to get the custom ffields of.
 	 *
 	 * @return string Content with added ACF data.
@@ -97,4 +97,4 @@ class Yoast_ACF_Analysis_Recalculation {
 		return trim( $output );
 	}
 
-} 
+}

@@ -13,7 +13,7 @@ class Yoast_ACF_Analysis_Scraper_Email implements Yoast_ACF_Analysis_Scraper {
 	 */
 	public function scrape( $field ) {
 
-		if ( empty( $field['value'] ) ||  ! is_email($field['value']) ) {
+		if ( empty( $field['value'] ) || ! is_email( $field['value'] ) ) {
 			return $field;
 		}
 

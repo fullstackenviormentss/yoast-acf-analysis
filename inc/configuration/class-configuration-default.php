@@ -32,9 +32,9 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 
 		$blacklist = apply_filters( self::PLUGIN_NAME . '/' . __FUNCTION__, $this->blacklist );
 
-		if( $blacklist instanceof Yoast_ACF_Analysis_Type_Blacklist){
+		if ( $blacklist instanceof Yoast_ACF_Analysis_Type_Blacklist ) {
 			return $blacklist;
-		}else{
+		} else {
 			return $this->blacklist;
 		}
 
@@ -54,7 +54,7 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 
 		$scraper_config = apply_filters( self::PLUGIN_NAME . '/' . __FUNCTION__, array() );
 
-		if( is_array( $scraper_config ) ){
+		if ( is_array( $scraper_config ) ) {
 			return $scraper_config;
 		}
 
@@ -66,7 +66,7 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 	 * @return int
 	 */
 	public function refresh_rate() {
-		return intval( apply_filters( self::PLUGIN_NAME . '/' . __FUNCTION__, 1000 ), 10);
+		return intval( apply_filters( self::PLUGIN_NAME . '/' . __FUNCTION__, 1000 ), 10 );
 	}
 
 	/**
@@ -76,9 +76,9 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 
 		$field_selectors = apply_filters( self::PLUGIN_NAME . '/' . __FUNCTION__, $this->field_selectors );
 
-		if( $field_selectors instanceof Yoast_ACF_Analysis_Field_Selectors){
+		if ( $field_selectors instanceof Yoast_ACF_Analysis_Field_Selectors ) {
 			return $field_selectors;
-		}else{
+		} else {
 			return $this->field_selectors;
 		}
 
@@ -96,7 +96,7 @@ class Yoast_ACF_Analysis_Configuration_Default implements Yoast_ACF_Analysis_Con
 			'scraper'         => $this->scraper_config(),
 			'pluginName'      => self::PLUGIN_NAME,
 			'refreshRate'     => $this->refresh_rate(),
-			'fieldSelectors'  => $this->field_selectors()->toArray()
+			'fieldSelectors'  => $this->field_selectors()->toArray(),
 		);
 
 	}

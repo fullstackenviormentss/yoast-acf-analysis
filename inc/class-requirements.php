@@ -68,4 +68,4 @@ class Yoast_ACF_Analysis_Requirements {
 		printf( '<div class="error"><p>%s</p></div>', esc_html( $message ) );
 	}
 
-} 
+}

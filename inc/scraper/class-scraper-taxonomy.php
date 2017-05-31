@@ -21,8 +21,8 @@ class Yoast_ACF_Analysis_Scraper_Taxonomy implements Yoast_ACF_Analysis_Scraper 
 
 		if ( ! empty( $field['value'] ) ) {
 
-			//If we get a single term ID we turn this into an array
-			if( 'array' !== gettype( $field['value'] ) ){
+			// If we get a single term ID we turn this into an array
+			if ( 'array' !== gettype( $field['value'] ) ) {
 				$field['value'] = [ $field['value'] ];
 			}
 
@@ -31,15 +31,13 @@ class Yoast_ACF_Analysis_Scraper_Taxonomy implements Yoast_ACF_Analysis_Scraper 
 				$term = get_term( $term_id, $field['taxonomy'] );
 
 				if ( $term ) {
-					$return_value .= "\n<li>" . $term->name . "</li>";
+					$return_value .= "\n<li>" . $term->name . '</li>';
 				}
-
 			}
-
 		}
 
-		if( '' !== $return_value ){
-			$field['value'] = "<ul>" . $return_value . "\n</ul>";
+		if ( '' !== $return_value ) {
+			$field['value'] = '<ul>' . $return_value . "\n</ul>";
 		}
 
 		return $field;
