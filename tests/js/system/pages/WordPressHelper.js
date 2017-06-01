@@ -11,23 +11,27 @@ module.exports = {
         {
             login: function(){
                 this.navigate();
-                this.fillLogin();
-                return this.submit();
+                return this.fillLogin().submit();
             },
             fillLogin: function(){
-                this.setValue('@user', this.api.globals.user);
+                this.waitForElementVisible('@user', 5000);
+                this.setValue('@user', []);
+                this.setValue('@user', [this.api.globals.user]);
                 this.api.pause(100);
+                this.waitForElementVisible('@password', 5000);
                 return this.setValue('@password', this.api.globals.password);
             },
             submit: function() {
+                this.waitForElementVisible('@submitButton', 5000);
+                //this.api.saveScreenshot('screenshots/login-' + (new Date()).getTime() + '.png');
                 this.click('@submitButton');
-                this.waitForElementVisible('#adminmenu #menu-dashboard.current', 15000);
+                return this.waitForElementVisible('#adminmenu #menu-dashboard.current', 15000);
             },
             newPost: function(){
                 this.api.url( this.api.launchUrl + '/wp/wp-admin/post-new.php' );
                 this.waitForElementVisible('body.post-new-php', 15000);
 
-                this.api.execute(function() {
+                return this.api.execute(function() {
                     YoastACFAnalysisConfig.refreshRate=10;
                 }, [] );
             }
