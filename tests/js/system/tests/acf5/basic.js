@@ -1,20 +1,5 @@
 var assert = require('assert');
-var logContains = require('../../helpers/logContains');
-var dummyContent = require('../../helpers/dummyContent');
-
-var simpleField = function( browser, selector ){
-
-    var hash = dummyContent.hash();
-
-    browser.setValue( selector, [ hash , browser.Keys.TAB ] );
-
-    browser.pause( 3000 );
-
-    logContains( browser, hash, browser.assert.ok );
-
-    browser.expect.element('#snippet_meta').text.to.contain( hash );
-
-}
+var simpleField = require('../../helpers/simpleField');
 
 module.exports = {
     tags: ['acf5', 'basic'],
@@ -22,11 +7,10 @@ module.exports = {
     before: function (browser) {
         var page = browser.page.WordPressHelper();
         page.login();
+        page.newPost();
     },
 
     beforeEach: function (browser) {
-        var page = browser.page.WordPressHelper();
-        page.newPost();
     },
 
     'URL Field' : function (browser) {

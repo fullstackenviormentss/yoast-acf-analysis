@@ -7,11 +7,10 @@ module.exports = {
     before: function (browser) {
         var page = browser.page.WordPressHelper();
         page.login();
+        page.newPost();
     },
 
     beforeEach: function (browser) {
-        var page = browser.page.WordPressHelper();
-        page.newPost();
     },
 
     'Taxonomy Checkbox Field' : function (browser) {
