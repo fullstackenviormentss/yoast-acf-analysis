@@ -21,7 +21,7 @@ module.exports = {
     'Text Field (as Headline)' : function (browser) {
 
         browser.execute(function() {
-                return jQuery('.acf-field-text').data('key');
+                return jQuery('.acf-field-text').data('key') || jQuery('.field_type-text').data('field_key');
             },
             [],
             function(result){
