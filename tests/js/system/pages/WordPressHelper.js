@@ -21,12 +21,11 @@ module.exports = {
             },
             submit: function() {
                 this.click('@submitButton');
-                this.api.pause(1000);
+                this.waitForElementVisible('#adminmenu #menu-dashboard.current', 15000);
             },
             newPost: function(){
-                this.api
-                    .url( this.api.launchUrl + '/wp/wp-admin/post-new.php' )
-                    .pause( 1000 );
+                this.api.url( this.api.launchUrl + '/wp/wp-admin/post-new.php' );
+                this.waitForElementVisible('body.post-new-php', 15000);
 
                 this.api.execute(function() {
                     YoastACFAnalysisConfig.refreshRate=10;

@@ -6,8 +6,7 @@ module.exports = {
     tags: ['acf5', 'pro', 'content'],
 
     before: function (browser) {
-        var page = browser.page.WordPressHelper();
-        page.login();
+
     },
 
     beforeEach: function (browser) {

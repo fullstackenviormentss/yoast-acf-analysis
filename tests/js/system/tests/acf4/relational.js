@@ -6,7 +6,6 @@ module.exports = {
 
     before: function (browser) {
         var page = browser.page.WordPressHelper();
-        page.login();
         page.newPost();
     },
 

@@ -6,8 +6,6 @@ module.exports = {
     tags: ['acf4', 'acf5', 'content'],
 
     before: function (browser) {
-        var page = browser.page.WordPressHelper();
-        page.login();
     },
 
     beforeEach: function (browser) {
@@ -16,6 +14,8 @@ module.exports = {
     },
 
     'WYSIWYG Field': function (browser) {
+
+        browser.pause( 3000 );
 
         var hash = dummyContent.hash();
 
@@ -46,6 +46,8 @@ module.exports = {
     },
 
     'Image Field': function (browser) {
+
+        browser.pause( 3000 );
 
         var hashTitle = dummyContent.hash();
         var hashAlt = dummyContent.hash();
