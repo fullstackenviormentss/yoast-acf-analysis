@@ -13,6 +13,12 @@
       "launch_url" : "http://site.vvv.dev",
       "globals" : {
       },
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure" : true,
+        "on_error" : false,
+        "path" : "screenshots"
+      },
       "selenium_port"  : 9515,
       "selenium_host"  : "localhost",
       "default_path_prefix" : "",
