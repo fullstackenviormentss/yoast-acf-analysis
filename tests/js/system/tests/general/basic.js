@@ -30,9 +30,34 @@ module.exports = {
     },
 
     'Text Field' : function (browser) {
-        simpleField( browser, '.field_type-text input, .acf-field-text input' );
+        simpleField(browser, '.field_type-text input, .acf-field-text input');
+    },
 
-        //TODO: Test Text Field set as headline
+    'Text Field (as Headline)' : function (browser) {
+
+        browser.execute(function() {
+                return jQuery('.acf-field-text').data('key');
+            },
+            [],
+            function(result){
+
+                browser.execute(
+                    function( key ) {
+                        YoastACFAnalysisConfig.scraper.text.headlines = {};
+                        YoastACFAnalysisConfig.scraper.text.headlines[key] = 2;
+                    },
+                    [result.value]
+                );
+
+        } );
+
+        var hash = dummyContent.hash();
+
+        browser.setValue( '.field_type-text input, .acf-field-text input', [ hash , browser.Keys.TAB ] );
+
+        browser.pause( 3000 );
+
+        logContains( browser, 'h2>' + hash, browser.assert.ok );
     },
 
     'Textarea Field' : function (browser) {
