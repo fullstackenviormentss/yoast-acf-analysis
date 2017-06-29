@@ -55,8 +55,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Yoast\\AcfAnalysis\\Tests\\": "tests/php/unit",
-      "Yoast\\AcfAnalysis\\Tests\\Configuration\\": "tests/php/unit/configuration"
+      "Yoast\\AcfAnalysis\\Tests\\": "tests/php/unit"
     }
   },
   "scripts": {
