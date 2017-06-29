@@ -6,3 +6,4 @@ composer.lock
 tests/js/system/reports
 tests/js/system/screenshots
 .env.js
+nightwatch.conf.js
