@@ -1,3 +1,4 @@
+var chromedriver = require('chromedriver');
 module.exports = {
     "user"     : "wp",
     "password" : "wp",
