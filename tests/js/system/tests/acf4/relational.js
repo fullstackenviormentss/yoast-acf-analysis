@@ -18,6 +18,8 @@ module.exports = {
 
         browser.waitForElementVisible( selector, 1000 );
 
+        browser.pause( 3000 );
+
         browser.click( selector + 'input' );
 
         browser.getText( selector + 'label', function(result) {
@@ -35,6 +37,8 @@ module.exports = {
         var selector = '.acf-taxonomy-field select ';
 
         browser.waitForElementVisible( selector, 1000 );
+
+        browser.pause( 3000 );
 
         browser.click( selector + 'option:first-child' );
 
