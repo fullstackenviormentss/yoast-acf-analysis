@@ -43,7 +43,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require": {},
+  "require": {
+    "composer/installers": "~1.0",
+    "xrstf/composer-php52": "1.*"
+  },
   "require-dev": {
     "php": ">=5.6.0",
     "brain/monkey": "2.*",
@@ -59,6 +62,15 @@
     }
   },
   "scripts": {
+    "post-install-cmd": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "post-update-cmd": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
+    "post-autoload-dump": [
+      "xrstf\\Composer52\\Generator::onPostInstallCmd"
+    ],
     "test": "vendor/bin/phpunit --configuration tests/php/phpunit.xml.dist --colors=always",
     "configure-phpcs": "\"vendor/bin/phpcs\" --config-set installed_paths ../../../vendor/wp-coding-standards/wpcs"
   }
