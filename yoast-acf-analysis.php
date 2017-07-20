@@ -127,7 +127,8 @@ class Yoast_ACF_Analysis {
 					'jquery',
 					$script_prefix . '-post-scraper',
 				),
-				self::VERSION
+				self::VERSION,
+				true
 			);
 		}
 
@@ -140,7 +141,8 @@ class Yoast_ACF_Analysis {
 					'jquery',
 					$script_prefix . '-term-scraper',
 				),
-				self::VERSION
+				self::VERSION,
+				true
 			);
 		}
 	}
