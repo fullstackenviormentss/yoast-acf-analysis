@@ -26,7 +26,7 @@ Please note that the plugin does not work with WYSIWYG fields for ACF yet, we're
 Released July 24th, 2017
 
 Bugfixes:
-	* Fixes the social sharing tabs of Yoast SEO Premium being broken when this plugin is active.
+	* Fixes Yoast SEO Premium social sharing tabs not showing any content when this plugin is active.
 
 = 1.2.0 =
 
