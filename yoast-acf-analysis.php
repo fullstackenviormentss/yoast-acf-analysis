@@ -32,7 +32,7 @@ class Yoast_ACF_Analysis {
 	 *
 	 * Add hooks and filters.
 	 */
-	function __construct() {
+	public function __construct() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 		add_filter( 'wpseo_post_content_for_recalculation', array( $this, 'add_recalculation_data_to_post_content' ) );
