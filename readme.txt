@@ -7,6 +7,8 @@ Tested up to: 4.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Version: 1.2.1
+Stable tag: 1.2.1
+Minimum PHP: 5.2.4
 
 Adds the content of all ACF fields to the Yoast SEO content analysis.
 
