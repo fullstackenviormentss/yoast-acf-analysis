@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Yoast\AcfAnalysis\Tests\Configuration;
 
 use Brain\Monkey;
@@ -14,52 +13,52 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 		Monkey\setUp();
 	}
 
-	public function testEmpty(){
+	public function testEmpty() {
 
 		$version = '4.0.0';
 
-		Functions\expect('get_option')
+		Functions\expect( 'get_option' )
 			->once()
-			->with('acf_version')
+			->with( 'acf_version' )
 			->andReturn( $version );
 
-		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
-			new \Yoast_ACF_Analysis_Type_Blacklist_Default(),
-			new \Yoast_ACF_Analysis_Field_Selectors_Default()
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store()
 		);
 
 		$this->assertSame(
 			[
-				'acfVersion'      => $version,
-				'blacklist'       => [],
-				'debug'           => false,
-				'scraper'         => [],
-				'pluginName'      => \Yoast_ACF_Analysis_Configuration::PLUGIN_NAME,
-				'refreshRate'     => 1000,
-				'fieldSelectors'  => []
+				'acfVersion'     => $version,
+				'blacklist'      => [],
+				'debug'          => false,
+				'scraper'        => [],
+				'pluginName'     => \Yoast_ACF_Analysis_Facade::get_plugin_name(),
+				'refreshRate'    => 1000,
+				'fieldSelectors' => []
 			],
 			$configuration->to_array()
 		);
 
 	}
 
-	public function testBlacklistFilter(){
+	public function testBlacklistFilter() {
 
 		$blacklistedType = 'test';
 
-		Functions\expect('get_option')->once()->andReturn();
+		Functions\expect( 'get_option' )->once()->andReturn();
 
-		$blacklist = new \Yoast_ACF_Analysis_Type_Blacklist_Default();
+		$blacklist = new \Yoast_ACF_Analysis_String_Store();
 
-		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
 			$blacklist,
-			new \Yoast_ACF_Analysis_Field_Selectors_Default()
+			new \Yoast_ACF_Analysis_String_Store()
 		);
 
-		$blacklist2 = new \Yoast_ACF_Analysis_Type_Blacklist_Default();
+		$blacklist2 = new \Yoast_ACF_Analysis_String_Store();
 		$blacklist2->add( $blacklistedType );
 
-		Filters\expectApplied( \Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/blacklist' )
+		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist' ) )
 			->once()
 			->with( $blacklist )
 			->andReturn( $blacklist2 );
@@ -68,21 +67,21 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testBlacklistFilterInvalid(){
+	public function testBlacklistFilterInvalid() {
 
 		$blacklistedType = 'test';
 
-		Functions\expect('get_option')->once()->andReturn();
+		Functions\expect( 'get_option' )->once()->andReturn();
 
-		$blacklist = new \Yoast_ACF_Analysis_Type_Blacklist_Default();
+		$blacklist = new \Yoast_ACF_Analysis_String_Store();
 		$blacklist->add( $blacklistedType );
 
-		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
 			$blacklist,
-			new \Yoast_ACF_Analysis_Field_Selectors_Default()
+			new \Yoast_ACF_Analysis_String_Store()
 		);
 
-		Filters\expectApplied( \Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/blacklist' )
+		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist' ) )
 			->once()
 			->with( $blacklist )
 			->andReturn( '' );
@@ -97,21 +96,21 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 	}
 	*/
 
-	public function testRefreshRateFilter(){
+	public function testRefreshRateFilter() {
 
-		Functions\expect('get_option')->once()->andReturn();
+		Functions\expect( 'get_option' )->once()->andReturn();
 
-		Filters\expectApplied( \Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/refresh_rate' )
+		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'refresh_rate' ) )
 			->once()
 			->with( 1000 )
 			->andReturn( 9999 );
 
-		$configuration = new \Yoast_ACF_Analysis_Configuration_Default(
-			new \Yoast_ACF_Analysis_Type_Blacklist_Default(),
-			new \Yoast_ACF_Analysis_Field_Selectors_Default()
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store()
 		);
 
-		$this->assertSame( 9999 , $configuration->to_array()['refreshRate'] );
+		$this->assertSame( 9999, $configuration->to_array()['refreshRate'] );
 
 	}
 
@@ -121,10 +120,8 @@ class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
 	}
 	*/
 
-	protected function tearDown()
-	{
+	protected function tearDown() {
 		Monkey\tearDown();
 		parent::tearDown();
 	}
-
 }
