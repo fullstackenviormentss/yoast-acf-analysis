@@ -45,9 +45,14 @@ function yoast_acf_analysis_load_textdomain() {
 }
 add_action( 'plugins_loaded', 'yoast_acf_analysis_load_textdomain' );
 
+/**
+ * Triggers a message whenever the class is missing.
+ */
 if ( ! class_exists( 'Yoast_ACF_Analysis' ) && is_admin() ) {
+	/* translators: %1$s resolves to Yoast SEO: ACF Analysis */
+	$message = sprintf( __( '%1$s could not be loaded because of missing files.', 'yoast-acf-analysis' ), 'Yoast SEO: ACF Analysis' );
 	add_action(
 		'admin_notices',
-		create_function( '', "echo '<div class=\"error\"><p>" . __( 'Yoast SEO: ACF Analysis could not be loaded because of missing files.', 'yoast-acf-analysis' ) . "</p></div>';" )
+		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )
 	);
 }
