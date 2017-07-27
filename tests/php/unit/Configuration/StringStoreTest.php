@@ -4,12 +4,14 @@
 namespace Yoast\AcfAnalysis\Tests\Configuration;
 
 
-abstract class StringStoreTest extends \PHPUnit_Framework_TestCase {
+class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @return \Yoast_ACF_Analysis_String_Store
 	 */
-	abstract protected function getStore();
+	protected function getStore() {
+		return new \Yoast_ACF_Analysis_String_Store();
+	}
 
 	public function testEmpty(){
 		$store = $this->getStore();

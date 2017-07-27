@@ -6,7 +6,7 @@ use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
 
-class ConfigurationDefaultTest extends \PHPUnit_Framework_TestCase {
+class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		parent::setUp();
