@@ -32,6 +32,8 @@ class Yoast_ACF_Analysis {
 			}
 		}
 
+		$assets = new Yoast_ACF_Analysis_Assets();
+		$assets->init();
 	}
 
 	/**
@@ -58,8 +60,6 @@ class Yoast_ACF_Analysis {
 
 		$this->add_headline_config();
 
-		$frontend = new Yoast_ACF_Analysis_Frontend();
-		$frontend->init();
 	}
 
 	/**

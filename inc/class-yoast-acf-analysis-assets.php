@@ -4,34 +4,28 @@
 /**
  * Class Yoast_ACF_Analysis_Frontend
  */
-class Yoast_ACF_Analysis_Frontend {
+class Yoast_ACF_Analysis_Assets {
 
 	/** @var array Plugin information. */
-	private $plugin_data = null;
+	protected $plugin_data;
 
 	/**
 	 * Initialize.
 	 */
 	public function init() {
-
 		$this->plugin_data = get_plugin_data( dirname( YOAST_ACF_ANALYSIS_FILE ) );
 
-		add_filter( 'admin_enqueue_scripts', array(
-			$this,
-			'enqueue_scripts',
-		) );
-
+		add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
 	/**
 	 * Enqueue JavaScript file to feed data to Yoast Content Analyses.
 	 */
 	public function enqueue_scripts() {
-
 		global $pagenow;
 
 		/* @var $config Yoast_ACF_Analysis_Configuration */
-		$config = Yoast_ACF_Analysis_Registry::instance()->get( 'config' );
+		$config = Yoast_ACF_Analysis_Facade::get_registry()->get( 'config' );
 
 		// Post page enqueue.
 		if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) {
@@ -39,11 +33,7 @@ class Yoast_ACF_Analysis_Frontend {
 			wp_enqueue_script(
 				'yoast-acf-analysis-post',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
-				array(
-					'jquery',
-					'yoast-seo-post-scraper',
-					'underscore',
-				),
+				array( 'jquery', 'yoast-seo-post-scraper', 'underscore' ),
 				$this->plugin_data['Version']
 			);
 
@@ -56,10 +46,7 @@ class Yoast_ACF_Analysis_Frontend {
 			wp_enqueue_script(
 				'yoast-acf-analysis-term',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
-				array(
-					'jquery',
-					'yoast-seo-term-scraper',
-				),
+				array( 'jquery', 'yoast-seo-term-scraper' ),
 				$this->plugin_data['Version']
 			);
 
