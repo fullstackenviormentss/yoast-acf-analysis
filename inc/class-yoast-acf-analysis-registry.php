@@ -13,11 +13,11 @@ class Yoast_ACF_Analysis_Registry {
 	private $storage = array();
 
 	/**
-	 * @param string|int                       $id    Registry index.
-	 * @param Yoast_ACF_Analysis_Configuration $class Registry value.
+	 * @param string|int $id   Registry index.
+	 * @param mixed      $item Item to store in the registry.
 	 */
-	public function add( $id, Yoast_ACF_Analysis_Configuration $class ) {
-		$this->storage[ $id ] = $class;
+	public function add( $id, $item ) {
+		$this->storage[ $id ] = $item;
 	}
 
 	/**
