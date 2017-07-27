@@ -30,13 +30,14 @@ class Yoast_ACF_Analysis_Requirements {
 		 */
 		$can_manage_plugins = current_user_can( 'activate_plugins' );
 
-		$all_are_met = true;
+		$all_are_met = false;
 		foreach ( $this->dependencies as $depencency ) {
 			$is_met = $depencency->is_met();
 			if ( ! $is_met && $can_manage_plugins ) {
 				$depencency->register_notifications();
-				$all_are_met = false;
 			}
+
+			$all_are_met = $is_met && $all_are_met;
 		}
 
 		return $all_are_met;
