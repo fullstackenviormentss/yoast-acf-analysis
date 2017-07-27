@@ -20,12 +20,15 @@ class Yoast_ACF_Analysis {
 	 * Check if all requirements are met and boot plugin if so
 	 */
 	public function admin_init() {
+		$dependencies = new Yoast_ACF_Analysis_Requirements();
+		$dependencies->add_dependency( new Yoast_ACF_Analysis_Dependency_Yoast_SEO() );
+		$dependencies->add_dependency( new Yoast_ACF_Analysis_Dependency_ACF() );
 
-		$dependencies         = new Yoast_ACF_Analysis_Requirements();
-		$dependencies_are_met = $dependencies->check();
+		if ( ! $dependencies->are_met() ) {
+			return;
+		}
 
-		if ( $dependencies_are_met ) {
-			$this->boot();
+		$this->boot();
 
 			if ( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
 				$this->boot_dev();
