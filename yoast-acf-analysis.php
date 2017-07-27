@@ -25,16 +25,11 @@ if ( is_file( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload_52.php' ) )
 
 	$yoast_acf_analysis = new Yoast_ACF_Analysis();
 	$yoast_acf_analysis->init();
-
-} elseif ( ! class_exists( 'Yoast_ACF_Analysis' ) ) {
-
-	if ( is_admin() ) {
-		add_action(
-			'admin_notices',
-			create_function( '', "echo '<div class=\"error\"><p>" . __( 'Missing Autoloader.', 'yoast-acf-analysis' ) . "</p></div>';" )
-		);
-	}
-	return;
 }
 
-
+if ( ! class_exists( 'Yoast_ACF_Analysis' ) && is_admin() ) {
+	add_action(
+		'admin_notices',
+		create_function( '', "echo '<div class=\"error\"><p>" . __( 'Missing Autoloader.', 'yoast-acf-analysis' ) . "</p></div>';" )
+	);
+}
