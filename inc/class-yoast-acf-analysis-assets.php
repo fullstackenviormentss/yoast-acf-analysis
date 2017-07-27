@@ -29,7 +29,6 @@ class Yoast_ACF_Analysis_Assets {
 
 		// Post page enqueue.
 		if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) {
-
 			wp_enqueue_script(
 				'yoast-acf-analysis-post',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
@@ -42,7 +41,6 @@ class Yoast_ACF_Analysis_Assets {
 
 		// Term page enqueue.
 		if ( 'term.php' === $pagenow ) {
-
 			wp_enqueue_script(
 				'yoast-acf-analysis-term',
 				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
@@ -52,7 +50,5 @@ class Yoast_ACF_Analysis_Assets {
 
 			wp_localize_script( 'yoast-acf-analysis-term', 'YoastACFAnalysisConfig', $config->to_array() );
 		}
-
 	}
-
 }

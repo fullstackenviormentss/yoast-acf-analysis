@@ -19,9 +19,9 @@ class Yoast_ACF_Analysis_Requirements {
 	}
 
 	/**
-	 * Add notifications to admin if plugins ACF or WordPress SEO are not present, deactivates plugin if so.
+	 * Checks if all depedencies are met.
 	 *
-	 * @return boolean If all requirements for this plugin are met
+	 * @return bool True if all requirements are met.
 	 */
 	public function are_met() {
 		/*

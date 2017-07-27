@@ -44,7 +44,6 @@ class Yoast_ACF_Analysis {
 	 * Boots the plugin.
 	 */
 	public function boot() {
-
 		$registry = Yoast_ACF_Analysis_Facade::get_registry();
 		if ( null !== $registry->get( 'config' ) ) {
 			return;
@@ -97,7 +96,6 @@ class Yoast_ACF_Analysis {
 	 * @return Yoast_ACF_Analysis_String_Store
 	 */
 	protected function get_field_selectors() {
-
 		$field_selectors = new Yoast_ACF_Analysis_String_Store();
 
 		$default_field_selectors = array(
@@ -169,16 +167,12 @@ class Yoast_ACF_Analysis {
 		}
 
 		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-
 			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );
-
 		}
 
 		return $blacklist;
-
 	}
-
 }

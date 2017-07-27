@@ -10,6 +10,8 @@
  * Version: 2.0.0-dev
  * Author: Thomas Kräftner, Marcus Forsberg & Team Yoast
  * License: GPL v3
+ * Text Domain: yoast-acf-analysis
+ * Domain Path: /languages/
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,6 +32,6 @@ if ( is_file( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload_52.php' ) )
 if ( ! class_exists( 'Yoast_ACF_Analysis' ) && is_admin() ) {
 	add_action(
 		'admin_notices',
-		create_function( '', "echo '<div class=\"error\"><p>" . __( 'Missing Autoloader.', 'yoast-acf-analysis' ) . "</p></div>';" )
+		create_function( '', "echo '<div class=\"error\"><p>" . __( 'Yoast SEO: ACF Analysis could not be loaded because of missing files.', 'yoast-acf-analysis' ) . "</p></div>';" )
 	);
 }
