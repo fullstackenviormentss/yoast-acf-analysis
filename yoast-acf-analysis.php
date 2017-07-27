@@ -29,6 +29,22 @@ if ( is_file( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload_52.php' ) )
 	$yoast_acf_analysis->init();
 }
 
+/**
+ * Loads translations.
+ */
+function yoast_acf_analysis_load_textdomain() {
+	$plugin_path = str_replace( '\\', '/', dirname( YOAST_ACF_ANALYSIS_FILE ) );
+	$mu_path    = str_replace( '\\', '/', WPMU_PLUGIN_DIR );
+
+	if ( 0 === stripos( $plugin_path, $mu_path ) ) {
+		load_muplugin_textdomain( 'yoast-acf-analysis', $plugin_path . '/languages' );
+		return;
+	}
+
+	load_plugin_textdomain( 'yoast-acf-analysis', false, $plugin_path . '/languages' );
+}
+add_action( 'plugins_loaded', 'yoast_acf_analysis_load_textdomain' );
+
 if ( ! class_exists( 'Yoast_ACF_Analysis' ) && is_admin() ) {
 	add_action(
 		'admin_notices',
