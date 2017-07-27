@@ -93,11 +93,13 @@ class Yoast_ACF_Analysis {
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_Field_Selectors_Default
+	 * Retrieves the default field selectors.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store
 	 */
 	protected function get_field_selectors() {
 
-		$field_selectors = new Yoast_ACF_Analysis_Field_Selectors_Default();
+		$field_selectors = new Yoast_ACF_Analysis_String_Store();
 
 		$default_field_selectors = array(
 			// Text.
@@ -130,11 +132,13 @@ class Yoast_ACF_Analysis {
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_Type_Blacklist_Default
+	 * Retrieves the default blacklist.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store
 	 */
 	protected function get_blacklist() {
 
-		$blacklist = new Yoast_ACF_Analysis_Type_Blacklist_Default();
+		$blacklist = new Yoast_ACF_Analysis_String_Store();
 
 		$default_blacklist = array(
 			'number',
