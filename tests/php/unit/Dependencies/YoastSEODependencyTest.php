@@ -2,10 +2,6 @@
 
 namespace Yoast\AcfAnalysis\Tests\Dependencies;
 
-use Brain\Monkey;
-use Brain\Monkey\Functions;
-use Brain\Monkey\Filters;
-
 class YoastSEODependencyTest extends \PHPUnit_Framework_TestCase {
 	protected $preserveGlobalState = false;
 	protected $runTestInSeparateProcess = true;
