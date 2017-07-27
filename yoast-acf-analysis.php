@@ -20,8 +20,7 @@ if ( ! defined( 'YOAST_ACF_ANALYSIS_FILE' ) ) {
 	define( 'YOAST_ACF_ANALYSIS_FILE', __FILE__ );
 }
 
-if ( file_exists( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload_52.php' ) ) {
-
+if ( is_file( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload_52.php' ) ) {
 	require dirname( YOAST_ACF_ANALYSIS_FILE ) . '/vendor/autoload_52.php';
 
 	$yoast_acf_analysis = new Yoast_ACF_Analysis();
