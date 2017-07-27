@@ -11,11 +11,6 @@
         <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
     </rule>
 
-    <!-- The commented out code is kept intentionally -->
-    <rule ref="Squiz.PHP.CommentedOutCode.Found">
-        <exclude-pattern>inc/class-yoast-acf-analysis.php</exclude-pattern>
-    </rule>
-
     <!-- exclude the 'empty' index files from some documentation checks -->
     <rule ref="Squiz.Commenting.FileComment">
         <exclude-pattern>*/index.php</exclude-pattern>
@@ -24,10 +19,5 @@
     <rule ref="Squiz.Commenting">
         <exclude name="Squiz.Commenting.FileComment.Missing" />
     </rule>
-
-    <exclude-pattern>inc/scraper</exclude-pattern>
-    <exclude-pattern>inc/class-yoast-acf-analysis-collector.php</exclude-pattern>
-    <exclude-pattern>inc/class-yoast-acf-analysis-recalculation.php</exclude-pattern>
-    <exclude-pattern>inc/class-yoast-acf-analysis-scraper-store.php</exclude-pattern>
 
 </ruleset>
