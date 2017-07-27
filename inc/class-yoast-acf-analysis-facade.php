@@ -39,6 +39,6 @@ class Yoast_ACF_Analysis_Facade {
 	 */
 	public static function get_filter_name( $filter_name ) {
 		// Example: yoast-acf-analysis/refresh_rate
-		return sprintf( '%1$s/%2$s', self::get_plugin_name(), ltrim( '/', $filter_name ) );
+		return sprintf( '%1$s/%2$s', self::get_plugin_name(), ltrim( $filter_name, '/' ) );
 	}
 }
