@@ -16,6 +16,12 @@ class Yoast_ACF_Analysis_Configuration {
 	 */
 	protected $field_selectors;
 
+	/** @var int Refresh rate to use */
+	protected $refresh_rate = 1000;
+
+	/** @var array Scraper configuration */
+	protected $scraper_config = array();
+
 	/**
 	 * @param Yoast_ACF_Analysis_String_Store  $blacklist       Blacklist Configuration Object.
 	 * @param Yoast_ACF_Analysis_String_Store $field_selectors Field Selectors Configuration Object.
@@ -26,16 +32,20 @@ class Yoast_ACF_Analysis_Configuration {
 	}
 
 	/**
-	 * @return string
+	 * Retrieves the ACF version.
+	 *
+	 * @return string The ACF version.
 	 */
-	public function acf_version() {
+	public function get_acf_version() {
 		return get_option( 'acf_version' );
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_String_Store
+	 * Retrieves the blacklist store.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store The blacklist store.
 	 */
-	public function blacklist() {
+	public function get_blacklist() {
 
 		$blacklist = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist' ),
@@ -58,12 +68,14 @@ class Yoast_ACF_Analysis_Configuration {
 	}
 
 	/**
-	 * @return array
+	 * Retrieves the scraper configuration.
+	 *
+	 * @return array The scraper configuration.
 	 */
-	public function scraper_config() {
+	public function get_scraper_config() {
 		$scraper_config = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
-			array()
+			$this->scraper_config
 		);
 
 		if ( is_array( $scraper_config ) ) {
@@ -74,19 +86,24 @@ class Yoast_ACF_Analysis_Configuration {
 	}
 
 	/**
-	 * @return int
+	 * Retrieves the refresh rate to be used.
+	 *
+	 * @return int The number of miliseconds between scrape runs.
 	 */
-	public function refresh_rate() {
-		return intval(
-			apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'refresh_rate' ), 1000 ),
-			10
-		);
+	public function get_refresh_rate() {
+		$refresh_rate = apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'refresh_rate' ), $this->refresh_rate );
+		$refresh_rate = intval( $refresh_rate, 10 );
+
+		// Make sure the refresh rate is not too low, this will introduce problems in the browser of the user.
+		return max( 200, $refresh_rate );
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_String_Store
+	 * Retrieves the field selectors store.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store Field selectors store.
 	 */
-	public function field_selectors() {
+	public function get_field_selectors() {
 		$field_selectors = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name('field_selectors' ),
 			$this->field_selectors
@@ -104,14 +121,13 @@ class Yoast_ACF_Analysis_Configuration {
 	 */
 	public function to_array() {
 		return array(
-			'acfVersion'     => $this->acf_version(),
-			'blacklist'      => $this->blacklist()->to_array(),
-			'debug'          => $this->is_debug(),
-			'scraper'        => $this->scraper_config(),
 			'pluginName'     => Yoast_ACF_Analysis_Facade::get_plugin_name(),
-			'refreshRate'    => $this->refresh_rate(),
-			'fieldSelectors' => $this->field_selectors()->to_array(),
+			'acfVersion'     => $this->get_acf_version(),
+			'scraper'        => $this->get_scraper_config(),
+			'refreshRate'    => $this->get_refresh_rate(),
+			'blacklist'      => $this->get_blacklist()->to_array(),
+			'fieldSelectors' => $this->get_field_selectors()->to_array(),
+			'debug'          => $this->is_debug(),
 		);
 	}
-
 }
