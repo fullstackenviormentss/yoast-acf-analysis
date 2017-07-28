@@ -54,6 +54,11 @@ class Yoast_ACF_Analysis {
 			$this->get_field_selectors()
 		);
 
+		$custom_configuration = apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'config' ), $configuration );
+		if ( $custom_configuration instanceof Yoast_ACF_Analysis_Configuration ) {
+			$configuration = $custom_configuration;
+		}
+
 		$registry->add( 'config', $configuration );
 	}
 
