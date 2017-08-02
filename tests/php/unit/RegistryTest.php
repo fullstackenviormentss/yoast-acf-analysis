@@ -7,12 +7,15 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSingleton(){
 
-		$first = \Yoast_ACF_Analysis_Registry::instance();
-		$second = \Yoast_ACF_Analysis_Registry::instance();
+		$first = \Yoast_ACF_Analysis_Facade::get_registry();
+		$second = \Yoast_ACF_Analysis_Facade::get_registry();
 
 		$this->assertSame( $first, $second );
 
-		$first->add( 'id', 'content');
+		$first->add( 'id', new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store()
+		) );
 
 		$this->assertSame( $first, $second );
 
@@ -23,11 +26,13 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$id = 'add';
 		$content = 'something';
 
-		$this->assertNull( \Yoast_ACF_Analysis_Registry::instance()->get( $id ) );
+		$registry = new \Yoast_ACF_Analysis_Registry();
 
-		\Yoast_ACF_Analysis_Registry::instance()->add( $id, $content);
+		$this->assertNull( $registry->get( $id ) );
 
-		$this->assertSame( $content, \Yoast_ACF_Analysis_Registry::instance()->get( $id ) );
+		$registry->add( $id, $content );
+
+		$this->assertSame( $content, $registry->get( $id ) );
 
 	}
 

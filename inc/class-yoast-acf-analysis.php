@@ -3,7 +3,7 @@
 /**
  * Class Yoast_ACF_Analysis
  *
- * Adds ACF data to the content analyses of WordPress SEO
+ * Adds ACF data to the content analyses of WordPress SEO.
  */
 class Yoast_ACF_Analysis {
 
@@ -12,7 +12,7 @@ class Yoast_ACF_Analysis {
 	 *
 	 * Add hooks and filters.
 	 */
-	function init() {
+	public function init() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 	}
 
@@ -20,84 +20,88 @@ class Yoast_ACF_Analysis {
 	 * Check if all requirements are met and boot plugin if so
 	 */
 	public function admin_init() {
+		$dependencies = new Yoast_ACF_Analysis_Requirements();
+		$dependencies->add_dependency( new Yoast_ACF_Analysis_Dependency_Yoast_SEO() );
+		$dependencies->add_dependency( new Yoast_ACF_Analysis_Dependency_ACF() );
 
-		$dependencies         = new Yoast_ACF_Analysis_Requirements();
-		$dependencies_are_met = $dependencies->check();
-
-		if ( $dependencies_are_met ) {
-			$this->boot();
-
-			if ( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
-				$this->boot_dev();
-			}
+		if ( ! $dependencies->are_met() ) {
+			return;
 		}
 
+		$this->boot();
+
+		if ( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
+			$this->boot_dev();
+		}
+
+		$this->register_config_filters();
+
+		$assets = new Yoast_ACF_Analysis_Assets();
+		$assets->init();
 	}
 
 	/**
-	 * Boot the plugin
+	 * Boots the plugin.
 	 */
 	public function boot() {
-
-		if ( is_null( Yoast_ACF_Analysis_Registry::instance()->get( 'config' ) ) ) {
-
-			$default_configuration = new Yoast_ACF_Analysis_Configuration_Default( $this->get_blacklist(), $this->get_field_selectors() );
-
-			$configuration = apply_filters(
-				Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/config',
-				$default_configuration
-			);
-
-			if ( ! ($configuration instanceof Yoast_ACF_Analysis_Configuration) ) {
-				$configuration = $default_configuration;
-			}
-
-			Yoast_ACF_Analysis_Registry::instance()->add( 'config', $configuration );
-
+		$registry = Yoast_ACF_Analysis_Facade::get_registry();
+		if ( null !== $registry->get( 'config' ) ) {
+			return;
 		}
 
-		$this->add_headline_config();
+		$configuration = new Yoast_ACF_Analysis_Configuration(
+			$this->get_blacklist(),
+			$this->get_field_selectors()
+		);
 
-		$frontend = new Yoast_ACF_Analysis_Frontend();
-		$frontend->init();
+		$custom_configuration = apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'config' ), $configuration );
+		if ( $custom_configuration instanceof Yoast_ACF_Analysis_Configuration ) {
+			$configuration = $custom_configuration;
+		}
+
+		$registry->add( 'config', $configuration );
 	}
 
 	/**
-	 * Boot the plugin for dev environment
+	 * Boots the plugin for dev environment.
 	 */
 	public function boot_dev() {
-
-		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf4.php' );
-		} else {
-			require_once( dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf5.php' );
-		}
-
+		$version = ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) ? '4' : '5';
+		require_once dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf' . $version . '.php';
 	}
 
 	/**
-	 * Filter the Scraper Configuration to add the headlines configuration for the text scraper
+	 * Filters the Scraper Configuration to add the headlines configuration for the text scraper.
 	 */
-	protected function add_headline_config() {
-
-		add_filter( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/scraper_config', function( $scraper_config ) {
-
-			$scraper_config['text'] = array(
-				'headlines' => apply_filters( Yoast_ACF_Analysis_Configuration::PLUGIN_NAME . '/headlines', array() ),
-			);
-
-			return $scraper_config;
-
-		} );
-
+	protected function register_config_filters() {
+		add_filter(
+			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
+			array( $this, 'filter_scraper_config')
+		);
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_Field_Selectors_Default
+	 * Enhances the scraper config with headlines configuration.
+	 *
+	 * @param array $scraper_config Scraper configuration.
+	 *
+	 * @return array Enhanched scraper config.
+	 */
+	public function filter_scraper_config( $scraper_config ) {
+		$scraper_config['text'] = array(
+			'headlines' => apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'headlines' ), array() ),
+		);
+
+		return $scraper_config;
+	}
+
+	/**
+	 * Retrieves the default field selectors.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store
 	 */
 	protected function get_field_selectors() {
-
-		$field_selectors = new Yoast_ACF_Analysis_Field_Selectors_Default();
+		$field_selectors = new Yoast_ACF_Analysis_String_Store();
 
 		$default_field_selectors = array(
 			// Text.
@@ -130,11 +134,13 @@ class Yoast_ACF_Analysis {
 	}
 
 	/**
-	 * @return Yoast_ACF_Analysis_Type_Blacklist_Default
+	 * Retrieves the default blacklist.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store
 	 */
 	protected function get_blacklist() {
 
-		$blacklist = new Yoast_ACF_Analysis_Type_Blacklist_Default();
+		$blacklist = new Yoast_ACF_Analysis_String_Store();
 
 		$default_blacklist = array(
 			'number',
@@ -166,16 +172,12 @@ class Yoast_ACF_Analysis {
 		}
 
 		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-
 			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );
-
 		}
 
 		return $blacklist;
-
 	}
-
 }

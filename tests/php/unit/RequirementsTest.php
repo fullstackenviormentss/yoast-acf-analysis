@@ -7,184 +7,82 @@ use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
 
+
+class PassingDependency implements \Yoast_ACF_Analysis_Dependency {
+	/**
+	 * Checks if this dependency is met.
+	 *
+	 * @return bool True when met, False when not met.
+	 */
+	public function is_met() {
+		return true;
+	}
+
+	/**
+	 * Registers the notifications to communicate the depedency is not met.
+	 *
+	 * @return void
+	 */
+	public function register_notifications() {
+	}
+}
+
+class FailingDependency implements \Yoast_ACF_Analysis_Dependency {
+	/**
+	 * Checks if this dependency is met.
+	 *
+	 * @return bool True when met, False when not met.
+	 */
+	public function is_met() {
+		return false;
+	}
+
+	/**
+	 * Registers the notifications to communicate the depedency is not met.
+	 *
+	 * @return void
+	 */
+	public function register_notifications() {
+	}
+}
+
 class RequirementsTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		parent::setUp();
 		Monkey\setUp();
+
+		Functions\expect( 'current_user_can' )->andReturn( true );
 	}
 
-	public function testNoRights(){
-
+	public function testNoDependencies() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
-
-		Functions\expect( 'current_user_can' )->once()->andReturn( false );
-
-		$this->assertNull( $testee->check() );
-
+		$this->assertTrue( $testee->are_met() );
 	}
 
-	/**
-	 * Run in separate process because of constant
-	 *
-	 * @runInSeparateProcess
-	 */
-	public function testAcfNotActive(){
-
+	public function testPassingDependency() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
+		$testee->add_dependency( new PassingDependency() );
 
-		Functions\expect( 'current_user_can' )->once()->andReturn( true );
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('advanced-custom-fields/acf.php')
-			->andReturn(false);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('advanced-custom-fields-pro/acf.php')
-			->andReturn(false);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('wordpress-seo/wp-seo.php')
-			->andReturn(true);
-
-		Functions\when('plugin_basename')->justReturn();
-		Functions\when('deactivate_plugins')->justReturn();
-
-		define( 'YOAST_ACF_ANALYSIS_FILE', '' );
-
-		$this->assertFalse( $testee->check() );
-
+		$this->assertTrue( $testee->are_met() );
 	}
 
-	/**
-	 * Run in separate process because of constant
-	 *
-	 * @runInSeparateProcess
-	 */
-	public function testYoastNotActive(){
-
+	public function testFailingDependency() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
+		$testee->add_dependency( new FailingDependency() );
 
-		Functions\expect( 'current_user_can' )->once()->andReturn( true );
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('advanced-custom-fields/acf.php')
-			->andReturn(true);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('wordpress-seo/wp-seo.php')
-			->andReturn(false);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('wordpress-seo-premium/wp-seo-premium.php')
-			->andReturn(false);
-
-		Functions\when('plugin_basename')->justReturn();
-		Functions\when('deactivate_plugins')->justReturn();
-
-		define( 'YOAST_ACF_ANALYSIS_FILE', '' );
-
-		$this->assertFalse( $testee->check() );
-
+		$this->assertFalse( $testee->are_met() );
 	}
 
-	/**
-	 * Run in separate process because of constant
-	 *
-	 * @runInSeparateProcess
-	 */
-	public function testAcfAndYoastNotActive(){
-
+	public function testMixedDependencies() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
+		$testee->add_dependency( new FailingDependency() );
+		$testee->add_dependency( new PassingDependency() );
 
-		Functions\expect( 'current_user_can' )->once()->andReturn( true );
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('advanced-custom-fields/acf.php')
-			->andReturn(false);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('advanced-custom-fields-pro/acf.php')
-			->andReturn(false);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('wordpress-seo/wp-seo.php')
-			->andReturn(false);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('wordpress-seo-premium/wp-seo-premium.php')
-			->andReturn(false);
-
-		Functions\when('plugin_basename')->justReturn();
-		Functions\when('deactivate_plugins')->justReturn();
-
-		define( 'YOAST_ACF_ANALYSIS_FILE', '' );
-
-		$this->assertFalse( $testee->check() );
-
+		$this->assertFalse( $testee->are_met() );
 	}
 
-	/**
-	 * Run in separate process because of constant
-	 *
-	 * @runInSeparateProcess
-	 */
-	public function testAcfAndYoastActive(){
-
-		$testee = new \Yoast_ACF_Analysis_Requirements();
-
-		Functions\expect( 'current_user_can' )->once()->andReturn( true );
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('advanced-custom-fields/acf.php')
-			->andReturn(true);
-
-		Functions\expect('is_plugin_active')
-			->once()
-			->with('wordpress-seo/wp-seo.php')
-			->andReturn(true);
-
-		$this->assertTrue( $testee->check() );
-
-	}
-
-	public function testAcfRequirementsMessageIsErrorMessage(){
-
-		$testee = new \Yoast_ACF_Analysis_Requirements();
-
-		Functions\when('__')->returnArg();
-		Functions\when('esc_html')->returnArg();
-
-		$testee->acf_requirements_not_met();
-
-		$this->expectOutputRegex( "/<div class=\"error\"><p>.*<\/p><\/div>/" );
-	}
-
-	public function testYoastSeoRequirementsMessageisErrorMessageAndContainsVersion(){
-
-		$testee = new \Yoast_ACF_Analysis_Requirements();
-
-		Functions\when('__')->returnArg();
-		Functions\when('esc_html')->returnArg();
-
-		$testee->yoast_seo_requirements_not_met();
-
-		$this->expectOutputRegex( "/<div class=\"error\"><p>.*" . preg_quote(\Yoast_ACF_Analysis_Requirements::MIN_WPSEO_VERSION)  .  ".*<\/p><\/div>/" );
-	}
-
-	protected function tearDown()
-	{
+	protected function tearDown() {
 		Monkey\tearDown();
 		parent::tearDown();
 	}

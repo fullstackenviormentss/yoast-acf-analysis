@@ -14,8 +14,8 @@
     </testsuites>
 
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
+        <whitelist>
+            <directory suffix=".php">../../inc/</directory>
         </whitelist>
     </filter>
 </phpunit>

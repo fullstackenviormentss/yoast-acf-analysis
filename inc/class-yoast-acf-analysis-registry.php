@@ -6,13 +6,6 @@
 class Yoast_ACF_Analysis_Registry {
 
 	/**
-	 * Singleton Instance
-	 *
-	 * @var Yoast_ACF_Analysis_Registry
-	 */
-	private static $instance;
-
-	/**
 	 * Registry storage array
 	 *
 	 * @var array
@@ -20,29 +13,17 @@ class Yoast_ACF_Analysis_Registry {
 	private $storage = array();
 
 	/**
-	 * @return Yoast_ACF_Analysis_Registry
+	 * @param string|int $id   Registry index.
+	 * @param mixed      $item Item to store in the registry.
 	 */
-	public static function instance() {
-
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self;
-		}
-
-		return self::$instance;
-	}
-
-	/**
-	 * @param string|int $id    Registry index.
-	 * @param mixed      $class Registry value.
-	 */
-	public function add( $id, $class ) {
-		$this->storage[ $id ] = $class;
+	public function add( $id, $item ) {
+		$this->storage[ $id ] = $item;
 	}
 
 	/**
 	 * @param string|int $id Registry index.
 	 *
-	 * @return null
+	 * @return object|null Object if a class is registered for the ID, otherwise null.
 	 */
 	public function get( $id ) {
 		return array_key_exists( $id, $this->storage ) ? $this->storage[ $id ] : null;

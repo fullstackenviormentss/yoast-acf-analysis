@@ -1,0 +1,64 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Yoast SEO: ACF Analysis\n"
+"POT-Creation-Date: 2017-07-27 13:42+0200\n"
+"PO-Revision-Date: 2017-07-27 11:34+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: yoast-acf-analysis.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#. translators: %1$s resolves to Yoast SEO: ACF Analysis, %2$s resolves to Advanced Custom Fields
+#: inc/dependencies/class-yoast-acf-analysis-dependency-afc.php:31
+#, php-format
+msgid "%1$s requires %2$s (free or pro) to be installed and activated."
+msgstr ""
+
+#. translators: %1$s resolves to Yoast SEO: ACF Analysis, %2$s resolves to Yoast SEO for WordPress, %3$s resolves to the minimal plugin version
+#: inc/dependencies/class-yoast-acf-analysis-dependency-yoast-seo.php:44
+#, php-format
+msgid "%1$s requires %2$s %3$s (or higher) to be installed and activated."
+msgstr ""
+
+#. translators: %1$s resolves to Yoast SEO: ACF Analysis, %2$s resolves to Yoast SEO for WordPress, %3$s resolves to the minimal plugin version
+#: inc/dependencies/class-yoast-acf-analysis-dependency-yoast-seo.php:59
+#, php-format
+msgid "%1$s requires %2$s %3$s or higher, please update the plugin."
+msgstr ""
+
+#. translators: %1$s resolves to Yoast SEO: ACF Analysis
+#: yoast-acf-analysis.php:53
+#, php-format
+msgid "%1$s could not be loaded because of missing files."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Yoast SEO: ACF Analysis"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://wordpress.org/plugins/yoast-seo-acf-analysis/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"WordPress plugin that adds the content of all ACF fields to the Yoast SEO "
+"score analysis."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Thomas Kräftner, Marcus Forsberg & Team Yoast"
+msgstr ""
