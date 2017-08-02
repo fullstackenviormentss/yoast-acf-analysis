@@ -113,7 +113,7 @@ class Yoast_ACF_Analysis {
 		$message = $this->get_general_deprecation_message();
 		$message .= sprintf(
 		/* translators: %1$s resolves to an openen link tag to search the plugin repository, %2$s resolves to the closing link tag, %3$s resolves to ACF Content Analysis for Yoast SEO, %4$s resolves to Angry Creative */
-			__( 'Please install & activate %1$s%3$s%2$s by %4$s to recieve an even better integration.', 'yoast-acf-analysis' ),
+			__( 'Please install & activate %1$s%3$s%2$s to instantly get improved functionality.', 'yoast-acf-analysis' ),
 			'<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&type=term&s=acf-content-analysis-for-yoast-seo&plugin-search-input=Search+Plugins' ) ) . '">',
 			'</a>',
 			'ACF Content Analysis for Yoast SEO',
@@ -331,8 +331,8 @@ class Yoast_ACF_Analysis {
 	 */
 	private function get_general_deprecation_message() {
 		return sprintf(
-			__( 'In a joined effort to make software as good as possible, %1$s, %2$s and %3$s have combined forces to make one %4$s %5$s integration plugin to rule them all.
-This means that the plugin you are currently using is not going to be maintained anymore.
+			__( 'In an effort to make the best software possible, %1$s, %2$s and %3$s have joined forces to make one %4$s %5$s integration plugin to rule them all.
+This means that the plugin you are currently using will <strong>not be maintained</strong> anymore.
 
 ', 'yoast-acf-analysis' ),
 			'Team Yoast',
