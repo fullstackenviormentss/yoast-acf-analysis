@@ -17,7 +17,7 @@ Collect.prototype.getFieldData = function () {
         field_data = scraper_store.getScraper(type).scrape(field_data);
     });
 
-    return field_data
+    return field_data;
 };
 
 Collect.prototype.append = function(data){

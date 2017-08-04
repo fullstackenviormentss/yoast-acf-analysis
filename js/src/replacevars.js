@@ -21,7 +21,9 @@ var createReplaceVars = function (collect) {
 
         replaceVars[field.name] = new ReplaceVar( '%%cf_'+field.name+'%%', content, { source: 'direct' } );
         YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[field.name] );
-        console.log("Created ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+        if (config.debug) {
+            console.log("Created ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+        }
     });
 
     return replaceVars;
@@ -41,7 +43,9 @@ var updateReplaceVars = function (collect, replace_vars) {
         var content = (field.type === 'wysiwyg') ? jQuery(jQuery.parseHTML(field.content)).text() : field.content;
 
         replaceVars[field.name].replacement = content;
-        console.log("Updated ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+        if (config.debug) {
+            console.log("Updated ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+        }
     });
 };
 
