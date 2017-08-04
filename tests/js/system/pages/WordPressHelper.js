@@ -25,7 +25,7 @@ module.exports = {
                 this.waitForElementVisible('@submitButton', 5000);
                 //this.api.saveScreenshot('screenshots/login-' + (new Date()).getTime() + '.png');
                 this.click('@submitButton');
-                return this.waitForElementVisible('#adminmenu #menu-dashboard.current', 15000);
+                return this.waitForElementVisible('#adminmenu #menu-dashboard .current', 15000);
             },
             newPost: function(){
                 this.api.url( this.api.launchUrl + '/wp/wp-admin/post-new.php' );

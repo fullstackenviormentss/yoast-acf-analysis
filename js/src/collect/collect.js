@@ -13,6 +13,11 @@ Collect.prototype.getFieldData = function () {
 
     var used_types = _.uniq(_.pluck(field_data, 'type'));
 
+    if(config.debug) {
+        console.log('Used types:')
+        console.log(used_types);
+    }
+
     _.each(used_types, function(type){
         field_data = scraper_store.getScraper(type).scrape(field_data);
     });
@@ -37,16 +42,11 @@ Collect.prototype.append = function(data){
     });
 
     if(config.debug){
-
-        console.log('Used types:')
-        console.log(used_types);
-
         console.log('Field data:')
         console.table(field_data);
 
         console.log('Data:')
         console.log(data);
-
     }
 
     return data;

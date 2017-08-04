@@ -4,6 +4,8 @@ var config = require( "./config/config.js" );
 
 var ReplaceVar = YoastReplaceVarPlugin.ReplaceVar;
 
+var supportedTypes = ['email', 'text', 'textarea', 'url', 'wysiwyg'];
+
 var createReplaceVars = function (collect) {
     if (ReplaceVar === undefined) {
         if (config.debug) {
@@ -12,7 +14,7 @@ var createReplaceVars = function (collect) {
         return;
     }
 
-    fieldData   = collect.getFieldData();
+    fieldData   = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
     replaceVars = {}
 
     _.each(fieldData, function(field) {
@@ -37,7 +39,7 @@ var updateReplaceVars = function (collect, replace_vars) {
         return;
     }
 
-    fieldData   = collect.getFieldData();
+    fieldData = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
     _.each(fieldData, function(field) {
         // Remove HTML tags using jQuery in case of a wysiwyg field.
         var content = (field.type === 'wysiwyg') ? jQuery(jQuery.parseHTML(field.content)).text() : field.content;

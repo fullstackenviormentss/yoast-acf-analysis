@@ -37,6 +37,16 @@ App.prototype.bindListeners = function(){
             fields.on('change', _self.maybeRefresh.bind(_self) );
             fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
 
+            // Do not ignore Wysiwyg fields for the purpose of Replace Vars.
+            jQuery('textarea[id^=wysiwyg-acf]').on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+            if (YoastSEO.wp._tinyMCEHelper) {
+                jQuery('textarea[id^=wysiwyg-acf]').each( function () {
+                    YoastSEO.wp._tinyMCEHelper.addEventHandler(this.id, [ 'input', 'change', 'cut', 'paste' ],
+                        replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+                });
+            }
+
+
             //Also refresh on media close as attachment data might have changed
             wp.media.frame.on('close', _self.maybeRefresh.bind(_self) );
         });
