@@ -3,6 +3,7 @@
 var config = require( "./config/config.js" );
 var helper = require( "./helper.js" );
 var collect = require( "./collect/collect.js" );
+var replaceVars = require( "./replacevars.js" );
 
 var analysisTimeout = 0;
 
@@ -18,7 +19,9 @@ var App = function(){
 App.prototype.bindListeners = function(){
 
     if(helper.acf_version >= 5){
+        this.replaceVars = replaceVars.createReplaceVars(collect);
         acf.add_action('change remove append sortstop', this.maybeRefresh);
+        acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(this, collect, this.replaceVars));
     }else{
         var fieldSelectors = config.fieldSelectors.slice(0);
 
@@ -28,10 +31,12 @@ App.prototype.bindListeners = function(){
         var _self = this;
 
         jQuery(document).on('acf/setup_fields', function(){
+            this.replaceVars = replaceVars.createReplaceVars(collect);
             var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
             //This would cause faster updates while typing
             //fields.on('change input', _self.maybeRefresh.bind(_self) );
             fields.on('change', _self.maybeRefresh.bind(_self) );
+            fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
 
             //Also refresh on media close as attachment data might have changed
             wp.media.frame.on('close', _self.maybeRefresh.bind(_self) );
@@ -58,7 +63,7 @@ App.prototype.maybeRefresh = function(){
 };
 
 module.exports = App;
-},{"./collect/collect.js":6,"./config/config.js":7,"./helper.js":8}],2:[function(require,module,exports){
+},{"./collect/collect.js":6,"./config/config.js":7,"./helper.js":8,"./replacevars.js":10}],2:[function(require,module,exports){
 /* global _ */
 var cache = require( "./cache.js" );
 
@@ -210,12 +215,7 @@ var Collect = function(){
 
 };
 
-Collect.prototype.append = function(data){
-
-    if(config.debug){
-        console.log('Recalculate...' + new Date());
-    }
-
+Collect.prototype.getFieldData = function () {
     var field_data = this.filterBroken(this.filterBlacklist(this.getData()));
 
     var used_types = _.uniq(_.pluck(field_data, 'type'));
@@ -223,6 +223,17 @@ Collect.prototype.append = function(data){
     _.each(used_types, function(type){
         field_data = scraper_store.getScraper(type).scrape(field_data);
     });
+
+    return field_data
+};
+
+Collect.prototype.append = function(data){
+
+    if(config.debug){
+        console.log('Recalculate...' + new Date());
+    }
+
+    var field_data = this.getFieldData();
 
     _.each(field_data, function(field){
 
@@ -272,7 +283,7 @@ Collect.prototype.filterBroken = function(field_data){
 };
 
 module.exports = new Collect();
-},{"./../config/config.js":7,"./../helper.js":8,"./../scraper-store.js":10,"./collect-v4.js":4,"./collect-v5.js":5}],7:[function(require,module,exports){
+},{"./../config/config.js":7,"./../helper.js":8,"./../scraper-store.js":11,"./collect-v4.js":4,"./collect-v5.js":5}],7:[function(require,module,exports){
 module.exports = YoastACFAnalysisConfig;
 },{}],8:[function(require,module,exports){
 var config = require( "./config/config.js" );
@@ -299,6 +310,58 @@ var App = require( "./app.js" );
 
 }(jQuery));
 },{"./app.js":1}],10:[function(require,module,exports){
+/* global _, jQuery, YoastSEO, YoastReplaceVarPlugin */
+
+var config = require( "./config/config.js" );
+
+var ReplaceVar = YoastReplaceVarPlugin.ReplaceVar;
+
+var createReplaceVars = function (collect) {
+    if (ReplaceVar === undefined) {
+        if (config.debug) {
+            console.log('Replacing ACF variables in the Snippet Window requires the latest version of wordpress-seo.');
+        }
+        return;
+    }
+
+    fieldData   = collect.getFieldData();
+    replaceVars = {}
+
+    _.each(fieldData, function(field) {
+        // Remove HTML tags using jQuery in case of a wysiwyg field.
+        var content = (field.type === 'wysiwyg') ? jQuery( jQuery.parseHTML( field.content) ).text() : field.content;
+
+        replaceVars[field.name] = new ReplaceVar( '%%cf_'+field.name+'%%', content, { source: 'direct' } );
+        YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[field.name] );
+        console.log("Created ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+    });
+
+    return replaceVars;
+};
+
+var updateReplaceVars = function (collect, replace_vars) {
+    if (ReplaceVar === undefined) {
+        if (config.debug) {
+            console.log('Replacing ACF variables in the Snippet Window requires the latest version of wordpress-seo.');
+        }
+        return;
+    }
+
+    fieldData   = collect.getFieldData();
+    _.each(fieldData, function(field) {
+        // Remove HTML tags using jQuery in case of a wysiwyg field.
+        var content = (field.type === 'wysiwyg') ? jQuery(jQuery.parseHTML(field.content)).text() : field.content;
+
+        replaceVars[field.name].replacement = content;
+        console.log("Updated ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+    });
+};
+
+module.exports = {
+    createReplaceVars: createReplaceVars,
+    updateReplaceVars: updateReplaceVars
+};
+},{"./config/config.js":7}],11:[function(require,module,exports){
 /* global _ */
 var config = require( "./config/config.js" );
 
@@ -390,7 +453,7 @@ module.exports = {
     getScraper: getScraper
 
 };
-},{"./config/config.js":7,"./scraper/scraper.email.js":11,"./scraper/scraper.gallery.js":12,"./scraper/scraper.image.js":13,"./scraper/scraper.taxonomy.js":14,"./scraper/scraper.text.js":15,"./scraper/scraper.textarea.js":16,"./scraper/scraper.url.js":17,"./scraper/scraper.wysiwyg.js":18}],11:[function(require,module,exports){
+},{"./config/config.js":7,"./scraper/scraper.email.js":12,"./scraper/scraper.gallery.js":13,"./scraper/scraper.image.js":14,"./scraper/scraper.taxonomy.js":15,"./scraper/scraper.text.js":16,"./scraper/scraper.textarea.js":17,"./scraper/scraper.url.js":18,"./scraper/scraper.wysiwyg.js":19}],12:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -415,7 +478,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":10}],12:[function(require,module,exports){
+},{"./../scraper-store.js":11}],13:[function(require,module,exports){
 var attachmentCache = require( "./../cache/cache.attachments.js" );
 var scrapers = require( "./../scraper-store.js" );
 
@@ -464,7 +527,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../cache/cache.attachments.js":2,"./../scraper-store.js":10}],13:[function(require,module,exports){
+},{"./../cache/cache.attachments.js":2,"./../scraper-store.js":11}],14:[function(require,module,exports){
 var attachmentCache = require( "./../cache/cache.attachments.js" );
 var scrapers = require( "./../scraper-store.js" );
 
@@ -507,7 +570,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../cache/cache.attachments.js":2,"./../scraper-store.js":10}],14:[function(require,module,exports){
+},{"./../cache/cache.attachments.js":2,"./../scraper-store.js":11}],15:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -571,7 +634,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":10}],15:[function(require,module,exports){
+},{"./../scraper-store.js":11}],16:[function(require,module,exports){
 var config = require( "./../config/config.js" );
 var scrapers = require( "./../scraper-store.js" );
 
@@ -631,7 +694,7 @@ Scraper.prototype.isHeadline = function(field){
 };
 
 module.exports = Scraper;
-},{"./../config/config.js":7,"./../scraper-store.js":10}],16:[function(require,module,exports){
+},{"./../config/config.js":7,"./../scraper-store.js":11}],17:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -656,7 +719,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":10}],17:[function(require,module,exports){
+},{"./../scraper-store.js":11}],18:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -681,7 +744,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":10}],18:[function(require,module,exports){
+},{"./../scraper-store.js":11}],19:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -744,4 +807,4 @@ var isTinyMCEAvailable = function(editorID) {
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":10}]},{},[9]);
+},{"./../scraper-store.js":11}]},{},[9]);
