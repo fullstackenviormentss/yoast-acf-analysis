@@ -9,7 +9,7 @@ var Collect = function(){
 };
 
 Collect.prototype.getFieldData = function () {
-    var field_data = this.filterExcludedFields(this.filterBroken(this.filterBlacklist(this.getData())));
+    var field_data = this.filterBroken(this.filterBlacklistName(this.filterBlacklistType(this.getData())));
 
     var used_types = _.uniq(_.pluck(field_data, 'type'));
 
@@ -65,15 +65,15 @@ Collect.prototype.getData = function(){
 
 };
 
-Collect.prototype.filterBlacklist = function(field_data){
+Collect.prototype.filterBlacklistType = function(field_data){
     return _.filter(field_data, function(field){
-        return !_.contains(config.blacklist, field.type);
+        return !_.contains(config.blacklistType, field.type);
     });
 };
 
-Collect.prototype.filterExcludedFields = function(field_data){
+Collect.prototype.filterBlacklistName = function(field_data){
     return _.filter(field_data, function(field){
-        return !_.contains(config.excludedFields, field.name);
+        return !_.contains(config.blacklistName, field.name);
     });
 };
 

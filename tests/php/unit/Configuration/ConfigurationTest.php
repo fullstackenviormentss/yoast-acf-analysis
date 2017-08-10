@@ -33,7 +33,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 				'acfVersion'     => $version,
 				'scraper'        => [],
 				'refreshRate'    => 1000,
-				'blacklist'      => [],
+				'blacklistType'  => [],
+				'blacklistName'  => [],
 				'fieldSelectors' => [],
 				'debug'          => false,
 			],
@@ -42,27 +43,27 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testBlacklistFilter() {
+	public function testBlacklistTypeFilter() {
 
-		$blacklist = new \Yoast_ACF_Analysis_String_Store();
+		$blacklist_type = new \Yoast_ACF_Analysis_String_Store();
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration(
-			$blacklist,
+			$blacklist_type,
 			new \Yoast_ACF_Analysis_String_Store()
 		);
 
-		$blacklist2 = new \Yoast_ACF_Analysis_String_Store();
+		$blacklist_type2 = new \Yoast_ACF_Analysis_String_Store();
 
-		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist' ) )
+		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_type' ) )
 			->once()
-			->with( $blacklist )
-			->andReturn( $blacklist2 );
+			->with( $blacklist_type )
+			->andReturn( $blacklist_type2 );
 
-		$this->assertSame( $blacklist2, $configuration->get_blacklist() );
+		$this->assertSame( $blacklist_type2, $configuration->get_blacklist_type() );
 
 	}
 
-	public function testBlacklistFilterInvalid() {
+	public function testBlacklistTypeFilterInvalid() {
 
 		$store = new \Yoast_ACF_Analysis_String_Store();
 
@@ -71,13 +72,52 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 			new \Yoast_ACF_Analysis_String_Store()
 		);
 
-		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist' ) )
+		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_type' ) )
 			->once()
 			->with( $store )
 			->andReturn( '' );
 
-		$this->assertSame( $store, $configuration->get_blacklist() );
+		$this->assertSame( $store, $configuration->get_blacklist_type() );
 	}
+
+	public function testBlacklistNameFilter() {
+
+		$blacklist_name = new \Yoast_ACF_Analysis_String_Store();
+
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			$blacklist_name,
+			new \Yoast_ACF_Analysis_String_Store()
+		);
+
+		$blacklist_name2 = new \Yoast_ACF_Analysis_String_Store();
+
+		$configuration->get_blacklist_name();
+
+		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_name' ) )
+			->once()
+			->with( $blacklist_name )
+			->andReturn( $blacklist_name2 );
+
+		$this->assertSame( $blacklist_name2, $configuration->get_blacklist_name() );
+
+	}
+
+//	public function testBlacklistNameFilterInvalid() {
+//
+//		$store = new \Yoast_ACF_Analysis_String_Store();
+//
+//		$configuration = new \Yoast_ACF_Analysis_Configuration(
+//			$store,
+//			new \Yoast_ACF_Analysis_String_Store()
+//		);
+//
+//		Filters\expectApplied( \Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_name' ) )
+//			->once()
+//			->with( $store )
+//			->andReturn( '' );
+//
+//		$this->assertSame( $store, $configuration->get_blacklist_name() );
+//	}
 
 	public function testScraperConfigFilter(){
 		$config = array();
