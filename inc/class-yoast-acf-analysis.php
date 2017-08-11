@@ -45,7 +45,10 @@ class Yoast_ACF_Analysis {
 	 */
 	public function boot() {
 		$registry = Yoast_ACF_Analysis_Facade::get_registry();
-		if ( null !== $registry->get( 'config' ) ) {
+
+		$configuration = $registry->get( 'config' );
+
+		if ( null !== $configuration && $configuration instanceof Yoast_ACF_Analysis_Configuration ) {
 			return;
 		}
 
