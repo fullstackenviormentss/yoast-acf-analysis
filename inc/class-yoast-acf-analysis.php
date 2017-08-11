@@ -57,6 +57,18 @@ class Yoast_ACF_Analysis {
 			$this->get_field_selectors()
 		);
 
+		/**
+		 * Filters the plugin configuration instance.
+		 *
+		 * You can replace the whole plugin configuration with a custom instance.
+		 * Only use this as a last resort as there are multiple more specific filters in the default configuration.
+		 *
+		 * @see Yoast_ACF_Analysis_Configuration
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param Yoast_ACF_Analysis_Configuration $configuration Plugin configuration instance
+		 */
 		$custom_configuration = apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'config' ), $configuration );
 		if ( $custom_configuration instanceof Yoast_ACF_Analysis_Configuration ) {
 			$configuration = $custom_configuration;
@@ -92,6 +104,25 @@ class Yoast_ACF_Analysis {
 	 */
 	public function filter_scraper_config( $scraper_config ) {
 		$scraper_config['text'] = array(
+			/**
+			 * Filters which ACF text fields are to be treated as a headline by the text scraper.
+			 *
+			 * The array has the ACF field key as the array key and the value should be an integer from 1 to 6
+			 * that corresponds to the 6 possible HTML tags <h1> to <h6>.
+			 *
+			 * So this is how to make the field with the key "field_591eb45f2be86" a <h3>:
+			 *
+			 *     $headlines_config = array(
+			 *          'field_591eb45f2be86' => 3
+			 *     );
+			 *
+			 * @since 2.0.0
+			 *
+			 * @param array $headlines_config {
+			 *      @type string $field_name     Name of the ACF field
+			 *      @type int    $headline_level Headline level 1 to 6
+			 * }
+			 */
 			'headlines' => apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'headlines' ), array() ),
 		);
 
@@ -99,7 +130,7 @@ class Yoast_ACF_Analysis {
 	}
 
 	/**
-	 * Retrieves the default field selectors.
+	 * Retrieves the default field selectors for ACF4.
 	 *
 	 * @return Yoast_ACF_Analysis_String_Store
 	 */
