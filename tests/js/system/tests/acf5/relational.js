@@ -32,28 +32,51 @@ module.exports = {
 
     'Taxonomy Multi Select Field' : function (browser) {
 
-        var selector = '.acf-taxonomy-field[data-type="multi_select"][data-taxonomy="category"] .select2-input ';
-
-        browser.waitForElementVisible( selector, 10000 );
-
-        browser.setValue( selector, [ browser.Keys.SPACE ] );
-
-        browser.waitForElementVisible( '.select2-result:first-child', 10000 );
-
-        browser.setValue( selector, [ browser.Keys.ENTER ] );
-
-        browser.waitForElementVisible( '.acf-taxonomy-field .select2-search-choice', 10000 );
-
         browser.execute(
             function() {
-                return jQuery('.acf-taxonomy-field[data-type="multi_select"] input').select2('data')[0].text
+                return parseFloat(YoastACFAnalysisConfig.acfVersion, 10);
             },
             [],
             function( result ){
-                this.pause( 3000 );
-                logContains( browser, 'li>' + result.value , browser.assert.ok );
+                var acfVersion = result.value;
+                var inputSelector, optionSelector, choiceSelector;
+
+                if( acfVersion >= 5.6 ){
+                    inputSelector = '.acf-taxonomy-field[data-type="multi_select"][data-taxonomy="category"] .select2-search__field ';
+                    optionSelector = '.select2-results__option--highlighted';
+                    choiceSelector = '.acf-taxonomy-field .select2-selection__choice';
+                }else{
+                    inputSelector = '.acf-taxonomy-field[data-type="multi_select"][data-taxonomy="category"] .select2-input ';
+                    optionSelector = '.select2-result:first-child';
+                    choiceSelector = '.acf-taxonomy-field .select2-search-choice';
+                }
+
+                browser.waitForElementVisible( inputSelector, 10000 );
+
+                browser.setValue( inputSelector, [ browser.Keys.SPACE ] );
+
+                browser.waitForElementVisible( optionSelector, 10000 );
+
+                browser.setValue( inputSelector, [ browser.Keys.ENTER ] );
+
+                browser.waitForElementVisible( choiceSelector, 10000 );
+
+                browser.execute(
+                    function() {
+
+                        var select2Target = (parseFloat(YoastACFAnalysisConfig.acfVersion, 10) >= 5.6)?'select':'input';
+
+                        return jQuery('.acf-taxonomy-field[data-type="multi_select"] ' + select2Target).select2('data')[0].text
+                    },
+                    [],
+                    function( result ){
+                        this.pause( 3000 );
+                        logContains( browser, 'li>' + result.value , browser.assert.ok );
+                    }
+                );
             }
         );
+
     },
 
     after : function(browser) {
