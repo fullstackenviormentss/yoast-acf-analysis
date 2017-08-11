@@ -590,6 +590,7 @@ Scraper.prototype.scrape = function(fields){
 module.exports = Scraper;
 },{"./../cache/cache.attachments.js":2,"./../scraper-store.js":11}],15:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
+var helper = require( "./../helper.js" );
 
 var Scraper = function() {};
 
@@ -654,7 +655,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":11}],16:[function(require,module,exports){
+},{"./../helper.js":8,"./../scraper-store.js":11}],16:[function(require,module,exports){
 var config = require( "./../config/config.js" );
 var scrapers = require( "./../scraper-store.js" );
 

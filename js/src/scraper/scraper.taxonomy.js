@@ -1,4 +1,5 @@
 var scrapers = require( "./../scraper-store.js" );
+var helper = require( "./../helper.js" );
 
 var Scraper = function() {};
 
