@@ -23,6 +23,13 @@ module.exports = {
         browser.waitForElementVisible('.acf-field-gallery .acf-gallery-add', 10000);
         browser.click(".acf-field-gallery .acf-gallery-add");
 
+        // Open Media Library
+        browser.useXpath();
+        var mediaLibraryTabSelector = "//div[contains(@class, 'media-modal')]//a[contains(@class, 'media-menu-item') and text()='Media Library']";
+        browser.waitForElementVisible(mediaLibraryTabSelector, 10000);
+        browser.click(mediaLibraryTabSelector);
+        browser.useCss();
+
         // Select Attachment
         browser.waitForElementVisible('.media-modal .attachment', 10000);
         browser.click(".media-modal .attachment");

@@ -70,8 +70,9 @@ module.exports = {
 
         // Open Media Library
         browser.useXpath();
-        browser.waitForElementVisible("//div[contains(@class, 'media-modal')]//a[@class='media-menu-item' and text()='Media Library']", 10000);
-        browser.click("//div[contains(@class, 'media-modal')]//a[@class='media-menu-item' and text()='Media Library']");
+        var mediaLibraryTabSelector = "//div[contains(@class, 'media-modal')]//a[contains(@class, 'media-menu-item') and text()='Media Library']";
+        browser.waitForElementVisible(mediaLibraryTabSelector, 10000);
+        browser.click(mediaLibraryTabSelector);
         browser.useCss();
 
         // Select Attachment
