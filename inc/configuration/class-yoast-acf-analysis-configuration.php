@@ -29,12 +29,17 @@ class Yoast_ACF_Analysis_Configuration {
 
 	/**
 	 * @param Yoast_ACF_Analysis_String_Store $blacklist_type  Blacklist Type Configuration Object.
+	 * @param Yoast_ACF_Analysis_String_Store $blacklist_name  Blacklist Name Configuration Object.
 	 * @param Yoast_ACF_Analysis_String_Store $field_selectors Field Selectors Configuration Object.
 	 */
-	public function __construct( Yoast_ACF_Analysis_String_Store $blacklist_type, Yoast_ACF_Analysis_String_Store $field_selectors ) {
+	public function __construct(
+		Yoast_ACF_Analysis_String_Store $blacklist_type,
+		Yoast_ACF_Analysis_String_Store $blacklist_name,
+		Yoast_ACF_Analysis_String_Store $field_selectors
+	) {
 		$this->blacklist_type  = $blacklist_type;
+		$this->blacklist_name  = $blacklist_name;
 		$this->field_selectors = $field_selectors;
-		$this->blacklist_name  = new Yoast_ACF_Analysis_String_Store();
 	}
 
 	/**
