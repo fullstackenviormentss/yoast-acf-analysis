@@ -19,9 +19,12 @@ var App = function(){
 App.prototype.bindListeners = function(){
 
     if(helper.acf_version >= 5){
-        this.replaceVars = replaceVars.createReplaceVars(collect);
-        acf.add_action('change remove append sortstop', this.maybeRefresh);
-        acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(this, collect, this.replaceVars));
+        var _self = this;
+        acf.add_action('ready', function () {
+            _self.replaceVars = replaceVars.createReplaceVars(collect);
+            acf.add_action('change remove append sortstop', _self.maybeRefresh);
+            acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+        });
     }else{
         var fieldSelectors = config.fieldSelectors.slice(0);
 
@@ -300,7 +303,7 @@ module.exports = YoastACFAnalysisConfig;
 var config = require( "./config/config.js" );
 
 module.exports = {
-    acf_version: parseInt(config.acfVersion, 10)
+    acf_version: parseFloat(config.acfVersion, 10)
 };
 },{"./config/config.js":7}],9:[function(require,module,exports){
 /* global jQuery, YoastACFAnalysis: true */
@@ -590,6 +593,7 @@ Scraper.prototype.scrape = function(fields){
 module.exports = Scraper;
 },{"./../cache/cache.attachments.js":2,"./../scraper-store.js":11}],15:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
+var helper = require( "./../helper.js" );
 
 var Scraper = function() {};
 
@@ -607,8 +611,10 @@ Scraper.prototype.scrape = function(fields){
 
         if( field.$el.find('.acf-taxonomy-field[data-type="multi_select"]').length > 0 ){
 
+            var select2Target = (helper.acf_version >= 5.6)?'select':'input';
+
             terms = _.pluck(
-                field.$el.find('.acf-taxonomy-field[data-type="multi_select"] input')
+                field.$el.find('.acf-taxonomy-field[data-type="multi_select"] ' + select2Target )
                     .select2('data')
                 , 'text'
             );
@@ -652,7 +658,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":11}],16:[function(require,module,exports){
+},{"./../helper.js":8,"./../scraper-store.js":11}],16:[function(require,module,exports){
 var config = require( "./../config/config.js" );
 var scrapers = require( "./../scraper-store.js" );
 
