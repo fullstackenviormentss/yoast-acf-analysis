@@ -1,6 +1,7 @@
 var assert = require('assert');
 var logContains = require('../../helpers/logContains');
 var dummyContent = require('../../helpers/dummyContent');
+var replaceVars = require('../../helpers/replaceVars');
 
 module.exports = {
     tags: ['acf4', 'acf5', 'content'],
@@ -43,6 +44,7 @@ module.exports = {
 
         browser.expect.element('#snippet_meta').text.to.contain( hash );
 
+        replaceVars( browser, 'yoast_acf_analysis_wysiwyg', hash );
     },
 
     'Image Field': function (browser) {
@@ -65,6 +67,12 @@ module.exports = {
                 browser.click('.acf-field-image .acf-button');
             }
         });
+
+        // Open Media Library
+        browser.useXpath();
+        browser.waitForElementVisible("//div[contains(@class, 'media-modal')]//a[@class='media-menu-item' and text()='Media Library']", 10000);
+        browser.click("//div[contains(@class, 'media-modal')]//a[@class='media-menu-item' and text()='Media Library']");
+        browser.useCss();
 
         // Select Attachment
         browser.waitForElementVisible('.media-modal .attachment', 10000);

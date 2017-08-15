@@ -8,19 +8,30 @@ var Collect = function(){
 
 };
 
+Collect.prototype.getFieldData = function () {
+    var field_data = this.filterBroken(this.filterBlacklist(this.getData()));
+
+    var used_types = _.uniq(_.pluck(field_data, 'type'));
+
+    if(config.debug) {
+        console.log('Used types:')
+        console.log(used_types);
+    }
+
+    _.each(used_types, function(type){
+        field_data = scraper_store.getScraper(type).scrape(field_data);
+    });
+
+    return field_data;
+};
+
 Collect.prototype.append = function(data){
 
     if(config.debug){
         console.log('Recalculate...' + new Date());
     }
 
-    var field_data = this.filterBroken(this.filterBlacklist(this.getData()));
-
-    var used_types = _.uniq(_.pluck(field_data, 'type'));
-
-    _.each(used_types, function(type){
-        field_data = scraper_store.getScraper(type).scrape(field_data);
-    });
+    var field_data = this.getFieldData();
 
     _.each(field_data, function(field){
 
@@ -31,16 +42,11 @@ Collect.prototype.append = function(data){
     });
 
     if(config.debug){
-
-        console.log('Used types:')
-        console.log(used_types);
-
         console.log('Field data:')
         console.table(field_data);
 
         console.log('Data:')
         console.log(data);
-
     }
 
     return data;

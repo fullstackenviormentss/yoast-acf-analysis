@@ -13,4 +13,5 @@ module.exports = function( browser, selector ){
 
     browser.expect.element('#snippet_meta').text.to.contain( hash );
 
+    return hash;
 };

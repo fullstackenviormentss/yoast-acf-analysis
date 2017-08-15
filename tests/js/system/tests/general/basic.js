@@ -2,6 +2,7 @@ var assert = require('assert');
 var logContains = require('../../helpers/logContains');
 var dummyContent = require('../../helpers/dummyContent');
 var simpleField = require('../../helpers/simpleField');
+var replaceVars = require('../../helpers/replaceVars');
 
 module.exports = {
     tags: ['acf4', 'acf5', 'basic'],
@@ -15,7 +16,8 @@ module.exports = {
     },
 
     'Text Field' : function (browser) {
-        simpleField(browser, '.field_type-text input, .acf-field-text input');
+        var value = simpleField(browser, '.field_type-text input, .acf-field-text input');
+        replaceVars( browser, 'yoast_acf_analysis_text', value );
     },
 
     'Text Field (as Headline)' : function (browser) {
@@ -50,11 +52,13 @@ module.exports = {
     },
 
     'Textarea Field' : function (browser) {
-        simpleField( browser, '.field_type-textarea textarea, .acf-field-textarea textarea' );
+        var value = simpleField( browser, '.field_type-textarea textarea, .acf-field-textarea textarea' );
+        replaceVars( browser, 'yoast_acf_analysis_textarea', value );
     },
 
     'Email Field' : function (browser) {
-        simpleField( browser, '.field_type-email input, .acf-field-email input' );
+        var value = simpleField( browser, '.field_type-email input, .acf-field-email input' );
+        replaceVars( browser, 'yoast_acf_analysis_email', value );
     },
 
     after : function(browser) {

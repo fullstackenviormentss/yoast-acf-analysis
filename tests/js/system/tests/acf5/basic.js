@@ -1,5 +1,6 @@
 var assert = require('assert');
 var simpleField = require('../../helpers/simpleField');
+var replaceVars = require('../../helpers/replaceVars');
 
 module.exports = {
     tags: ['acf5', 'basic'],
@@ -13,7 +14,8 @@ module.exports = {
     },
 
     'URL Field' : function (browser) {
-        simpleField( browser, '.field_type-url input, .acf-field-url input' );
+        var value = simpleField( browser, '.field_type-url input, .acf-field-url input' );
+        replaceVars( browser, 'yoast_acf_analysis_url', value );
     },
 
     after : function(browser) {
