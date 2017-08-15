@@ -67,7 +67,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	 */
 	public function boot_dev() {
 		$version = ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) ? '4' : '5';
-		require_once dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf' . $version . '.php';
+		require_once dirname( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH ) . '/tests/js/system/data/acf' . $version . '.php';
 	}
 
 	/**
