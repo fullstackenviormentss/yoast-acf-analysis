@@ -18,7 +18,7 @@ class MainTest extends \PHPUnit_Framework_TestCase {
 
 		$registry->add( 'config', 'Invalid Config' );
 
-		$testee = new \Yoast_ACF_Analysis();
+		$testee = new \AC_Yoast_SEO_ACF_Content_Analysis();
 
 		Functions\expect('get_option')
 			->once()
