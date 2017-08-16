@@ -34,6 +34,13 @@ module.exports = {
                 return this.api.execute(function() {
                     YoastACFAnalysisConfig.refreshRate=10;
                 }, [] );
+            },
+            openMediaLibraryTab: function(){
+                this.api.useXpath();
+                var mediaLibraryTabSelector = "//div[contains(@class, 'media-modal')]//a[contains(@class, 'media-menu-item') and text()='Media Library']";
+                this.waitForElementVisible(mediaLibraryTabSelector, 10000);
+                this.click(mediaLibraryTabSelector);
+                this.api.useCss();
             }
         }
     ]
