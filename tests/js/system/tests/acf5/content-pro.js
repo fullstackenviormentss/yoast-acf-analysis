@@ -23,6 +23,9 @@ module.exports = {
         browser.waitForElementVisible('.acf-field-gallery .acf-gallery-add', 10000);
         browser.click(".acf-field-gallery .acf-gallery-add");
 
+        // Open Media Library
+        browser.page.WordPressHelper().openMediaLibraryTab();
+
         // Select Attachment
         browser.waitForElementVisible('.media-modal .attachment', 10000);
         browser.click(".media-modal .attachment");
