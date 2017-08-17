@@ -3,7 +3,7 @@
  * Plugin Name:[DEPRECATED] Yoast SEO: ACF Analysis
  * Plugin URI: https://forsberg.ax
  * Description: Adds the content of all ACF fields to the Yoast SEO score analysis.
- * Version: 1.3
+ * Version: 1.3.0
  * Author: Marcus Forsberg & Team Yoast
  * Author URI: https://forsberg.ax
  * License: GPL v3
