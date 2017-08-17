@@ -3,11 +3,11 @@ Contributors: marcusforsberg, joostdevalk, atimmer, omarreiss, jipmoors
 Tags: yoast, seo, acf, advanced custom fields, analysis, search engine optimization, seo score
 Donate link: https://forsberg.ax
 Requires at least: 4.3.1
-Tested up to: 4.8
+Tested up to: 4.8.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Version: 1.2.1
-Stable tag: 1.2.1
+Version: 1.3.0
+Stable tag: 1.3.0
 Requires PHP: 5.2.4
 
 Adds the content of all ACF fields to the Yoast SEO content analysis.
@@ -22,6 +22,10 @@ Please note that the plugin does not work with WYSIWYG fields for ACF yet, we're
 > If you have issues, please [submit them on GitHub](https://github.com/Yoast/yoast-acf-analysis/issues)
 
 == Changelog ==
+
+= 1.3.0 =
+
+* Adds deprecation warning. Please use [ACF Content Analysis for Yoast SEO](https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/) instead of this plugin.
 
 = 1.2.1 =
 
