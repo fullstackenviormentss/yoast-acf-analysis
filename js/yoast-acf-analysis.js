@@ -230,7 +230,7 @@ var Collect = function(){
 };
 
 Collect.prototype.getFieldData = function () {
-    var field_data = this.filterBroken(this.filterBlacklist(this.getData()));
+    var field_data = this.filterExcludedFields(this.filterBroken(this.filterBlacklist(this.getData())));
 
     var used_types = _.uniq(_.pluck(field_data, 'type'));
 
@@ -290,6 +290,12 @@ Collect.prototype.filterBlacklist = function(field_data){
     });
 };
 
+Collect.prototype.filterExcludedFields = function(field_data){
+    return _.filter(field_data, function(field){
+        return !_.contains(config.excludedFields, field.name);
+    });
+};
+
 Collect.prototype.filterBroken = function(field_data){
     return _.filter(field_data, function(field){
         return ('key' in field);
@@ -297,6 +303,7 @@ Collect.prototype.filterBroken = function(field_data){
 };
 
 module.exports = new Collect();
+
 },{"./../config/config.js":7,"./../helper.js":8,"./../scraper-store.js":11,"./collect-v4.js":4,"./collect-v5.js":5}],7:[function(require,module,exports){
 module.exports = YoastACFAnalysisConfig;
 },{}],8:[function(require,module,exports){

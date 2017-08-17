@@ -9,13 +9,15 @@ var Collect = function(){
 };
 
 Collect.prototype.getFieldData = function () {
-    var field_data = this.filterBroken(this.filterBlacklist(this.getData()));
+    var field_data = this.filterExcludedFields(this.filterBroken(this.filterBlacklist(this.getData())));
 
     var used_types = _.uniq(_.pluck(field_data, 'type'));
 
     if(config.debug) {
+
         console.log('Used types:')
         console.log(used_types);
+
     }
 
     _.each(used_types, function(type){
@@ -66,6 +68,12 @@ Collect.prototype.getData = function(){
 Collect.prototype.filterBlacklist = function(field_data){
     return _.filter(field_data, function(field){
         return !_.contains(config.blacklist, field.type);
+    });
+};
+
+Collect.prototype.filterExcludedFields = function(field_data){
+    return _.filter(field_data, function(field){
+        return !_.contains(config.excludedFields, field.name);
     });
 };
 

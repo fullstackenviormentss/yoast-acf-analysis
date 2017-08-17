@@ -23,6 +23,11 @@ class Yoast_ACF_Analysis_Configuration {
 	protected $scraper_config = array();
 
 	/**
+	 * @var array Field names to exclude from the analysis
+	 */
+	protected $excluded_fields = array();
+
+	/**
 	 * @param Yoast_ACF_Analysis_String_Store  $blacklist       Blacklist Configuration Object.
 	 * @param Yoast_ACF_Analysis_String_Store $field_selectors Field Selectors Configuration Object.
 	 */
@@ -117,6 +122,24 @@ class Yoast_ACF_Analysis_Configuration {
 	}
 
 	/**
+	 * Gets the excluded fields.
+	 *
+	 * @return array
+	 */
+	public function get_excluded_fields() {
+		$excluded_fields = apply_filters(
+			'ysacf_exclude_fields',
+			$this->excluded_fields
+		);
+
+		if ( is_array( $excluded_fields ) ) {
+			return $excluded_fields;
+		}
+
+		return array();
+	}
+
+	/**
 	 * @return array
 	 */
 	public function to_array() {
@@ -128,6 +151,7 @@ class Yoast_ACF_Analysis_Configuration {
 			'blacklist'      => $this->get_blacklist()->to_array(),
 			'fieldSelectors' => $this->get_field_selectors()->to_array(),
 			'debug'          => $this->is_debug(),
+			'excludedFields' => $this->get_excluded_fields(),
 		);
 	}
 }
