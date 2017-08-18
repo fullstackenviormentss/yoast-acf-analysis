@@ -101,7 +101,24 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 			->andReturn( $blacklist_name2 );
 
 		$this->assertSame( $blacklist_name2, $configuration->get_blacklist_name() );
+	}
 
+	public function testLegacyBlackistNameFilter() {
+
+		$blacklist_name = new \Yoast_ACF_Analysis_String_Store();
+
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			$blacklist_name,
+			new \Yoast_ACF_Analysis_String_Store()
+		);
+
+		Filters\expectApplied( 'ysacf_exclude_fields' )
+			->once()
+			->with( [] )
+			->andReturn( [] );
+
+		$this->assertSame( $configuration->get_blacklist_name(), $blacklist_name );
 	}
 
 	public function testBlacklistNameFilterInvalid() {
