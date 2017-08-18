@@ -54,7 +54,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 		$configuration = new Yoast_ACF_Analysis_Configuration(
 			$this->get_blacklist_type(),
-			$this->get_blacklist_type(),
+			$this->get_blacklist_name(),
 			$this->get_field_selectors()
 		);
 
