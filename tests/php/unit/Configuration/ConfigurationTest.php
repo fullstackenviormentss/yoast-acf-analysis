@@ -119,6 +119,47 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 			->andReturn( [] );
 
 		$this->assertSame( $configuration->get_blacklist_name(), $blacklist_name );
+
+
+		Filters\expectApplied( 'ysacf_exclude_fields' )
+			->once()
+			->with( [] )
+			->andReturn( [] );
+
+		$this->assertSame( $configuration->get_blacklist_name()->to_array(), [] );
+
+
+		Filters\expectApplied( 'ysacf_exclude_fields' )
+			->once()
+			->with( [] )
+			->andReturn( [ 'some_field_name' ] );
+
+		$this->assertSame( $configuration->get_blacklist_name()->to_array(), [ 'some_field_name' ] );
+	}
+
+	public function testLegacyBlackistNameFilterInvalid() {
+
+		$blacklist_name = new \Yoast_ACF_Analysis_String_Store();
+
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			$blacklist_name,
+			new \Yoast_ACF_Analysis_String_Store()
+		);
+
+		Filters\expectApplied( 'ysacf_exclude_fields' )
+			->once()
+			->with( [] )
+			->andReturn( 'invalid' );
+
+		$this->assertSame( $configuration->get_blacklist_name(), $blacklist_name );
+
+		Filters\expectApplied( 'ysacf_exclude_fields' )
+			->once()
+			->with( [] )
+			->andReturn( 'invalid' );
+
+		$this->assertSame( $configuration->get_blacklist_name()->to_array(), [] );
 	}
 
 	public function testBlacklistNameFilterInvalid() {
