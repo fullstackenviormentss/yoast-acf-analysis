@@ -14,6 +14,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$first->add( 'id', new \Yoast_ACF_Analysis_Configuration(
 			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store(),
 			new \Yoast_ACF_Analysis_String_Store()
 		) );
 

@@ -13,7 +13,7 @@ class Yoast_ACF_Analysis_Assets {
 	 * Initialize.
 	 */
 	public function init() {
-		$this->plugin_data = get_plugin_data( dirname( YOAST_ACF_ANALYSIS_FILE ) );
+		$this->plugin_data = get_plugin_data( dirname( AC_SEO_ACF_ANALYSIS_PLUGIN_FILE ) );
 
 		add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
@@ -31,7 +31,7 @@ class Yoast_ACF_Analysis_Assets {
 		if ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) {
 			wp_enqueue_script(
 				'yoast-acf-analysis-post',
-				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
+				plugins_url( '/js/yoast-acf-analysis.js', AC_SEO_ACF_ANALYSIS_PLUGIN_FILE ),
 				array( 'jquery', 'yoast-seo-post-scraper', 'underscore' ),
 				$this->plugin_data['Version']
 			);
@@ -43,7 +43,7 @@ class Yoast_ACF_Analysis_Assets {
 		if ( 'term.php' === $pagenow ) {
 			wp_enqueue_script(
 				'yoast-acf-analysis-term',
-				plugins_url( '/js/yoast-acf-analysis.js', YOAST_ACF_ANALYSIS_FILE ),
+				plugins_url( '/js/yoast-acf-analysis.js', AC_SEO_ACF_ANALYSIS_PLUGIN_FILE ),
 				array( 'jquery', 'yoast-seo-term-scraper' ),
 				$this->plugin_data['Version']
 			);

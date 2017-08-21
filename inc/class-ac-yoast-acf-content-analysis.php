@@ -5,7 +5,7 @@
  *
  * Adds ACF data to the content analyses of WordPress SEO.
  */
-class Yoast_ACF_Analysis {
+class AC_Yoast_SEO_ACF_Content_Analysis {
 
 	/**
 	 * Yoast_ACF_Analysis init.
@@ -30,7 +30,7 @@ class Yoast_ACF_Analysis {
 
 		$this->boot();
 
-		if ( defined( 'YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
+		if ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
 			$this->boot_dev();
 		}
 
@@ -53,7 +53,8 @@ class Yoast_ACF_Analysis {
 		}
 
 		$configuration = new Yoast_ACF_Analysis_Configuration(
-			$this->get_blacklist(),
+			$this->get_blacklist_type(),
+			$this->get_blacklist_name(),
 			$this->get_field_selectors()
 		);
 
@@ -82,7 +83,7 @@ class Yoast_ACF_Analysis {
 	 */
 	public function boot_dev() {
 		$version = ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) ? '4' : '5';
-		require_once dirname( YOAST_ACF_ANALYSIS_FILE ) . '/tests/js/system/data/acf' . $version . '.php';
+		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/acf' . $version . '.php';
 	}
 
 	/**
@@ -172,7 +173,7 @@ class Yoast_ACF_Analysis {
 	 *
 	 * @return Yoast_ACF_Analysis_String_Store
 	 */
-	protected function get_blacklist() {
+	protected function get_blacklist_type() {
 
 		$blacklist = new Yoast_ACF_Analysis_String_Store();
 
@@ -213,5 +214,12 @@ class Yoast_ACF_Analysis {
 		}
 
 		return $blacklist;
+	}
+
+	/**
+	 * @return Yoast_ACF_Analysis_String_Store
+	 */
+	protected function get_blacklist_name() {
+		return new Yoast_ACF_Analysis_String_Store();
 	}
 }

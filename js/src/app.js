@@ -18,9 +18,12 @@ var App = function(){
 App.prototype.bindListeners = function(){
 
     if(helper.acf_version >= 5){
-        this.replaceVars = replaceVars.createReplaceVars(collect);
-        acf.add_action('change remove append sortstop', this.maybeRefresh);
-        acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(this, collect, this.replaceVars));
+        var _self = this;
+        acf.add_action('ready', function () {
+            _self.replaceVars = replaceVars.createReplaceVars(collect);
+            acf.add_action('change remove append sortstop', _self.maybeRefresh);
+            acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+        });
     }else{
         var fieldSelectors = config.fieldSelectors.slice(0);
 

@@ -9,7 +9,12 @@ class Yoast_ACF_Analysis_Configuration {
 	/**
 	 * @var Yoast_ACF_Analysis_String_Store
 	 */
-	protected $blacklist;
+	protected $blacklist_type;
+
+	/**
+	 * @var Yoast_ACF_Analysis_String_Store
+	 */
+	protected $blacklist_name;
 
 	/**
 	 * @var Yoast_ACF_Analysis_String_Store
@@ -23,11 +28,17 @@ class Yoast_ACF_Analysis_Configuration {
 	protected $scraper_config = array();
 
 	/**
-	 * @param Yoast_ACF_Analysis_String_Store  $blacklist       Blacklist Configuration Object.
+	 * @param Yoast_ACF_Analysis_String_Store $blacklist_type  Blacklist Type Configuration Object.
+	 * @param Yoast_ACF_Analysis_String_Store $blacklist_name  Blacklist Name Configuration Object.
 	 * @param Yoast_ACF_Analysis_String_Store $field_selectors Field Selectors Configuration Object.
 	 */
-	public function __construct( Yoast_ACF_Analysis_String_Store $blacklist, Yoast_ACF_Analysis_String_Store $field_selectors ) {
-		$this->blacklist       = $blacklist;
+	public function __construct(
+		Yoast_ACF_Analysis_String_Store $blacklist_type,
+		Yoast_ACF_Analysis_String_Store $blacklist_name,
+		Yoast_ACF_Analysis_String_Store $field_selectors
+	) {
+		$this->blacklist_type  = $blacklist_type;
+		$this->blacklist_name  = $blacklist_name;
 		$this->field_selectors = $field_selectors;
 	}
 
@@ -41,11 +52,11 @@ class Yoast_ACF_Analysis_Configuration {
 	}
 
 	/**
-	 * Retrieves the blacklist store.
+	 * Retrieves the blacklist type store.
 	 *
-	 * @return Yoast_ACF_Analysis_String_Store The blacklist store.
+	 * @return Yoast_ACF_Analysis_String_Store The blacklist type store.
 	 */
-	public function get_blacklist() {
+	public function get_blacklist_type() {
 
 		/**
 		 * Filters the types of fields to ignore.
@@ -57,17 +68,47 @@ class Yoast_ACF_Analysis_Configuration {
 		 *
 		 * @param Yoast_ACF_Analysis_String_Store $blacklist Store instance of ignored field types
 		 */
-		$blacklist = apply_filters(
-			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist' ),
-			$this->blacklist
+		$blacklist_type = apply_filters(
+			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_type' ),
+			$this->blacklist_type
 		);
 
-		if ( $blacklist instanceof Yoast_ACF_Analysis_String_Store ) {
-			return $blacklist;
+		if ( $blacklist_type instanceof Yoast_ACF_Analysis_String_Store ) {
+			return $blacklist_type;
 		}
 
-		return $this->blacklist;
+		return $this->blacklist_type;
 
+	}
+
+	/**
+	 * Retrieves the blacklist name store.
+	 *
+	 * @return Yoast_ACF_Analysis_String_Store The blacklist name store.
+	 */
+	public function get_blacklist_name() {
+		// Implement legacy filter
+		$legacy_names = apply_filters(
+			'ysacf_exclude_fields',
+			array()
+		);
+
+		if ( is_array( $legacy_names ) && ! empty( $legacy_names ) ) {
+			foreach ( $legacy_names as $legacy_name ) {
+				$this->blacklist_name->add( $legacy_name );
+			}
+		}
+
+		$blacklist_name = apply_filters(
+			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_name' ),
+			$this->blacklist_name
+		);
+
+		if ( $blacklist_name instanceof Yoast_ACF_Analysis_String_Store ) {
+			return $blacklist_name;
+		}
+
+		return $this->blacklist_name;
 	}
 
 	/**
@@ -168,7 +209,8 @@ class Yoast_ACF_Analysis_Configuration {
 			'acfVersion'     => $this->get_acf_version(),
 			'scraper'        => $this->get_scraper_config(),
 			'refreshRate'    => $this->get_refresh_rate(),
-			'blacklist'      => $this->get_blacklist()->to_array(),
+			'blacklistType'  => $this->get_blacklist_type()->to_array(),
+			'blacklistName'  => $this->get_blacklist_name()->to_array(),
 			'fieldSelectors' => $this->get_field_selectors()->to_array(),
 			'debug'          => $this->is_debug(),
 		);

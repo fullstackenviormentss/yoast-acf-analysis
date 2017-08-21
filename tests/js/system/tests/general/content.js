@@ -69,10 +69,7 @@ module.exports = {
         });
 
         // Open Media Library
-        browser.useXpath();
-        browser.waitForElementVisible("//div[contains(@class, 'media-modal')]//a[@class='media-menu-item' and text()='Media Library']", 10000);
-        browser.click("//div[contains(@class, 'media-modal')]//a[@class='media-menu-item' and text()='Media Library']");
-        browser.useCss();
+        browser.page.WordPressHelper().openMediaLibraryTab();
 
         // Select Attachment
         browser.waitForElementVisible('.media-modal .attachment', 10000);
