@@ -53,7 +53,8 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 		}
 
 		$configuration = new Yoast_ACF_Analysis_Configuration(
-			$this->get_blacklist(),
+			$this->get_blacklist_type(),
+			$this->get_blacklist_name(),
 			$this->get_field_selectors()
 		);
 
@@ -141,7 +142,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	 *
 	 * @return Yoast_ACF_Analysis_String_Store
 	 */
-	protected function get_blacklist() {
+	protected function get_blacklist_type() {
 
 		$blacklist = new Yoast_ACF_Analysis_String_Store();
 
@@ -182,5 +183,12 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 		}
 
 		return $blacklist;
+	}
+
+	/**
+	 * @return Yoast_ACF_Analysis_String_Store
+	 */
+	protected function get_blacklist_name() {
+		return new Yoast_ACF_Analysis_String_Store();
 	}
 }
