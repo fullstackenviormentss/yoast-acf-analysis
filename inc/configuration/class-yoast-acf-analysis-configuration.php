@@ -59,14 +59,14 @@ class Yoast_ACF_Analysis_Configuration {
 	public function get_blacklist_type() {
 
 		/**
-		 * Filters the types of fields to ignore.
+		 * Filters the fields to ignore based on field type.
 		 *
 		 * You can add or remove field types to be analysed.
 		 * Be aware that when adding types this will only have an effect if there is a scraper for the type.
 		 *
 		 * @since 2.0.0
 		 *
-		 * @param Yoast_ACF_Analysis_String_Store $blacklist Store instance of ignored field types
+		 * @param Yoast_ACF_Analysis_String_Store $blacklist_type Store instance of ignored field types
 		 */
 		$blacklist_type = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_type' ),
@@ -87,7 +87,17 @@ class Yoast_ACF_Analysis_Configuration {
 	 * @return Yoast_ACF_Analysis_String_Store The blacklist name store.
 	 */
 	public function get_blacklist_name() {
-		// Implement legacy filter
+
+		/**
+		 * Filters the fields to ignore based on field name.
+		 *
+		 * You can add or remove fields to be analysed based on the field name.
+		 *
+		 * @since 1.0.0
+		 * @deprecated 2.0.0 Use the {@see 'yoast-acf-analysis/blacklist_name'} filter instead.
+		 *
+		 * @param array $legacy_names Array with field names
+		 */
 		$legacy_names = apply_filters(
 			'ysacf_exclude_fields',
 			array()
@@ -99,6 +109,15 @@ class Yoast_ACF_Analysis_Configuration {
 			}
 		}
 
+		/**
+		 * Filters the fields to ignore based on field name.
+		 *
+		 * You can add or remove fields to be analysed based on the field name.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param Yoast_ACF_Analysis_String_Store $blacklist_name Store instance of ignored field names
+		 */
 		$blacklist_name = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_name' ),
 			$this->blacklist_name
