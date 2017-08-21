@@ -58,6 +58,16 @@ class Yoast_ACF_Analysis_Configuration {
 	 */
 	public function get_blacklist_type() {
 
+		/**
+		 * Filters the fields to ignore based on field type.
+		 *
+		 * You can add or remove field types to be analysed.
+		 * Be aware that when adding types this will only have an effect if there is a scraper for the type.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param Yoast_ACF_Analysis_String_Store $blacklist_type Store instance of ignored field types
+		 */
 		$blacklist_type = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_type' ),
 			$this->blacklist_type
@@ -77,7 +87,17 @@ class Yoast_ACF_Analysis_Configuration {
 	 * @return Yoast_ACF_Analysis_String_Store The blacklist name store.
 	 */
 	public function get_blacklist_name() {
-		// Implement legacy filter
+
+		/**
+		 * Filters the fields to ignore based on field name.
+		 *
+		 * You can add or remove fields to be analysed based on the field name.
+		 *
+		 * @since 1.0.0
+		 * @deprecated 2.0.0 Use the {@see 'yoast-acf-analysis/blacklist_name'} filter instead.
+		 *
+		 * @param array $legacy_names Array with field names
+		 */
 		$legacy_names = apply_filters(
 			'ysacf_exclude_fields',
 			array()
@@ -89,6 +109,15 @@ class Yoast_ACF_Analysis_Configuration {
 			}
 		}
 
+		/**
+		 * Filters the fields to ignore based on field name.
+		 *
+		 * You can add or remove fields to be analysed based on the field name.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param Yoast_ACF_Analysis_String_Store $blacklist_name Store instance of ignored field names
+		 */
 		$blacklist_name = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'blacklist_name' ),
 			$this->blacklist_name
@@ -114,6 +143,16 @@ class Yoast_ACF_Analysis_Configuration {
 	 * @return array The scraper configuration.
 	 */
 	public function get_scraper_config() {
+		/**
+		 * Filters the scraper configuration.
+		 *
+		 * This nested array holds configuration specific to certain scrapers (for specific field types)
+		 * Before using this filter see if there isn't a more specific one like {@see yoast-acf-analysis/headlines}.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param array $scraper_config Nested array of scraper configuration
+		 */
 		$scraper_config = apply_filters(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
 			$this->scraper_config
@@ -129,9 +168,20 @@ class Yoast_ACF_Analysis_Configuration {
 	/**
 	 * Retrieves the refresh rate to be used.
 	 *
-	 * @return int The number of miliseconds between scrape runs.
+	 * @return int The number of milliseconds between scrape runs.
 	 */
 	public function get_refresh_rate() {
+		/**
+		 * Refresh rate for changes to ACF fields
+		 *
+		 * This plugin limits the rate at which changes to ACF fields are reported to Yoast SEO.
+		 * By default it will only report changes to Yoast SEO after no changes have happened for 1000 milliseconds.
+		 * This filter allows to change this to any value above 200 milliseconds.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param int $refresh_rate Refresh rates in milliseconds
+		 */
 		$refresh_rate = apply_filters( Yoast_ACF_Analysis_Facade::get_filter_name( 'refresh_rate' ), $this->refresh_rate );
 		$refresh_rate = intval( $refresh_rate, 10 );
 
@@ -145,8 +195,20 @@ class Yoast_ACF_Analysis_Configuration {
 	 * @return Yoast_ACF_Analysis_String_Store Field selectors store.
 	 */
 	public function get_field_selectors() {
+		/**
+		 * Filters the CSS selectors that are used to scrape find the fields when using ACF4.
+		 *
+		 * This is an advanced filter that should rarely if ever be used, especially because it only affects ACF4.
+		 * If you want to exclude certain fields by name or type there are specific filters for these.
+		 *
+		 * @see get_blacklist()
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param Yoast_ACF_Analysis_String_Store $field_selectors Field selector store instance
+		 */
 		$field_selectors = apply_filters(
-			Yoast_ACF_Analysis_Facade::get_filter_name('field_selectors' ),
+			Yoast_ACF_Analysis_Facade::get_filter_name( 'field_selectors' ),
 			$this->field_selectors
 		);
 
