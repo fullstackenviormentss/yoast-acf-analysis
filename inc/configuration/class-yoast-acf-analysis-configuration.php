@@ -196,12 +196,14 @@ class Yoast_ACF_Analysis_Configuration {
 	 */
 	public function get_field_selectors() {
 		/**
-		 * Filters the CSS selectors that are used to scrape find the fields when using ACF4.
+		 * Filters the CSS selectors that are used to find the fields when using ACF4.
 		 *
 		 * This is an advanced filter that should rarely if ever be used, especially because it only affects ACF4.
-		 * If you want to exclude certain fields by name or type there are specific filters for these.
+		 * If you want to exclude certain fields by type or name there are the more specific filters
+		 * {@see 'yoast-acf-analysis/blacklist_type'} and {@see 'yoast-acf-analysis/blacklist_name'} for these.
 		 *
-		 * @see get_blacklist()
+		 * @see get_blacklist_type()
+		 * @see get_blacklist_name()
 		 *
 		 * @since 2.0.0
 		 *
