@@ -1,4 +1,4 @@
-=== Yoast ACF Analysis ===
+=== ACF Content Analysis for Yoast SEO ===
 Contributors: yoast, angrycreative, kraftner, marcusforsberg, viktorfroberg, joostdevalk, atimmer, jipmoors, theorboman
 Tags: Yoast, SEO, ACF, Advanced Custom Fields, analysis, Search Engine Optimization
 Requires at least: 4.3.1
@@ -21,6 +21,8 @@ This Plugin is compatible with the free ACF 4 Version as well as with the PRO Ve
 
 > If you have issues, please [submit them on GitHub](https://github.com/Yoast/yoast-acf-analysis/issues)
 
+Previously called Yoast ACF Analysis.
+
 == Changelog ==
 
 = 2.0.0 =
@@ -29,10 +31,6 @@ Released August 22th, 2017
 
 * Changed:
 	* Complete rewrite, including full support for ACF 4 and 5.
-
-= 1.3.0 =
-
-* Adds deprecation warning. Please use [ACF Content Analysis for Yoast SEO](https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/) instead of this plugin.
 
 = 1.2.1 =
 
