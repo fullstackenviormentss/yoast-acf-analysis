@@ -30,6 +30,17 @@ Released August 22th, 2017
 * Changed:
 	* Complete rewrite, including full support for ACF 4 and 5.
 
+= 1.3.0 =
+
+* Adds deprecation warning. Please use [ACF Content Analysis for Yoast SEO](https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/) instead of this plugin.
+
+= 1.2.1 =
+
+Released July 24th, 2017
+
+Bugfixes:
+	* Fixes Yoast SEO Premium social sharing tabs not showing any content when this plugin is active, props [Matt McAchran](https://github.com/mmcachran).
+
 = 1.2.0 =
 
 Released June 30th, 2016
