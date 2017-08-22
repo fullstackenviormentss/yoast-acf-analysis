@@ -13,7 +13,7 @@ class Yoast_ACF_Analysis_Assets {
 	 * Initialize.
 	 */
 	public function init() {
-		$this->plugin_data = get_plugin_data( dirname( AC_SEO_ACF_ANALYSIS_PLUGIN_FILE ) );
+		$this->plugin_data = get_plugin_data( AC_SEO_ACF_ANALYSIS_PLUGIN_FILE );
 
 		add_filter( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}

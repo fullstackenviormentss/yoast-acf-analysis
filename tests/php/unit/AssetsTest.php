@@ -18,8 +18,12 @@ class AssetsTest extends \PHPUnit_Framework_TestCase {
 		define( 'AC_SEO_ACF_ANALYSIS_PLUGIN_FILE', '/directory/file' );
 		Functions\expect( 'get_plugin_data' )
 			->once()
-			->with( dirname( AC_SEO_ACF_ANALYSIS_PLUGIN_FILE ) )
-			->andReturn( array( 'Version' => '1.0.0' ) );
+			->with( AC_SEO_ACF_ANALYSIS_PLUGIN_FILE )
+			->andReturn(
+				array(
+					'Version' => '2.0.0',
+				)
+			);
 
 		$testee = new \Yoast_ACF_Analysis_Assets();
 		$testee->init();
