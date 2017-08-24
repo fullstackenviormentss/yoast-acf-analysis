@@ -17,12 +17,13 @@ var App = function(){
 
 App.prototype.bindListeners = function(){
 
+    var _self = this;
+
     if(helper.acf_version >= 5){
-        var _self = this;
         acf.add_action('ready', function () {
-            _self.replaceVars = replaceVars.createReplaceVars(collect);
+            replaceVars.createReplaceVars(collect);
             acf.add_action('change remove append sortstop', _self.maybeRefresh);
-            acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+            acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect));
         });
     }else{
         var fieldSelectors = config.fieldSelectors.slice(0);
@@ -30,22 +31,20 @@ App.prototype.bindListeners = function(){
         // Ignore Wysiwyg fields because they trigger a refresh in Yoast SEO itself
         fieldSelectors = _.without(fieldSelectors, 'textarea[id^=wysiwyg-acf]');
 
-        var _self = this;
-
         jQuery(document).on('acf/setup_fields', function(){
-            this.replaceVars = replaceVars.createReplaceVars(collect);
+            replaceVars.createReplaceVars(collect);
             var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
             //This would cause faster updates while typing
             //fields.on('change input', _self.maybeRefresh.bind(_self) );
             fields.on('change', _self.maybeRefresh.bind(_self) );
-            fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+            fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect));
 
             // Do not ignore Wysiwyg fields for the purpose of Replace Vars.
-            jQuery('textarea[id^=wysiwyg-acf]').on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+            jQuery('textarea[id^=wysiwyg-acf]').on('change', replaceVars.updateReplaceVars.bind(_self, collect));
             if (YoastSEO.wp._tinyMCEHelper) {
                 jQuery('textarea[id^=wysiwyg-acf]').each( function () {
                     YoastSEO.wp._tinyMCEHelper.addEventHandler(this.id, [ 'input', 'change', 'cut', 'paste' ],
-                        replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+                        replaceVars.updateReplaceVars.bind(_self, collect));
                 });
             }
 

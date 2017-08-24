@@ -6,17 +6,17 @@ var ReplaceVar = YoastReplaceVarPlugin.ReplaceVar;
 
 var supportedTypes = ['email', 'text', 'textarea', 'url', 'wysiwyg'];
 
+var replaceVars = {};
+
 var createReplaceVars = function (collect) {
     if (ReplaceVar === undefined) {
         if (config.debug) {
-            console.log('Replacing ACF variables in the Snippet Window requires the latest version of wordpress-seo.');
+            console.log('Replacing ACF variables in the Snippet Window requires Yoast SEO >= 5.3.');
         }
         return;
     }
 
-    fieldData   = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
-    replaceVars = {}
-
+    var fieldData   = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
     _.each(fieldData, function(field) {
         // Remove HTML tags using jQuery in case of a wysiwyg field.
         var content = (field.type === 'wysiwyg') ? jQuery( jQuery.parseHTML( field.content) ).text() : field.content;
@@ -27,19 +27,17 @@ var createReplaceVars = function (collect) {
             console.log("Created ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
         }
     });
-
-    return replaceVars;
 };
 
-var updateReplaceVars = function (collect, replace_vars) {
+var updateReplaceVars = function (collect) {
     if (ReplaceVar === undefined) {
         if (config.debug) {
-            console.log('Replacing ACF variables in the Snippet Window requires the latest version of wordpress-seo.');
+            console.log('Replacing ACF variables in the Snippet Window requires Yoast SEO >= 5.3.');
         }
         return;
     }
 
-    fieldData = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
+    var fieldData = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
     _.each(fieldData, function(field) {
         // Remove HTML tags using jQuery in case of a wysiwyg field.
         var content = (field.type === 'wysiwyg') ? jQuery(jQuery.parseHTML(field.content)).text() : field.content;
