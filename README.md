@@ -1,4 +1,4 @@
-# Yoast SEO: ACF Analysis
+# ACF Content Analysis for Yoast SEO
 WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
 
 ##Description
