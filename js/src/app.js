@@ -19,7 +19,7 @@ App.prototype.bindListeners = function(){
 
     if(helper.acf_version >= 5){
         var _self = this;
-        acf.add_action('ready', function () {
+        jQuery(function(){
             _self.replaceVars = replaceVars.createReplaceVars(collect);
             acf.add_action('change remove append sortstop', _self.maybeRefresh);
             acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
