@@ -17,7 +17,7 @@ module.exports = {
     'Flexible Content Field': function (browser) {
 
         var addRowButton = '.acf-field-flexible-content .acf-actions .acf-button';
-        var addLayoutPopup = '.acf-field-flexible-content .acf-actions .acf-fc-popup a[data-layout="yoast_acf_analysis_flexible_content_layout"]';
+        var addLayoutPopup = '.acf-fc-popup a[data-layout="yoast_acf_analysis_flexible_content_layout"]';
         var textField = '.acf-field-flexible-content .values .acf-field-text input';
 
         browser.waitForElementVisible(addRowButton, 10000);
