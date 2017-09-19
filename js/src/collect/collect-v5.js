@@ -3,6 +3,7 @@ module.exports = function(){
 
         var field_data = jQuery.extend( true, {}, acf.get_data(jQuery(field)) );
         field_data.$el = jQuery(field);
+        field_data.post_meta_key = field_data.name;
 
         return field_data;
 
@@ -21,16 +22,16 @@ module.exports = function(){
                    outer.children = outer.children || [];
                    outer.children.push(inner);
                    inner.parent = outer;
-                   inner.name = outer.name + '_' + (outer.children.length - 1) + '_' + inner.name;
+                   inner.post_meta_key = outer.name + '_' + (outer.children.length - 1) + '_' + inner.name;
 
                }
 
                // Types that hold single children.
                if (outer.type === 'group') {
 
-                   outer.child = inner;
+                   outer.children = [inner];
                    inner.parent = outer;
-                   inner.name = outer.name + '_' + inner.name;
+                   inner.post_meta_key = outer.name + '_' + inner.name;
 
                }
 

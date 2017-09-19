@@ -203,10 +203,11 @@ fields.each(function() {
     var $el = jQuery(this).parents('.field').last();
 
     field_data.push({
-        $el     : $el,
-        key     : $el.data('field_key'),
-        name    : $el.data('field_name'),
-        type    : $el.data('field_type')
+        $el             : $el,
+        key             : $el.data('field_key'),
+        name            : $el.data('field_name'),
+        type            : $el.data('field_type'),
+        post_meta_key   : $el.data('field_key')
     });
 
 });
@@ -218,6 +219,7 @@ module.exports = function(){
 
         var field_data = jQuery.extend( true, {}, acf.get_data(jQuery(field)) );
         field_data.$el = jQuery(field);
+        field_data.post_meta_key = field_data.name;
 
         return field_data;
 
@@ -236,16 +238,16 @@ module.exports = function(){
                    outer.children = outer.children || [];
                    outer.children.push(inner);
                    inner.parent = outer;
-                   inner.name = outer.name + '_' + (outer.children.length - 1) + '_' + inner.name;
+                   inner.post_meta_key = outer.name + '_' + (outer.children.length - 1) + '_' + inner.name;
 
                }
 
                // Types that hold single children.
                if (outer.type === 'group') {
 
-                   outer.child = inner;
+                   outer.children = [inner];
                    inner.parent = outer;
-                   inner.name = outer.name + '_' + inner.name;
+                   inner.post_meta_key = outer.name + '_' + inner.name;
 
                }
 
@@ -405,21 +407,21 @@ var updateReplaceVars = function (collect) {
         // Remove HTML tags using jQuery in case of a wysiwyg field.
         var content = (field.type === 'wysiwyg') ? jQuery(jQuery.parseHTML(field.content)).text() : field.content;
 
-        if(replaceVars[field.name]===undefined){
+        if(replaceVars[field.post_meta_key]===undefined){
 
-            replaceVars[field.name] = new ReplaceVar( '%%cf_'+field.name+'%%', content, { source: 'direct' } );
-            YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[field.name] );
+            replaceVars[field.post_meta_key] = new ReplaceVar( '%%cf_'+field.post_meta_key+'%%', content, { source: 'direct' } );
+            YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[field.post_meta_key] );
 
             if (config.debug) {
-                console.log("Created ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+                console.log("Created ReplaceVar for: ", field.post_meta_key, " with: ", content, replaceVars[field.post_meta_key]);
             }
 
         }else{
 
-            replaceVars[field.name].replacement = content;
+            replaceVars[field.post_meta_key].replacement = content;
 
             if (config.debug) {
-                console.log("Updated ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+                console.log("Updated ReplaceVar for: ", field.post_meta_key, " with: ", content, replaceVars[field.post_meta_key]);
             }
 
         }
