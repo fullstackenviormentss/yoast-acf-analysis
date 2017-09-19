@@ -23,6 +23,9 @@ App.prototype.bindListeners = function(){
     if(helper.acf_version >= 5){
 
         acf.add_action('ready', function () {
+
+            replaceVars.updateReplaceVars(collect);
+
             acf.add_action('change remove append sortstop', _self.maybeRefresh);
             acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect));
 
@@ -37,6 +40,9 @@ App.prototype.bindListeners = function(){
         fieldSelectors = _.without(fieldSelectors, wysiwygSelector);
 
         jQuery(document).on('acf/setup_fields', function(){
+
+            replaceVars.updateReplaceVars(collect);
+
             var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
             //This would cause faster updates while typing
             //fields.on('change input', _self.maybeRefresh.bind(_self) );
