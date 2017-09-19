@@ -31,7 +31,7 @@ module.exports = {
         browser.pause( 3000 );
 
         var value = simpleField(browser, textField);
-        replaceVars( browser, 'yoast_acf_analysis_flexible_content_text', value );
+        replaceVars( browser, 'yoast_acf_analysis_flexible_content_0_yoast_acf_analysis_flexible_content_text', value );
 
     },
 
@@ -48,7 +48,7 @@ module.exports = {
         browser.pause( 3000 );
 
         var value = simpleField(browser, textField);
-        replaceVars( browser, 'yoast_acf_analysis_repeater_text', value );
+        replaceVars( browser, 'yoast_acf_analysis_repeater_0_yoast_acf_analysis_repeater_text', value );
 
     },
 
