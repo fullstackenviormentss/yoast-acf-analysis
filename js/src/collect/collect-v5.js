@@ -1,18 +1,39 @@
 module.exports = function(){
+
+    var outerFieldsName = [
+        'flexible_content',
+        'repeater',
+        'group'
+    ];
+
+    var innerFields = [];
+    var outerFields = [];
+
     var fields = _.map(acf.get_fields(), function(field){
 
         var field_data = jQuery.extend( true, {}, acf.get_data(jQuery(field)) );
         field_data.$el = jQuery(field);
         field_data.post_meta_key = field_data.name;
 
+        // Collect nested and parent
+        if( outerFieldsName.indexOf(field_data.type) === -1 ) {
+            innerFields.push(field_data);
+        }else{
+            outerFields.push(field_data);
+        }
+
         return field_data;
 
     });
 
-    // Transform field names for nested fields.
-    _.each(fields, function(inner){
+    if( outerFields.length === 0){
+        return fields;
+    }
 
-       _.each(fields, function(outer){
+    // Transform field names for nested fields.
+    _.each(innerFields, function(inner){
+
+       _.each(outerFields, function(outer){
 
            if (jQuery.contains(outer.$el[0], inner.$el[0])) {
 
