@@ -52,6 +52,13 @@ module.exports = {
 
     },
 
+    'Group Field': function (browser) {
+
+        var value = simpleField(browser, '.acf-field-group .acf-field-text input');
+        replaceVars( browser, 'yoast_acf_analysis_group_yoast_acf_analysis_group_text', value );
+
+    },
+
     after : function(browser) {
         browser.end();
     }
