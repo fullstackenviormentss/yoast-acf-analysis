@@ -37,20 +37,19 @@ App.prototype.bindListeners = function(){
         var wysiwygSelector = 'textarea[id^=wysiwyg-acf]';
 
         // Ignore Wysiwyg fields because they trigger a refresh in Yoast SEO itself
-        fieldSelectors = _.without(fieldSelectors, wysiwygSelector);
+        fieldSelectorsWithoutWysiwyg = _.without(fieldSelectors, wysiwygSelector);
 
         jQuery(document).on('acf/setup_fields', function(){
 
             replaceVars.updateReplaceVars(collect);
 
+            var fieldsWithoutWysiwyg = jQuery('#post-body, #edittag').find(fieldSelectorsWithoutWysiwyg.join(','));
             var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
-            //This would cause faster updates while typing
-            //fields.on('change input', _self.maybeRefresh.bind(_self) );
-            fields.on('change', _self.maybeRefresh.bind(_self) );
+
+            fieldsWithoutWysiwyg.on('change', _self.maybeRefresh.bind(_self) );
+            // Do not ignore Wysiwyg fields for the purpose of Replace Vars.
             fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect));
 
-            // Do not ignore Wysiwyg fields for the purpose of Replace Vars.
-            jQuery(wysiwygSelector).on('change', replaceVars.updateReplaceVars.bind(_self, collect));
             if (YoastSEO.wp._tinyMCEHelper) {
 
                 jQuery(wysiwygSelector).each( function () {
