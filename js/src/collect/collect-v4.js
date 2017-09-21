@@ -14,7 +14,7 @@ fields.each(function() {
         key             : $el.data('field_key'),
         name            : $el.data('field_name'),
         type            : $el.data('field_type'),
-        post_meta_key   : $el.data('field_key')
+        post_meta_key   : $el.data('field_name')
     });
 
 });
