@@ -10,10 +10,11 @@ fields.each(function() {
     var $el = jQuery(this).parents('.field').last();
 
     field_data.push({
-        $el     : $el,
-        key     : $el.data('field_key'),
-        name    : $el.data('field_name'),
-        type    : $el.data('field_type')
+        $el             : $el,
+        key             : $el.data('field_key'),
+        name            : $el.data('field_name'),
+        type            : $el.data('field_type'),
+        post_meta_key   : $el.data('field_name')
     });
 
 });

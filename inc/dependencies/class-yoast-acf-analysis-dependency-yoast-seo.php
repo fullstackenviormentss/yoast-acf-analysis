@@ -40,9 +40,9 @@ final class Yoast_ACF_Analysis_Dependency_Yoast_SEO implements Yoast_ACF_Analysi
 	 */
 	public function message_plugin_not_activated() {
 		$message = sprintf(
-			/* translators: %1$s resolves to Yoast SEO: ACF Analysis, %2$s resolves to Yoast SEO for WordPress, %3$s resolves to the minimal plugin version */
-			__( '%1$s requires %2$s %3$s (or higher) to be installed and activated.', 'yoast-acf-analysis' ),
-			'Yoast SEO: ACF Analysis',
+			/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO, %2$s resolves to Yoast SEO for WordPress, %3$s resolves to the minimal plugin version */
+			__( '%1$s requires %2$s %3$s (or higher) to be installed and activated.', 'acf-content-analysis-for-yoast-seo' ),
+			'ACF Content Analysis for Yoast SEO',
 			'Yoast SEO for WordPress',
 			self::MINIMAL_REQUIRED_VERSION
 		);
@@ -55,9 +55,9 @@ final class Yoast_ACF_Analysis_Dependency_Yoast_SEO implements Yoast_ACF_Analysi
 	 */
 	public function message_minimum_version() {
 		$message = sprintf(
-			/* translators: %1$s resolves to Yoast SEO: ACF Analysis, %2$s resolves to Yoast SEO for WordPress, %3$s resolves to the minimal plugin version */
-			__( '%1$s requires %2$s %3$s or higher, please update the plugin.', 'yoast-acf-analysis' ),
-			'Yoast SEO: ACF Analysis',
+			/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO, %2$s resolves to Yoast SEO for WordPress, %3$s resolves to the minimal plugin version */
+			__( '%1$s requires %2$s %3$s or higher, please update the plugin.', 'acf-content-analysis-for-yoast-seo' ),
+			'ACF Content Analysis for Yoast SEO',
 			'Yoast SEO for WordPress',
 			self::MINIMAL_REQUIRED_VERSION
 		);

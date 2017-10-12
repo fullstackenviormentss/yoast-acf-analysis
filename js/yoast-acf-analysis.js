@@ -14,49 +14,58 @@ var App = function(){
     YoastSEO.app.registerModification('content', collect.append.bind(collect), config.pluginName);
 
     this.bindListeners();
+
 };
 
 App.prototype.bindListeners = function(){
 
+    var _self = this;
+
     if(helper.acf_version >= 5){
-        var _self = this;
+
         jQuery(function(){
-            _self.replaceVars = replaceVars.createReplaceVars(collect);
+
+            replaceVars.updateReplaceVars(collect);
+
             acf.add_action('change remove append sortstop', _self.maybeRefresh);
-            acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
+            acf.add_action('change remove append sortstop', replaceVars.updateReplaceVars.bind(_self, collect));
+
         });
+
     }else{
+
         var fieldSelectors = config.fieldSelectors.slice(0);
+        var wysiwygSelector = 'textarea[id^=wysiwyg-acf]';
 
         // Ignore Wysiwyg fields because they trigger a refresh in Yoast SEO itself
-        fieldSelectors = _.without(fieldSelectors, 'textarea[id^=wysiwyg-acf]');
-
-        var _self = this;
+        fieldSelectorsWithoutWysiwyg = _.without(fieldSelectors, wysiwygSelector);
 
         jQuery(document).on('acf/setup_fields', function(){
-            this.replaceVars = replaceVars.createReplaceVars(collect);
+
+            replaceVars.updateReplaceVars(collect);
+
+            var fieldsWithoutWysiwyg = jQuery('#post-body, #edittag').find(fieldSelectorsWithoutWysiwyg.join(','));
             var fields = jQuery('#post-body, #edittag').find(fieldSelectors.join(','));
-            //This would cause faster updates while typing
-            //fields.on('change input', _self.maybeRefresh.bind(_self) );
-            fields.on('change', _self.maybeRefresh.bind(_self) );
-            fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
 
+            fieldsWithoutWysiwyg.on('change', _self.maybeRefresh.bind(_self) );
             // Do not ignore Wysiwyg fields for the purpose of Replace Vars.
-            jQuery('textarea[id^=wysiwyg-acf]').on('change', replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
-            if (YoastSEO.wp._tinyMCEHelper) {
-                jQuery('textarea[id^=wysiwyg-acf]').each( function () {
-                    YoastSEO.wp._tinyMCEHelper.addEventHandler(this.id, [ 'input', 'change', 'cut', 'paste' ],
-                        replaceVars.updateReplaceVars.bind(_self, collect, _self.replaceVars));
-                });
-            }
+            fields.on('change', replaceVars.updateReplaceVars.bind(_self, collect));
 
+            if (YoastSEO.wp._tinyMCEHelper) {
+
+                jQuery(wysiwygSelector).each( function () {
+                    YoastSEO.wp._tinyMCEHelper.addEventHandler(this.id, [ 'input', 'change', 'cut', 'paste' ],
+                        replaceVars.updateReplaceVars.bind(_self, collect));
+                });
+
+            }
 
             //Also refresh on media close as attachment data might have changed
             wp.media.frame.on('close', _self.maybeRefresh.bind(_self) );
         });
-    }
 
-}
+    }
+};
 
 App.prototype.maybeRefresh = function(){
 
@@ -199,10 +208,11 @@ fields.each(function() {
     var $el = jQuery(this).parents('.field').last();
 
     field_data.push({
-        $el     : $el,
-        key     : $el.data('field_key'),
-        name    : $el.data('field_name'),
-        type    : $el.data('field_type')
+        $el             : $el,
+        key             : $el.data('field_key'),
+        name            : $el.data('field_name'),
+        type            : $el.data('field_type'),
+        post_meta_key   : $el.data('field_name')
     });
 
 });
@@ -210,14 +220,73 @@ fields.each(function() {
 module.exports = field_data;
 },{"./../config/config.js":7}],5:[function(require,module,exports){
 module.exports = function(){
-    return _.map(acf.get_fields(), function(field){
+
+    var outerFieldsName = [
+        'flexible_content',
+        'repeater',
+        'group'
+    ];
+
+    var innerFields = [];
+    var outerFields = [];
+
+    var fields = _.map(acf.get_fields(), function(field){
 
         var field_data = jQuery.extend( true, {}, acf.get_data(jQuery(field)) );
         field_data.$el = jQuery(field);
+        field_data.post_meta_key = field_data.name;
+
+        // Collect nested and parent
+        if( outerFieldsName.indexOf(field_data.type) === -1 ) {
+            innerFields.push(field_data);
+        }else{
+            outerFields.push(field_data);
+        }
+
         return field_data;
 
     });
+
+    if( outerFields.length === 0){
+        return fields;
+    }
+
+    // Transform field names for nested fields.
+    _.each(innerFields, function(inner){
+
+       _.each(outerFields, function(outer){
+
+           if (jQuery.contains(outer.$el[0], inner.$el[0])) {
+
+               // Types that hold multiple children.
+               if (outer.type === 'flexible_content' || outer.type === 'repeater'){
+
+                   outer.children = outer.children || [];
+                   outer.children.push(inner);
+                   inner.parent = outer;
+                   inner.post_meta_key = outer.name + '_' + (outer.children.length - 1) + '_' + inner.name;
+
+               }
+
+               // Types that hold single children.
+               if (outer.type === 'group') {
+
+                   outer.children = [inner];
+                   inner.parent = outer;
+                   inner.post_meta_key = outer.name + '_' + inner.name;
+
+               }
+
+           }
+
+       });
+
+    });
+
+    return fields;
+
 };
+
 },{}],6:[function(require,module,exports){
 /* global acf, _ */
 
@@ -236,7 +305,7 @@ Collect.prototype.getFieldData = function () {
 
     if(config.debug) {
 
-        console.log('Used types:')
+        console.log('Used types:');
         console.log(used_types);
 
     }
@@ -265,10 +334,10 @@ Collect.prototype.append = function(data){
     });
 
     if(config.debug){
-        console.log('Field data:')
+        console.log('Field data:');
         console.table(field_data);
 
-        console.log('Data:')
+        console.log('Data:');
         console.log(data);
     }
 
@@ -341,53 +410,52 @@ var ReplaceVar = YoastReplaceVarPlugin.ReplaceVar;
 
 var supportedTypes = ['email', 'text', 'textarea', 'url', 'wysiwyg'];
 
-var createReplaceVars = function (collect) {
+var replaceVars = {};
+
+var replaceVarPluginAvailable = function(){
     if (ReplaceVar === undefined) {
         if (config.debug) {
-            console.log('Replacing ACF variables in the Snippet Window requires the latest version of wordpress-seo.');
+            console.log('Replacing ACF variables in the Snippet Window requires Yoast SEO >= 5.3.');
         }
-        return;
+        return false;
     }
-
-    fieldData   = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
-    replaceVars = {}
-
-    _.each(fieldData, function(field) {
-        // Remove HTML tags using jQuery in case of a wysiwyg field.
-        var content = (field.type === 'wysiwyg') ? jQuery( jQuery.parseHTML( field.content) ).text() : field.content;
-
-        replaceVars[field.name] = new ReplaceVar( '%%cf_'+field.name+'%%', content, { source: 'direct' } );
-        YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[field.name] );
-        if (config.debug) {
-            console.log("Created ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
-        }
-    });
-
-    return replaceVars;
+    return true;
 };
 
-var updateReplaceVars = function (collect, replace_vars) {
-    if (ReplaceVar === undefined) {
-        if (config.debug) {
-            console.log('Replacing ACF variables in the Snippet Window requires the latest version of wordpress-seo.');
-        }
+var updateReplaceVars = function (collect) {
+    if (!replaceVarPluginAvailable()) {
         return;
     }
 
-    fieldData = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
+    var fieldData = _.filter(collect.getFieldData(), function (field) { return _.contains(supportedTypes, field.type) });
+
     _.each(fieldData, function(field) {
         // Remove HTML tags using jQuery in case of a wysiwyg field.
         var content = (field.type === 'wysiwyg') ? jQuery(jQuery.parseHTML(field.content)).text() : field.content;
 
-        replaceVars[field.name].replacement = content;
-        if (config.debug) {
-            console.log("Updated ReplaceVar for: ", field.name, " with: ", content, replaceVars[field.name]);
+        if(replaceVars[field.post_meta_key]===undefined){
+
+            replaceVars[field.post_meta_key] = new ReplaceVar( '%%cf_'+field.post_meta_key+'%%', content, { source: 'direct' } );
+            YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[field.post_meta_key] );
+
+            if (config.debug) {
+                console.log("Created ReplaceVar for: ", field.post_meta_key, " with: ", content, replaceVars[field.post_meta_key]);
+            }
+
+        }else{
+
+            replaceVars[field.post_meta_key].replacement = content;
+
+            if (config.debug) {
+                console.log("Updated ReplaceVar for: ", field.post_meta_key, " with: ", content, replaceVars[field.post_meta_key]);
+            }
+
         }
+
     });
 };
 
 module.exports = {
-    createReplaceVars: createReplaceVars,
     updateReplaceVars: updateReplaceVars
 };
 

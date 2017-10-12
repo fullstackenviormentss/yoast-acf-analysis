@@ -11,7 +11,7 @@ Version: 2.0.0
 Author: Thomas Kräftner, ViktorFroberg, marol87, pekz0r, angrycreative, Team Yoast
 Author URI: http://angrycreative.se
 License: GPL v3
-Text Domain: yoast-acf-analysis
+Text Domain: acf-content-analysis-for-yoast-seo
 Domain Path: /languages/
  */
 
@@ -42,11 +42,11 @@ function yoast_acf_analysis_load_textdomain() {
 	$mu_path    = str_replace( '\\', '/', WPMU_PLUGIN_DIR );
 
 	if ( 0 === stripos( $plugin_path, $mu_path ) ) {
-		load_muplugin_textdomain( 'yoast-acf-analysis', $plugin_path . '/languages' );
+		load_muplugin_textdomain( 'acf-content-analysis-for-yoast-seo', $plugin_path . '/languages' );
 		return;
 	}
 
-	load_plugin_textdomain( 'yoast-acf-analysis', false, $plugin_path . '/languages' );
+	load_plugin_textdomain( 'acf-content-analysis-for-yoast-seo', false, $plugin_path . '/languages' );
 }
 add_action( 'plugins_loaded', 'yoast_acf_analysis_load_textdomain' );
 
@@ -54,8 +54,8 @@ add_action( 'plugins_loaded', 'yoast_acf_analysis_load_textdomain' );
  * Triggers a message whenever the class is missing.
  */
 if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) && is_admin() ) {
-	/* translators: %1$s resolves to Yoast SEO: ACF Analysis */
-	$message = sprintf( __( '%1$s could not be loaded because of missing files.', 'yoast-acf-analysis' ), 'ACF Content Analysis for Yoast SEO' );
+	/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
+	$message = sprintf( __( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ), 'ACF Content Analysis for Yoast SEO' );
 	add_action(
 		'admin_notices',
 		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )

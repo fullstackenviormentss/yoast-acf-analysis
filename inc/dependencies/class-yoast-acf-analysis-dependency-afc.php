@@ -27,9 +27,9 @@ final class Yoast_ACF_Analysis_Dependency_ACF implements Yoast_ACF_Analysis_Depe
 	 */
 	public function message_plugin_not_activated() {
 		$message = sprintf(
-			/* translators: %1$s resolves to Yoast SEO: ACF Analysis, %2$s resolves to Advanced Custom Fields */
-			__( '%1$s requires %2$s (free or pro) to be installed and activated.', 'yoast-acf-analysis' ),
-			'Yoast SEO: ACF Analysis',
+			/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO, %2$s resolves to Advanced Custom Fields */
+			__( '%1$s requires %2$s (free or pro) to be installed and activated.', 'acf-content-analysis-for-yoast-seo' ),
+			'ACF Content Analysis for Yoast SEO',
 			'Advanced Custom Fields'
 		);
 
