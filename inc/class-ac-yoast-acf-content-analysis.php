@@ -200,6 +200,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 			'tab',
 			'repeater',
 			'flexible_content',
+			'group',
 		);
 
 		foreach ( $default_blacklist as $type ) {
