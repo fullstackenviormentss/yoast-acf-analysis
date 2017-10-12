@@ -47,7 +47,7 @@ class Yoast_ACF_Analysis_String_Store {
 		}
 		$this->items = array_values(
 			array_diff(
-				$this->items, [ $item ]
+				$this->items, array( $item )
 			)
 		);
 		sort( $this->items );
