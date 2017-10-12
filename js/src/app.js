@@ -22,7 +22,7 @@ App.prototype.bindListeners = function(){
 
     if(helper.acf_version >= 5){
 
-        acf.add_action('ready', function () {
+        jQuery(function(){
 
             replaceVars.updateReplaceVars(collect);
 
