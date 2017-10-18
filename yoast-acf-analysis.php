@@ -47,8 +47,12 @@ function yoast_acf_analysis_load_textdomain() {
  * Triggers a message whenever the class is missing.
  */
 if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) && is_admin() ) {
-	/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
-	$message = sprintf( __( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ), 'ACF Content Analysis for Yoast SEO' );
+	$message = sprintf(
+		/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
+		__( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ),
+		'ACF Content Analysis for Yoast SEO'
+	);
+
 	add_action(
 		'admin_notices',
 		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )
