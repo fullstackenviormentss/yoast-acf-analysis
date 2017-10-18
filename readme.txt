@@ -28,7 +28,7 @@ Previously called Yoast ACF Analysis.
 
 = 2.0.1 =
 
-Released October 18th, 2017
+Released October 19th, 2017
 
 Bugfixes:
 	* Fixes the mismatch in textdomain according to the plugin slug.
