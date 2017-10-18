@@ -14,6 +14,10 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	 */
 	public function init() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+		if ( $this->is_dev_environment() ) {
+			add_action( 'init', array( $this, 'add_cpt_for_tests' ) );
+		}
 	}
 
 	/**
@@ -30,7 +34,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 		$this->boot();
 
-		if ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
+		if ( $this->is_dev_environment() ) {
 			$this->boot_dev();
 		}
 
@@ -92,7 +96,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	protected function register_config_filters() {
 		add_filter(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
-			array( $this, 'filter_scraper_config')
+			array( $this, 'filter_scraper_config' )
 		);
 	}
 
@@ -223,4 +227,20 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	protected function get_blacklist_name() {
 		return new Yoast_ACF_Analysis_String_Store();
 	}
+
+	/**
+	 * Adds a CPT for tests
+	 */
+	public function add_cpt_for_tests() {
+		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/cpt-non-public.php';
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	protected function is_dev_environment() {
+		return ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT );
+	}
+
 }
