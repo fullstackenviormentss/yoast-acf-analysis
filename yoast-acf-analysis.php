@@ -36,19 +36,12 @@ if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php' ) ) {
 
 /**
  * Loads translations.
+ *
+ * @deprecated 2.0.1
  */
 function yoast_acf_analysis_load_textdomain() {
-	$plugin_path = str_replace( '\\', '/', AC_SEO_ACF_ANALYSIS_PLUGIN_PATH );
-	$mu_path    = str_replace( '\\', '/', WPMU_PLUGIN_DIR );
-
-	if ( 0 === stripos( $plugin_path, $mu_path ) ) {
-		load_muplugin_textdomain( 'acf-content-analysis-for-yoast-seo', $plugin_path . '/languages' );
-		return;
-	}
-
-	load_plugin_textdomain( 'acf-content-analysis-for-yoast-seo', false, $plugin_path . '/languages' );
+	// As we require WordPress 4.6 and higher, we don't need to load the translation files manually anymore.
 }
-add_action( 'plugins_loaded', 'yoast_acf_analysis_load_textdomain' );
 
 /**
  * Triggers a message whenever the class is missing.
