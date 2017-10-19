@@ -212,6 +212,11 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );
+		} elseif ( ! defined( 'ACF_PRO' ) || ! ACF_PRO ) {
+			// ACF 5 FREE doesn't support these fields either.
+			$blacklist->remove( 'gallery' );
+			$blacklist->remove( 'repeater' );
+			$blacklist->remove( 'flexible_content' );
 		}
 
 		return $blacklist;
