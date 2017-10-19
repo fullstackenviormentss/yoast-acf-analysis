@@ -6,7 +6,7 @@
     and Advanced Custom Fields.
 -->
 
-* [ ] I've read and understood the [contribution guidelines](https://github.com/Yoast/wordpress-seo/blob/trunk/.github/CONTRIBUTING.md).
+* [ ] I've read and understood the [contribution guidelines](https://github.com/Yoast/yoast-acf-analysis/blob/develop/.github/CONTRIBUTING.md).
 * [ ] I've searched for any related issues and avoided creating a duplicate issue.
 
 ### Please give us a description of what happened.
@@ -29,4 +29,4 @@
 * ACF Content Analysis for Yoast SEO version: 
 * Yoast SEO version: 
 * ACF version: 
-* Relevant plugins in case of a bug:
+* Relevant plugins in case of a bug: 
