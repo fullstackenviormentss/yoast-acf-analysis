@@ -470,6 +470,7 @@ var scraperObjects = {
     'textarea':     require( "./scraper/scraper.textarea.js" ),
     'email':        require( "./scraper/scraper.email.js" ),
     'url':          require( "./scraper/scraper.url.js" ),
+    'link':          require( "./scraper/scraper.link.js" ),
 
     //Content
     'wysiwyg':      require( "./scraper/scraper.wysiwyg.js" ),
@@ -551,7 +552,8 @@ module.exports = {
     getScraper: getScraper
 
 };
-},{"./config/config.js":7,"./scraper/scraper.email.js":12,"./scraper/scraper.gallery.js":13,"./scraper/scraper.image.js":14,"./scraper/scraper.taxonomy.js":15,"./scraper/scraper.text.js":16,"./scraper/scraper.textarea.js":17,"./scraper/scraper.url.js":18,"./scraper/scraper.wysiwyg.js":19}],12:[function(require,module,exports){
+
+},{"./config/config.js":7,"./scraper/scraper.email.js":12,"./scraper/scraper.gallery.js":13,"./scraper/scraper.image.js":14,"./scraper/scraper.link.js":15,"./scraper/scraper.taxonomy.js":16,"./scraper/scraper.text.js":17,"./scraper/scraper.textarea.js":18,"./scraper/scraper.url.js":19,"./scraper/scraper.wysiwyg.js":20}],12:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -670,6 +672,36 @@ Scraper.prototype.scrape = function(fields){
 module.exports = Scraper;
 },{"./../cache/cache.attachments.js":2,"./../scraper-store.js":11}],15:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
+
+var Scraper = function() {};
+
+Scraper.prototype.scrape = function(fields){
+
+    var that = this;
+
+    fields = _.map(fields, function(field){
+
+        if(field.type !== 'link'){
+            return field;
+        }
+
+        var title = field.$el.find('input[type=hidden].input-title').val(),
+            url = field.$el.find('input[type=hidden].input-url').val(),
+            target = field.$el.find('input[type=hidden].input-target').val();
+
+        field.content = '<a href="' + url + '" target="' + target + '">' + title + '</a>';
+
+        return field;
+    });
+
+    return fields;
+
+};
+
+module.exports = Scraper;
+
+},{"./../scraper-store.js":11}],16:[function(require,module,exports){
+var scrapers = require( "./../scraper-store.js" );
 var helper = require( "./../helper.js" );
 
 var Scraper = function() {};
@@ -735,7 +767,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../helper.js":8,"./../scraper-store.js":11}],16:[function(require,module,exports){
+},{"./../helper.js":8,"./../scraper-store.js":11}],17:[function(require,module,exports){
 var config = require( "./../config/config.js" );
 var scrapers = require( "./../scraper-store.js" );
 
@@ -795,7 +827,7 @@ Scraper.prototype.isHeadline = function(field){
 };
 
 module.exports = Scraper;
-},{"./../config/config.js":7,"./../scraper-store.js":11}],17:[function(require,module,exports){
+},{"./../config/config.js":7,"./../scraper-store.js":11}],18:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -820,7 +852,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":11}],18:[function(require,module,exports){
+},{"./../scraper-store.js":11}],19:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};
@@ -845,7 +877,7 @@ Scraper.prototype.scrape = function(fields){
 };
 
 module.exports = Scraper;
-},{"./../scraper-store.js":11}],19:[function(require,module,exports){
+},{"./../scraper-store.js":11}],20:[function(require,module,exports){
 var scrapers = require( "./../scraper-store.js" );
 
 var Scraper = function() {};

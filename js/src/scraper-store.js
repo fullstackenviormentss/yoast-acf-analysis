@@ -8,6 +8,7 @@ var scraperObjects = {
     'textarea':     require( "./scraper/scraper.textarea.js" ),
     'email':        require( "./scraper/scraper.email.js" ),
     'url':          require( "./scraper/scraper.url.js" ),
+    'link':          require( "./scraper/scraper.link.js" ),
 
     //Content
     'wysiwyg':      require( "./scraper/scraper.wysiwyg.js" ),
