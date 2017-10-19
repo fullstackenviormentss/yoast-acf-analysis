@@ -7,7 +7,7 @@ Before filing a bug report or a feature request, be sure to read the contributio
 We use GitHub exclusively for well-documented bugs, feature requests and code contributions.
 Please follow the instructions in the issue and PR templates. 
 
-To receive free support for ACF Content Analisys for Yoast SEO we have the following channels:
+To receive free support for ACF Content Analysis for Yoast SEO we have the following channels:
 * [Support forums](https://wordpress.org/support/plugin/acf-content-analysis-for-yoast-seo/) on WordPress.org
 
 ## Security issues
@@ -15,7 +15,7 @@ Please do not report security issues here. Instead, email them to security at yo
 
 ## I have found a bug
 Before opening a new issue, please:
-* update to the newest versions of WordPress and ACF Content Analisys for Yoast SEO.
+* update to the newest versions of WordPress, ACF Content Analysis for Yoast SEO, Yoast SEO and Advanced Custom Fields.
 * search for duplicate issues to prevent opening a duplicate issue. If there is already an open existing issue, please comment on that issue.
 * check our [knowledge base](http://kb.yoast.com) for your issue. There are a lot of common errors documented there with possible solutions.
 * check for [plugin and theme conflicts](https://kb.yoast.com/kb/how-to-check-for-plugin-conflicts/). Please report your findings in the issue.
@@ -28,7 +28,7 @@ Before opening a new issue, please:
 * add as much information as possible. For example: give us a clear explanation of why you think the feature request is something we should consider for the Yoast SEO plugins.
 
 ## I want to create a patch
-Community made patches, localizations, bug reports and contributions are very welcome and ACF Content Analisys for Yoast SEO to become the best it can be.
+Community made patches, localizations, bug reports and contributions are very welcome and ACF Content Analysis for Yoast SEO to become the best it can be.
 
 When contributing please ensure you follow the guidelines below so that we can keep on top of things.
 
@@ -37,11 +37,11 @@ Make sure your problem does not exist as a ticket already by searching through [
 
 #### Fixing an issue
 
-* Fork the repository on GitHub (make sure to use the trunk branch, not master).
+* Fork the repository on GitHub (make sure to use the `develop` branch, not `master`).
 * Make the changes to your forked repository.
 * Ensure you stick to the [WordPress Coding Standards](http://make.wordpress.org/core/handbook/coding-standards/) and you properly document any new functions, actions and filters following the [documentation standards](http://make.wordpress.org/core/handbook/inline-documentation-standards/php-documentation-standards/).
 * When committing, reference your issue and include a note about the fix.
-* Push the changes to your fork and submit a pull request to the 'trunk' branch of the Yoast SEO repository.
+* Push the changes to your fork and submit a pull request to the `develop` branch of the Yoast SEO repository.
 
 We will review your pull request and merge when everything is in order. We will help you to make sure the code complies with the standards described above.
 

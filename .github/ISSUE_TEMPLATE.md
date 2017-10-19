@@ -28,5 +28,6 @@
 * WordPress version: 
 * ACF Content Analysis for Yoast SEO version: 
 * Yoast SEO version: 
+* ACF type: <!-- Please remove this and enter `free` or `pro` -->
 * ACF version: 
 * Relevant plugins in case of a bug: 
