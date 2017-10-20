@@ -16,7 +16,7 @@
     "score"
   ],
   "type": "wordpress-plugin",
-  "homepage": "https://wordpress.org/plugins/yoast-seo-acf-analysis/",
+  "homepage": "https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/",
   "license": "GPL-3.0",
   "authors": [
     {
@@ -38,7 +38,7 @@
   ],
   "support": {
     "issues": "https://github.com/Yoast/yoast-acf-analysis/issues",
-    "forum": "https://wordpress.org/support/plugin/yoast-seo-acf-analysis",
+    "forum": "https://wordpress.org/support/plugin/acf-content-analysis-for-yoast-seo",
     "source": "https://github.com/Yoast/yoast-acf-analysis"
   },
   "minimum-stability": "dev",

@@ -5,7 +5,7 @@ Requires at least: 4.6
 Tested up to: 4.8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 Text Domain: acf-content-analysis-for-yoast-seo
 
 WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
@@ -26,11 +26,22 @@ Previously called Yoast ACF Analysis.
 
 == Changelog ==
 
+= 2.0.1 =
+
+Released October 19th, 2017
+
+Bugfixes:
+	* Fixes the mismatch in textdomain according to the plugin slug.
+	* Fixes using an incorrect path when loading plugin data.
+	* Fixes a bug with flexible content and repeaters, in combination with ACF 5, causing JavaScript errors.
+	* Fixes a bug with short array notation which is a problem on sites running on PHP 5.3 or lower.
+	* Fixes a bug where assets are loaded without checking for required dependencies.
+
 = 2.0.0 =
 
 Released August 22th, 2017
 
-* Changed:
+Changes:
 	* Complete rewrite, including full support for ACF 4 and 5.
 
 = 1.2.1 =
