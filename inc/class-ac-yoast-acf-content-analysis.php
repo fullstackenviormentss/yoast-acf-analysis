@@ -207,13 +207,14 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 			$blacklist->add( $type );
 		}
 
-		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
-			$blacklist->remove( 'gallery' );
-			$blacklist->remove( 'repeater' );
-			$blacklist->remove( 'flexible_content' );
-		} elseif ( ! defined( 'ACF_PRO' ) || ! ACF_PRO ) {
-			// ACF 5 FREE doesn't support these fields either.
+		/**
+		 * Disable Pro fields for anything but ACF 5 pro.
+		 *
+		 * - It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
+		 * - ACF v5 FREE on the other hand does not support these fields either.
+		 */
+		if ( ! defined( 'ACF_PRO' ) || ! ACF_PRO ) {
+
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );
