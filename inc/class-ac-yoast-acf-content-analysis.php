@@ -229,7 +229,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	}
 
 	/**
-	 * Adds a CPT for tests
+	 * Adds a Custom Post Type used in the general/cpt Nightwatch test
 	 */
 	public function add_cpt_for_tests() {
 		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/cpt-non-public.php';
@@ -237,6 +237,8 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 
 	/**
+	 * Returns true if the plugin is currently running in a development environment.
+	 *
 	 * @return bool
 	 */
 	protected function is_dev_environment() {
