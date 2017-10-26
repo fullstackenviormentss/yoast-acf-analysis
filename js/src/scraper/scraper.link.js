@@ -1,12 +1,20 @@
-var scrapers = require( "./../scraper-store.js" );
+require( "./../scraper-store.js" );
 
 var Scraper = function() {};
 
+/**
+ * Scraper for the link field type.
+ *
+ * @param {Object} fields
+ * @returns {Object}
+ */
 Scraper.prototype.scrape = function(fields){
 
-    var that = this;
-
-    fields = _.map(fields, function(field){
+    /**
+    * Set content for all link fields as a-tag with title, url and target.
+    * Return the fields object containing all fields.
+    */
+    return _.map(fields, function(field){
 
         if(field.type !== 'link'){
             return field;
@@ -20,8 +28,6 @@ Scraper.prototype.scrape = function(fields){
 
         return field;
     });
-
-    return fields;
 
 };
 

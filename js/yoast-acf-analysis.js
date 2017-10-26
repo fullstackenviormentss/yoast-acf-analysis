@@ -470,7 +470,7 @@ var scraperObjects = {
     'textarea':     require( "./scraper/scraper.textarea.js" ),
     'email':        require( "./scraper/scraper.email.js" ),
     'url':          require( "./scraper/scraper.url.js" ),
-    'link':          require( "./scraper/scraper.link.js" ),
+    'link':         require( "./scraper/scraper.link.js" ),
 
     //Content
     'wysiwyg':      require( "./scraper/scraper.wysiwyg.js" ),
@@ -671,15 +671,23 @@ Scraper.prototype.scrape = function(fields){
 
 module.exports = Scraper;
 },{"./../cache/cache.attachments.js":2,"./../scraper-store.js":11}],15:[function(require,module,exports){
-var scrapers = require( "./../scraper-store.js" );
+require( "./../scraper-store.js" );
 
 var Scraper = function() {};
 
+/**
+ * Scraper for the link field type.
+ *
+ * @param {Object} fields
+ * @returns {Object}
+ */
 Scraper.prototype.scrape = function(fields){
 
-    var that = this;
-
-    fields = _.map(fields, function(field){
+    /**
+    * Set content for all link fields as a-tag with title, url and target.
+    * Return the fields object containing all fields.
+    */
+    return _.map(fields, function(field){
 
         if(field.type !== 'link'){
             return field;
@@ -693,8 +701,6 @@ Scraper.prototype.scrape = function(fields){
 
         return field;
     });
-
-    return fields;
 
 };
 
