@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Yoast_ACF_Analysis
- *
  * Adds ACF data to the content analyses of WordPress SEO.
  */
 class AC_Yoast_SEO_ACF_Content_Analysis {
