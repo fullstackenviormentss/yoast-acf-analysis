@@ -24,6 +24,35 @@ This Plugin is compatible with the free ACF 4 Version as well as with the PRO Ve
 
 Previously called Yoast ACF Analysis.
 
+== Filters ==
+
+= Remove specific field from scoring =
+`add_filter( 'yoast-acf-analysis/blacklist_name', function ( $blacklist_name ) {
+    $blacklist_name->add( 'my-field-name' );
+    return $blacklist_name;
+});`
+
+= Remove field type from scoring =
+`add_filter( 'yoast-acf-analysis/blacklist_type', function ( $blacklist_type ) {
+    // text, image etc
+    $blacklist_type->add( 'text' );
+    $blacklist_type->add( 'image' );
+    return $blacklist_type;
+});`
+
+= Define custom field a specific heading value =
+`add_filter( 'yoast-acf-analysis/headlines', function ( $headlines ) {
+    // value from 1-6, 1=h1, 6=h6
+    $headlines['field_591eb45f2be86'] = 3;
+    return $headlines;
+});`
+
+= Change refresh rate =
+`add_filter( 'yoast-acf-analysis/refresh_rate', function () {
+    // Refresh rates in milliseconds
+    return 1000;
+});`
+
 == Changelog ==
 
 = 2.0.1 =
