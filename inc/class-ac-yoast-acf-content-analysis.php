@@ -82,7 +82,11 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	 * Boots the plugin for dev environment.
 	 */
 	public function boot_dev() {
-		$version = ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) ? '4' : '5';
+		$registry = Yoast_ACF_Analysis_Facade::get_registry();
+		$configuration = $registry->get( 'config' );
+
+		$version = ( -1 === version_compare( $configuration->get_acf_version(), 5 ) ) ? '4' : '5';
+
 		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/acf' . $version . '.php';
 	}
 
