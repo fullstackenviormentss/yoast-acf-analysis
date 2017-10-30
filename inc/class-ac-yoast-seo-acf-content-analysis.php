@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Yoast_ACF_Analysis
- *
  * Adds ACF data to the content analyses of WordPress SEO.
  */
 class AC_Yoast_SEO_ACF_Content_Analysis {
@@ -92,7 +90,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	protected function register_config_filters() {
 		add_filter(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
-			array( $this, 'filter_scraper_config')
+			array( $this, 'filter_scraper_config' )
 		);
 	}
 
