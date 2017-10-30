@@ -3,7 +3,6 @@
 namespace Yoast\AcfAnalysis\Tests;
 
 use Brain\Monkey;
-use Brain\Monkey\Filters;
 
 class MainTest extends \PHPUnit_Framework_TestCase {
 
