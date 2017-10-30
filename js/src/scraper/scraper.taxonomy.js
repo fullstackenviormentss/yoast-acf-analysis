@@ -17,7 +17,7 @@ Scraper.prototype.scrape = function(fields){
 
         if( field.$el.find('.acf-taxonomy-field[data-type="multi_select"]').length > 0 ){
 
-            var select2Target = (helper.acf_version >= 5.6)?'select':'input';
+            var select2Target = (acf.select2.version >= 4)?'select':'input';
 
             terms = _.pluck(
                 field.$el.find('.acf-taxonomy-field[data-type="multi_select"] ' + select2Target )
