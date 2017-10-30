@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Checks wether ACF is installed.
+ */
 final class Yoast_ACF_Analysis_Dependency_ACF implements Yoast_ACF_Analysis_Dependency {
 
 	/**
