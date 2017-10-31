@@ -32,8 +32,16 @@ cache:
     - vendor
     - $HOME/.composer/cache
 
+before_install:
+- if [[ "$CHECKJS" == "1" ]]; then nvm install $TRAVIS_NODE_VERSION; fi
+- if [[ "$CHECKJS" == "1" ]]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi
+- if [[ "$CHECKJS" == "1" ]]; then export PATH=$HOME/.yarn/bin:$PATH; fi
+
 install:
 - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" && ${TRAVIS_PHP_VERSION:0:3} != "7.0" || $TRAVIS_PHP_VERSION == "nightly" ]]; then composer install --no-interaction; fi
+- if [[ "$CHECKJS" == "1" ]]; then yarn global add grunt-cli; fi
+- if [[ "$CHECKJS" == "1" ]]; then yarn install; fi
+- if [[ "$CHECKJS" == "1" ]]; then cd premium && yarn install && cd ..; fi
 
 before_script:
 - PLUGIN_SLUG=$(basename $(pwd))
@@ -55,4 +63,5 @@ script:
 - if [[ "$PHPLINT" == "1" && ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then find -L . -path ./vendor -prune -o -path ./node_modules -prune -o -path ./tests -prune -o -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l; fi
 - if [[ "$PHPLINT" == "1" && ${TRAVIS_PHP_VERSION:0:1} == "7" ]]; then find -L . -path ./vendor -prune -o -path ./node_modules -prune -o -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l; fi
 - if [[ "$PHPCS" == "1" ]]; then composer configure-phpcs; composer check-cs-errors; fi
+- if [[ "$CHECKJS" == "1" ]]; then grunt check; fi
 - if [[ "$PHPUNIT" == "1" ]]; then composer test; fi
