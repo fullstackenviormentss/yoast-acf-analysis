@@ -41,7 +41,6 @@ install:
 - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" && ${TRAVIS_PHP_VERSION:0:3} != "7.0" || $TRAVIS_PHP_VERSION == "nightly" ]]; then composer install --no-interaction; fi
 - if [[ "$CHECKJS" == "1" ]]; then yarn global add grunt-cli; fi
 - if [[ "$CHECKJS" == "1" ]]; then yarn install; fi
-- if [[ "$CHECKJS" == "1" ]]; then cd premium && yarn install && cd ..; fi
 
 before_script:
 - PLUGIN_SLUG=$(basename $(pwd))
