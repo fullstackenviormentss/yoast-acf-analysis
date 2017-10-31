@@ -35,8 +35,14 @@
   "devDependencies": {
     "browserify": "^14.3.0",
     "chromedriver": "^2.29.0",
+    "eslint-config-yoast": "^2.0.2",
+    "eslint-plugin-yoast": "^1.0.1",
+    "grunt": "^1.0.1",
+    "grunt-eslint": "^20.1.0",
+    "load-grunt-config": "^0.19.2",
     "nightwatch": "^0.9.15",
     "ps-tree": "^1.1.0",
+    "time-grunt": "^1.4.0",
     "watchify": "^3.9.0"
   }
 }
