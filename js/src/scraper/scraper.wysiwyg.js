@@ -24,13 +24,13 @@ Scraper.prototype.scrape = function(fields){
 /**
  * Adapted from wp-seo-shortcode-plugin-305.js:115-126
  *
- * @returns {string}
+ * @param {Object} field Field to get the content for.
+ *
+ * @returns {string} The content of the field.
  */
 var getContentTinyMCE = function(field) {
     var textarea = field.$el.find('textarea')[0];
-
     var editorID = textarea.id;
-
     var val = textarea.value;
 
     if ( isTinyMCEAvailable(editorID) ) {
@@ -43,9 +43,9 @@ var getContentTinyMCE = function(field) {
 /**
  * Adapted from wp-seo-post-scraper-plugin-310.js:196-210
  *
+ * @param {string} editorID TinyMCE identifier to look up.
  *
- * @param editorID
- * @returns {boolean}
+ * @returns {boolean} True if an editor exists for the supplied ID.
  */
 var isTinyMCEAvailable = function(editorID) {
     if ( typeof tinyMCE === 'undefined' ||

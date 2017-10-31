@@ -31,8 +31,10 @@ var scrapers = {};
 /**
  * Set a scraper object on the store. Existing scrapers will be overwritten.
  *
- * @param {Object} scraper
- * @param {string} type
+ * @param {Object} scraper Scraper object to use.
+ * @param {string} type Identifier of the scraper.
+ *
+ * @returns {Object} The scraper which was added to the store.
  */
 var setScraper = function(scraper, type){
 
@@ -49,8 +51,9 @@ var setScraper = function(scraper, type){
  * Returns the scraper object for a field type.
  * If there is no scraper object for this field type a no-op scraper is returned.
  *
- * @param {string} type
- * @returns {Object}
+ * @param {string} type Type to get the scraper for.
+ *
+ * @returns {Object} Scraper connected to the supplied type.
  */
 var getScraper = function(type){
 
@@ -69,13 +72,14 @@ var getScraper = function(type){
             }
         };
     }
-}
+};
 
 /**
  * Checks if there already is a scraper for a field type in the store.
  *
- * @param {string} type
- * @returns {boolean}
+ * @param {string} type Type to check for a connected scraper.
+ *
+ * @returns {boolean} True if a scraper is connected to the type.
  */
 var hasScraper = function(type){
 
