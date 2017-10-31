@@ -1,4 +1,4 @@
-var assert = require('assert');
+/* globals YoastACFAnalysisConfig */
 var logContains = require('../../helpers/logContains');
 var dummyContent = require('../../helpers/dummyContent');
 var simpleField = require('../../helpers/simpleField');
