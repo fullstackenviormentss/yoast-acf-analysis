@@ -9,22 +9,30 @@ global $wp_filter;
 $hook_name = 'admin_init';
 $function_name = 'yoast_acf_analysis_test_data_loader';
 
-if ( ! is_array( $wp_filter ) ) {
-	$wp_filter = array();
-}
+if ( ! function_exists( 'add_action' ) ) {
 
-if ( ! isset( $wp_filter[ $hook_name ] ) ) {
-	$wp_filter[ $hook_name ] = array();
-}
+	if ( ! is_array( $wp_filter ) ) {
+		$wp_filter = array();
+	}
 
-if ( ! isset( $wp_filter[ $hook_name ][10] ) ) {
-	$wp_filter[ $hook_name ][10] = array();
-}
+	if ( ! isset( $wp_filter[ $hook_name ] ) ) {
+		$wp_filter[ $hook_name ] = array();
+	}
 
-$wp_filter[ $hook_name ][10][ $function_name ] = array(
-	'function' => $function_name,
-	'accepted_args' => 1,
-);
+	if ( ! isset( $wp_filter[ $hook_name ][10] ) ) {
+		$wp_filter[ $hook_name ][10] = array();
+	}
+
+	$wp_filter[ $hook_name ][10][ $function_name ] = array(
+		'function' => $function_name,
+		'accepted_args' => 1,
+	);
+
+}else{
+
+	add_action( $hook_name, $function_name );
+
+}
 
 function yoast_acf_analysis_test_data_loader() {
 

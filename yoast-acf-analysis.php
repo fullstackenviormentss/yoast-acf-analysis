@@ -27,11 +27,14 @@ if ( ! defined( 'AC_SEO_ACF_ANALYSIS_PLUGIN_PATH' ) ) {
 	define( 'AC_SEO_ACF_ANALYSIS_PLUGIN_NAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 }
 
-if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php' ) ) {
-	require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php';
-
-	$ac_yoast_seo_acf_analysis = new AC_Yoast_SEO_ACF_Content_Analysis();
-	$ac_yoast_seo_acf_analysis->init();
+if ( version_compare( PHP_VERSION, '5.3.2', '>=' ) ) {
+	if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload.php' ) ) {
+		require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload.php';
+	}
+} else {
+	if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php' ) ) {
+		require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php';
+	}
 }
 
 /**
@@ -57,4 +60,7 @@ if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) && is_admin() ) {
 		'admin_notices',
 		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )
 	);
+} else {
+	$ac_yoast_seo_acf_analysis = new AC_Yoast_SEO_ACF_Content_Analysis();
+	$ac_yoast_seo_acf_analysis->init();
 }
