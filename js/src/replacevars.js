@@ -31,14 +31,14 @@ var updateReplaceVars = function( collect ) {
 		// Remove HTML tags using jQuery in case of a wysiwyg field.
 		var content = ( field.type === "wysiwyg" ) ? jQuery( jQuery.parseHTML( field.content ) ).text() : field.content;
 
-		if( typeof replaceVars[ field.post_meta_key ] === "undefined" ) {
+		if ( typeof replaceVars[ field.post_meta_key ] === "undefined" ) {
 			replaceVars[ field.post_meta_key ] = new ReplaceVar( "%%cf_" + field.post_meta_key + "%%", content, { source: "direct" } );
 			YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[ field.post_meta_key ] );
 
 			if ( config.debug ) {
 				console.log( "Created ReplaceVar for: ", field.post_meta_key, " with: ", content, replaceVars[ field.post_meta_key ] );
 			}
-		}else{
+		} else {
 			replaceVars[ field.post_meta_key ].replacement = content;
 
 			if ( config.debug ) {

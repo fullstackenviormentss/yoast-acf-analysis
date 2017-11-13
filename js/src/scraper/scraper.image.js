@@ -8,7 +8,7 @@ Scraper.prototype.scrape = function( fields ) {
 	var attachment_ids = [];
 
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "image" ) {
+		if ( field.type !== "image" ) {
 			return field;
 		}
 
@@ -18,7 +18,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 		attachment_ids.push( attachment_id );
 
-		if( attachmentCache.get( attachment_id, "attachment" ) ) {
+		if ( attachmentCache.get( attachment_id, "attachment" ) ) {
 			var attachment = attachmentCache.get( attachment_id, "attachment" );
 
 			field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';

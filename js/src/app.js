@@ -57,9 +57,9 @@ App.prototype.acf5Listener = function() {
 };
 
 App.prototype.bindListeners = function() {
-	if( helper.acf_version >= 5 ) {
+	if ( helper.acf_version >= 5 ) {
 		jQuery( this.acf4Listener.bind( this ) );
-	}else{
+	} else {
 		var fieldSelectors = config.fieldSelectors.slice( 0 );
 		var wysiwygSelector = "textarea[id^=wysiwyg-acf]";
 
@@ -76,7 +76,7 @@ App.prototype.maybeRefresh = function() {
 	}
 
 	analysisTimeout = window.setTimeout( function() {
-		if( config.debug ) {
+		if ( config.debug ) {
 			console.log( "Recalculate..." + new Date() + "(Internal)" );
 		}
 

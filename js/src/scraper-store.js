@@ -48,7 +48,7 @@ var hasScraper = function( type ) {
  * @returns {Object} The scraper which was added to the store.
  */
 var setScraper = function( scraper, type ) {
-	if( config.debug && hasScraper( type ) ) {
+	if ( config.debug && hasScraper( type ) ) {
 		console.warn( 'Scraper for "' + type + '" already exists and will be overwritten.' );
 	}
 
@@ -66,15 +66,15 @@ var setScraper = function( scraper, type ) {
  * @returns {Object} Scraper connected to the supplied type.
  */
 var getScraper = function( type ) {
-	if( hasScraper( type ) ) {
+	if ( hasScraper( type ) ) {
 		return scrapers[ type ];
-	}else if( type in scraperObjects ) {
+	} else if ( type in scraperObjects ) {
 		return setScraper( new scraperObjects[ type ](), type );
 	}
 	// If we do not have a scraper just pass the fields through so it will be filtered out by the app.
 	return {
 		scrape: function( fields ) {
-			if( config.debug ) {
+			if ( config.debug ) {
 				console.warn( "No Scraper for field type: " + type );
 			}
 			return fields;

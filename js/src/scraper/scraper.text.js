@@ -8,7 +8,7 @@ Scraper.prototype.scrape = function( fields ) {
 	var that = this;
 
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "text" ) {
+		if ( field.type !== "text" ) {
 			return field;
 		}
 
@@ -23,7 +23,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 Scraper.prototype.wrapInHeadline = function( field ) {
 	var level = this.isHeadline( field );
-	if( level ) {
+	if ( level ) {
 		field.content = "<h" + level + ">" + field.content + "</h" + level + ">";
 	}
 
@@ -36,12 +36,12 @@ Scraper.prototype.isHeadline = function( field ) {
 	} );
 
 	// It has to be an integer
-	if( level ) {
+	if ( level ) {
 		level = parseInt( level, 10 );
 	}
 
 	// Headlines only exist from h1 to h6
-	if( level < 1 || level > 6 ) {
+	if ( level < 1 || level > 6 ) {
 		level = false;
 	}
 

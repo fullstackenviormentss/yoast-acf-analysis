@@ -8,7 +8,7 @@ var _cache;
 Cache.prototype.set = function( id, value, store ) {
 	store = typeof store === "undefined" ? "default" : store;
 
-	if( ! ( store in _cache ) ) {
+	if ( ! ( store in _cache ) ) {
 		_cache[ store ] = {};
 	}
 
@@ -40,9 +40,9 @@ Cache.prototype.getUncached =  function( ids, store ) {
 Cache.prototype.clear =  function( store ) {
 	store = typeof store === "undefined" ? "default" : store;
 
-	if( store === "all" ) {
+	if ( store === "all" ) {
 		_cache = {};
-	}else{
+	} else {
 		_cache[ store ] = {};
 	}
 };

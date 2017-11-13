@@ -16,16 +16,16 @@ module.exports = function() {
 		field_data.post_meta_key = field_data.name;
 
 		// Collect nested and parent
-		if( outerFieldsName.indexOf( field_data.type ) === -1 ) {
+		if ( outerFieldsName.indexOf( field_data.type ) === -1 ) {
 			innerFields.push( field_data );
-		}else{
+		} else {
 			outerFields.push( field_data );
 		}
 
 		return field_data;
 	} );
 
-	if( outerFields.length === 0 ) {
+	if ( outerFields.length === 0 ) {
 		return fields;
 	}
 

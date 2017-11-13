@@ -4,7 +4,7 @@ var Scraper = function() {};
 
 Scraper.prototype.scrape = function( fields ) {
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "textarea" ) {
+		if ( field.type !== "textarea" ) {
 			return field;
 		}
 

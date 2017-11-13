@@ -23,17 +23,17 @@ var refresh = function( attachment_ids ) {
 var get = function( id ) {
 	var attachment = cache.get( id, "attachment" );
 
-	if( ! attachment ) {
+	if ( ! attachment ) {
 		return false;
 	}
 
 	var changedAttachment = window.wp.media.attachment( id );
 
-	if( changedAttachment.has( "alt" ) ) {
+	if ( changedAttachment.has( "alt" ) ) {
 		attachment.alt = changedAttachment.get( "alt" );
 	}
 
-	if( changedAttachment.has( "title" ) ) {
+	if ( changedAttachment.has( "title" ) ) {
 		attachment.title = changedAttachment.get( "title" );
 	}
 

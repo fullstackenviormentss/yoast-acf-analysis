@@ -13,7 +13,7 @@ Collect.prototype.getFieldData = function() {
 
 	var used_types = _.uniq( _.pluck( field_data, "type" ) );
 
-	if( config.debug ) {
+	if ( config.debug ) {
 		console.log( "Used types:" );
 		console.log( used_types );
 	}
@@ -26,19 +26,19 @@ Collect.prototype.getFieldData = function() {
 };
 
 Collect.prototype.append = function( data ) {
-	if( config.debug ) {
+	if ( config.debug ) {
 		console.log( "Recalculate..." + new Date() );
 	}
 
 	var field_data = this.getFieldData();
 
 	_.each( field_data, function( field ) {
-		if( typeof field.content !== "undefined" && field.content !== "" ) {
+		if ( typeof field.content !== "undefined" && field.content !== "" ) {
 			data += "\n" + field.content;
 		}
 	} );
 
-	if( config.debug ) {
+	if ( config.debug ) {
 		console.log( "Field data:" );
 		console.table( field_data );
 
@@ -50,7 +50,7 @@ Collect.prototype.append = function( data ) {
 };
 
 Collect.prototype.getData = function() {
-	if( helper.acf_version >= 5 ) {
+	if ( helper.acf_version >= 5 ) {
 		return require( "./collect-v5.js" )();
 	}
 	return require( "./collect-v4.js" );

@@ -9,3 +9,4 @@ rules:
   valid-jsdoc: 2
   global-require: 1
   strict: 1
+  keyword-spacing: 2

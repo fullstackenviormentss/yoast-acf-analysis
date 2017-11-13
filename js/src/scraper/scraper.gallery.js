@@ -8,7 +8,7 @@ Scraper.prototype.scrape = function( fields ) {
 	var attachment_ids = [];
 
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "gallery" ) {
+		if ( field.type !== "gallery" ) {
 			return field;
 		}
 
@@ -22,7 +22,7 @@ Scraper.prototype.scrape = function( fields ) {
 			attachment_ids.push( attachment_id );
 
 			// If we have the attachment data in the cache we can return a useful value
-			if( attachmentCache.get( attachment_id, "attachment" ) ) {
+			if ( attachmentCache.get( attachment_id, "attachment" ) ) {
 				var attachment = attachmentCache.get( attachment_id, "attachment" );
 
 				field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';
