@@ -4,6 +4,7 @@ namespace Yoast\AcfAnalysis\Tests\Configuration;
 
 use Brain\Monkey;
 use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 
@@ -35,6 +36,20 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertEquals( Filters\applied( 'acf/get_info' ), 1 );
+	}
+
+	public function testACF5VersionFunction() {
+		$acf_version = '5.0.0';
+		Functions\when( 'acf_get_setting' )->justReturn( $acf_version );
+
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store()
+		);
+		$config        = $configuration->to_array();
+
+		$this->assertEquals( $acf_version, $config['acfVersion'] );
 	}
 
 	public function testBlacklistTypeFilter() {
