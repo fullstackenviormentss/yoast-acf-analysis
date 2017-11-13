@@ -21,6 +21,7 @@ Cache.prototype.get =  function( id, store ) {
 	if ( store in _cache && id in _cache[ store ] ) {
 		return _cache[ store ][ id ];
 	}
+
 	return false;
 };
 
@@ -33,6 +34,7 @@ Cache.prototype.getUncached =  function( ids, store ) {
 
 	return ids.filter( function( id ) {
 		var value = that.get( id, store );
+
 		return value === false;
 	} );
 };

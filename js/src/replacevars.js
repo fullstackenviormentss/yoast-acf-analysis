@@ -13,8 +13,10 @@ var replaceVarPluginAvailable = function() {
 		if ( config.debug ) {
 			console.log( "Replacing ACF variables in the Snippet Window requires Yoast SEO >= 5.3." );
 		}
+
 		return false;
 	}
+
 	return true;
 };
 
