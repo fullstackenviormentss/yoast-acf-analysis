@@ -58,7 +58,7 @@ App.prototype.acf5Listener = function() {
 
 App.prototype.bindListeners = function() {
 	if ( helper.acf_version >= 5 ) {
-		jQuery( this.acf4Listener.bind( this ) );
+		jQuery( this.acf5Listener.bind( this ) );
 	} else {
 		var fieldSelectors = config.fieldSelectors.slice( 0 );
 		var wysiwygSelector = "textarea[id^=wysiwyg-acf]";
@@ -66,7 +66,7 @@ App.prototype.bindListeners = function() {
 		// Ignore Wysiwyg fields because they trigger a refresh in Yoast SEO itself
 		var fieldSelectorsWithoutWysiwyg = _.without( fieldSelectors, wysiwygSelector );
 
-		jQuery( document ).on( "acf/setup_fields", this.acf5Listener.bind( this, fieldSelectors, wysiwygSelector, fieldSelectorsWithoutWysiwyg ) );
+		jQuery( document ).on( "acf/setup_fields", this.acf4Listener.bind( this, fieldSelectors, wysiwygSelector, fieldSelectorsWithoutWysiwyg ) );
 	}
 };
 
