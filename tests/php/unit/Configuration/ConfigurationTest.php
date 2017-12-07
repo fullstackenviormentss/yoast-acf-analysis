@@ -3,8 +3,8 @@
 namespace Yoast\AcfAnalysis\Tests\Configuration;
 
 use Brain\Monkey;
-use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 
@@ -15,13 +15,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 
 	public function testEmpty() {
 
-		$version = '4.0.0';
-
-		Functions\expect( 'get_option' )
-			->once()
-			->with( 'acf_version' )
-			->andReturn( $version );
-
 		$configuration = new \Yoast_ACF_Analysis_Configuration(
 			new \Yoast_ACF_Analysis_String_Store(),
 			new \Yoast_ACF_Analysis_String_Store(),
@@ -31,7 +24,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame(
 			[
 				'pluginName'     => \Yoast_ACF_Analysis_Facade::get_plugin_name(),
-				'acfVersion'     => $version,
+				'acfVersion'     => 'version',
 				'scraper'        => [],
 				'refreshRate'    => 1000,
 				'blacklistType'  => [],
@@ -42,6 +35,21 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 			$configuration->to_array()
 		);
 
+		$this->assertEquals( Filters\applied( 'acf/get_info' ), 1 );
+	}
+
+	public function testACF5VersionFunction() {
+		$acf_version = '5.0.0';
+		Functions\when( 'acf_get_setting' )->justReturn( $acf_version );
+
+		$configuration = new \Yoast_ACF_Analysis_Configuration(
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store(),
+			new \Yoast_ACF_Analysis_String_Store()
+		);
+		$config        = $configuration->to_array();
+
+		$this->assertEquals( $acf_version, $config['acfVersion'] );
 	}
 
 	public function testBlacklistTypeFilter() {
@@ -180,8 +188,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $store, $configuration->get_blacklist_name() );
 	}
 
-	public function testScraperConfigFilter(){
-		$config = array();
+	public function testScraperConfigFilter() {
+		$config    = array();
 		$blacklist = new \Yoast_ACF_Analysis_String_Store();
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration(
@@ -198,7 +206,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( $config, $configuration->get_scraper_config() );
 	}
 
-	public function testInvalidScraperConfigFilter(){
+	public function testInvalidScraperConfigFilter() {
 		$blacklist = new \Yoast_ACF_Analysis_String_Store();
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration(
@@ -245,8 +253,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame( 200, $configuration->get_refresh_rate() );
 	}
 
-	public function testFieldSelectorsFilter(){
-		$custom_store = new \Yoast_ACF_Analysis_String_Store();
+	public function testFieldSelectorsFilter() {
+		$custom_store   = new \Yoast_ACF_Analysis_String_Store();
 		$field_selector = new \Yoast_ACF_Analysis_String_Store();
 
 		$configuration = new \Yoast_ACF_Analysis_Configuration(

@@ -48,7 +48,13 @@ class Yoast_ACF_Analysis_Configuration {
 	 * @return string The ACF version.
 	 */
 	public function get_acf_version() {
-		return get_option( 'acf_version' );
+		// ACF 5 introduces `acf_get_setting`, so this might not always be available.
+		if ( function_exists( 'acf_get_setting' ) ) {
+			return acf_get_setting( 'version' );
+		}
+
+		// Fall back on filter use.
+		return apply_filters( 'acf/get_info', 'version' );
 	}
 
 	/**
