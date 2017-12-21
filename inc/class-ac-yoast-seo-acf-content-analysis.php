@@ -28,10 +28,6 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 		$this->boot();
 
-		if ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
-			$this->boot_dev();
-		}
-
 		$this->register_config_filters();
 
 		$assets = new Yoast_ACF_Analysis_Assets();
@@ -74,21 +70,6 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 		}
 
 		$registry->add( 'config', $configuration );
-	}
-
-	/**
-	 * Boots the plugin for dev environment.
-	 */
-	public function boot_dev() {
-		$registry = Yoast_ACF_Analysis_Facade::get_registry();
-		$configuration = $registry->get( 'config' );
-
-		$version = 4;
-		if ( version_compare( $configuration->get_acf_version(), 5, '>=' ) ) {
-			$version = 5;
-		}
-
-		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/acf' . $version . '.php';
 	}
 
 	/**

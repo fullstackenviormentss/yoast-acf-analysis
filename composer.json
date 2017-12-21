@@ -59,7 +59,10 @@
   "autoload-dev": {
     "psr-4": {
       "Yoast\\AcfAnalysis\\Tests\\": "tests/php/unit"
-    }
+    },
+    "files": [
+      "tests/js/system/data/test-data-loader.php"
+    ]
   },
   "scripts": {
     "post-install-cmd": [
