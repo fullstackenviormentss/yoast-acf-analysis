@@ -1,38 +1,6 @@
 <?php
 
-/**
- * This file is loaded by Composer autoload-dev, and that happens before `add_action` is available.
- * So we "manually" add in global `$wp_filter` the function that loads translations.
- */
-global $wp_filter;
-
-$hook_name = 'admin_init';
-$function_name = 'yoast_acf_analysis_test_data_loader';
-
-if ( ! function_exists( 'add_action' ) ) {
-
-	if ( ! is_array( $wp_filter ) ) {
-		$wp_filter = array();
-	}
-
-	if ( ! isset( $wp_filter[ $hook_name ] ) ) {
-		$wp_filter[ $hook_name ] = array();
-	}
-
-	if ( ! isset( $wp_filter[ $hook_name ][11] ) ) {
-		$wp_filter[ $hook_name ][11] = array();
-	}
-
-	$wp_filter[ $hook_name ][11][ $function_name ] = array(
-		'function' => $function_name,
-		'accepted_args' => 1,
-	);
-
-} else {
-
-	add_action( $hook_name, $function_name, 11 );
-
-}
+add_action( 'admin_init', 'yoast_acf_analysis_test_data_loader', 11 );
 
 function yoast_acf_analysis_test_data_loader() {
 
