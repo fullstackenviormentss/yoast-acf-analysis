@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Yoast_ACF_Analysis
- *
  * Adds ACF data to the content analyses of WordPress SEO.
  */
 class AC_Yoast_SEO_ACF_Content_Analysis {
@@ -14,10 +12,6 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	 */
 	public function init() {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
-
-		if ( $this->is_dev_environment() ) {
-			add_action( 'init', array( $this, 'add_cpt_for_tests' ) );
-		}
 	}
 
 	/**
@@ -34,7 +28,7 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 
 		$this->boot();
 
-		if ( $this->is_dev_environment() ) {
+		if ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
 			$this->boot_dev();
 		}
 
@@ -211,8 +205,14 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 			$blacklist->add( $type );
 		}
 
-		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
+		/**
+		 * Disable Pro fields for anything but ACF 5 pro.
+		 *
+		 * - It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
+		 * - ACF v5 FREE on the other hand does not support these fields either.
+		 */
+		if ( ! defined( 'ACF_PRO' ) || ! ACF_PRO ) {
+
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );
@@ -227,22 +227,4 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	protected function get_blacklist_name() {
 		return new Yoast_ACF_Analysis_String_Store();
 	}
-
-	/**
-	 * Adds a Custom Post Type used in the general/cpt Nightwatch test
-	 */
-	public function add_cpt_for_tests() {
-		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/cpt-non-public.php';
-	}
-
-
-	/**
-	 * Returns true if the plugin is currently running in a development environment.
-	 *
-	 * @return bool
-	 */
-	protected function is_dev_environment() {
-		return ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT );
-	}
-
 }

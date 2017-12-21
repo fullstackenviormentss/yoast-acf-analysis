@@ -3,7 +3,6 @@
 /**
  * Class Yoast_ACF_Analysis_Facade
  */
-
 class Yoast_ACF_Analysis_Facade {
 
 	/**
@@ -23,7 +22,7 @@ class Yoast_ACF_Analysis_Facade {
 	public static function get_registry() {
 		static $registry = null;
 
-		if( null === $registry ) {
+		if ( null === $registry ) {
 			$registry = new Yoast_ACF_Analysis_Registry();
 		}
 
@@ -38,7 +37,7 @@ class Yoast_ACF_Analysis_Facade {
 	 * @return string Full filter name to use.
 	 */
 	public static function get_filter_name( $filter_name ) {
-		// Example: yoast-acf-analysis/refresh_rate
+		// Example: yoast-acf-analysis/refresh_rate.
 		return sprintf( '%1$s/%2$s', self::get_plugin_name(), ltrim( $filter_name, '/' ) );
 	}
 }

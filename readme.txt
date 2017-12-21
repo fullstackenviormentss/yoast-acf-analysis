@@ -1,7 +1,7 @@
 === ACF Content Analysis for Yoast SEO ===
 Contributors: yoast, angrycreative, kraftner, marcusforsberg, viktorfroberg, joostdevalk, atimmer, jipmoors, theorboman
 Tags: Yoast, SEO, ACF, Advanced Custom Fields, analysis, Search Engine Optimization
-Requires at least: 4.3.1
+Requires at least: 4.6
 Tested up to: 4.8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -23,6 +23,35 @@ This Plugin is compatible with the free ACF 4 Version as well as with the PRO Ve
 > If you have issues, please [submit them on GitHub](https://github.com/Yoast/yoast-acf-analysis/issues)
 
 Previously called Yoast ACF Analysis.
+
+== Filters ==
+
+= Remove specific field from scoring =
+`add_filter( 'yoast-acf-analysis/blacklist_name', function ( $blacklist_name ) {
+    $blacklist_name->add( 'my-field-name' );
+    return $blacklist_name;
+});`
+
+= Remove field type from scoring =
+`add_filter( 'yoast-acf-analysis/blacklist_type', function ( $blacklist_type ) {
+    // text, image etc
+    $blacklist_type->add( 'text' );
+    $blacklist_type->add( 'image' );
+    return $blacklist_type;
+});`
+
+= Define custom field a specific heading value =
+`add_filter( 'yoast-acf-analysis/headlines', function ( $headlines ) {
+    // value from 1-6, 1=h1, 6=h6
+    $headlines['field_591eb45f2be86'] = 3;
+    return $headlines;
+});`
+
+= Change refresh rate =
+`add_filter( 'yoast-acf-analysis/refresh_rate', function () {
+    // Refresh rates in milliseconds
+    return 1000;
+});`
 
 == Changelog ==
 

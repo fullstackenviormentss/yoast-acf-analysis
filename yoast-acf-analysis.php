@@ -27,37 +27,40 @@ if ( ! defined( 'AC_SEO_ACF_ANALYSIS_PLUGIN_PATH' ) ) {
 	define( 'AC_SEO_ACF_ANALYSIS_PLUGIN_NAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 }
 
-if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php' ) ) {
-	require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/vendor/autoload_52.php';
+$autoload_file = '/vendor/autoload.php';
 
-	$ac_yoast_seo_acf_analysis = new AC_Yoast_SEO_ACF_Content_Analysis();
-	$ac_yoast_seo_acf_analysis->init();
+if ( version_compare( PHP_VERSION, '5.3.2', '<' ) ) {
+	$autoload_file = '/vendor/autoload_52.php';
+}
+
+if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . $autoload_file ) ) {
+	require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . $autoload_file;
 }
 
 /**
  * Loads translations.
+ *
+ * @deprecated 2.0.1
  */
 function yoast_acf_analysis_load_textdomain() {
-	$plugin_path = str_replace( '\\', '/', AC_SEO_ACF_ANALYSIS_PLUGIN_PATH );
-	$mu_path    = str_replace( '\\', '/', WPMU_PLUGIN_DIR );
-
-	if ( 0 === stripos( $plugin_path, $mu_path ) ) {
-		load_muplugin_textdomain( 'acf-content-analysis-for-yoast-seo', $plugin_path . '/languages' );
-		return;
-	}
-
-	load_plugin_textdomain( 'acf-content-analysis-for-yoast-seo', false, $plugin_path . '/languages' );
+	// As we require WordPress 4.6 and higher, we don't need to load the translation files manually anymore.
 }
-add_action( 'plugins_loaded', 'yoast_acf_analysis_load_textdomain' );
 
 /**
  * Triggers a message whenever the class is missing.
  */
 if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) && is_admin() ) {
-	/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
-	$message = sprintf( __( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ), 'ACF Content Analysis for Yoast SEO' );
+	$message = sprintf(
+		/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
+		__( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ),
+		'ACF Content Analysis for Yoast SEO'
+	);
+
 	add_action(
 		'admin_notices',
 		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )
 	);
+} else {
+	$ac_yoast_seo_acf_analysis = new AC_Yoast_SEO_ACF_Content_Analysis();
+	$ac_yoast_seo_acf_analysis->init();
 }
