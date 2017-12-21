@@ -28,7 +28,7 @@ if ( ! function_exists( 'add_action' ) ) {
 		'accepted_args' => 1,
 	);
 
-}else{
+} else {
 
 	add_action( $hook_name, $function_name, 11 );
 
