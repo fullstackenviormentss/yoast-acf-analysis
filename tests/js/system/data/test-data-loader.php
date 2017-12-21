@@ -1,11 +1,9 @@
 <?php
 
-// Load Monkey Brains WP mock methods if Plugin API is not available (e.g. in Unit Tests).
-if ( ! function_exists( 'add_action' ) ) {
-	Brain\Monkey\setUp();
+// Only load data when Plugin API is available because it is not needed in Unit Tests anyway.
+if ( function_exists( 'add_action' ) ) {
+	add_action( 'admin_init', 'yoast_acf_analysis_test_data_loader', 11 );
 }
-
-add_action( 'admin_init', 'yoast_acf_analysis_test_data_loader', 11 );
 
 function yoast_acf_analysis_test_data_loader() {
 
