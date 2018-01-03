@@ -1,13 +1,12 @@
-
 var config = require( "./config/config.js" );
 
 var scraperObjects = {
-
 	// Basic
 	text: require( "./scraper/scraper.text.js" ),
 	textarea: require( "./scraper/scraper.textarea.js" ),
 	email: require( "./scraper/scraper.email.js" ),
 	url: require( "./scraper/scraper.url.js" ),
+	link: require( "./scraper/scraper.link.js" ),
 
 	// Content
 	wysiwyg: require( "./scraper/scraper.wysiwyg.js" ),
@@ -21,7 +20,7 @@ var scraperObjects = {
 	// Relational
 	taxonomy: require( "./scraper/scraper.taxonomy.js" ),
 
-	// JQuery
+	// jQuery
 	// TODO: google_map, date_picker, color_picker
 
 };
@@ -31,25 +30,29 @@ var scrapers = {};
 /**
  * Checks if there already is a scraper for a field type in the store.
  *
- * @param {string} type Type to check for a connected scraper.
+ * @param {string} type Type of scraper to find.
  *
- * @returns {boolean} True if a scraper is connected to the type.
+ * @returns {boolean} True if the scraper is already defined.
  */
 var hasScraper = function( type ) {
-	return ( type in scrapers );
+	return (
+		type in scrapers
+	);
 };
 
 /**
  * Set a scraper object on the store. Existing scrapers will be overwritten.
  *
- * @param {Object} scraper Scraper object to use.
- * @param {string} type Identifier of the scraper.
+ * @param {Object} scraper The scraper to add.
+ * @param {string} type Type of scraper.
  *
- * @returns {Object} The scraper which was added to the store.
+ * @chainable
+ *
+ * @returns {Object} Added scraper.
  */
 var setScraper = function( scraper, type ) {
 	if ( config.debug && hasScraper( type ) ) {
-		console.warn( 'Scraper for "' + type + '" already exists and will be overwritten.' );
+		console.warn( "Scraper for " + type + " already exists and will be overwritten." );
 	}
 
 	scrapers[ type ] = scraper;
@@ -61,16 +64,19 @@ var setScraper = function( scraper, type ) {
  * Returns the scraper object for a field type.
  * If there is no scraper object for this field type a no-op scraper is returned.
  *
- * @param {string} type Type to get the scraper for.
+ * @param {string} type Type of scraper to fetch.
  *
- * @returns {Object} Scraper connected to the supplied type.
+ * @returns {Object} The scraper for the specified type.
  */
 var getScraper = function( type ) {
 	if ( hasScraper( type ) ) {
 		return scrapers[ type ];
-	} else if ( type in scraperObjects ) {
+	}
+
+	if ( type in scraperObjects ) {
 		return setScraper( new scraperObjects[ type ](), type );
 	}
+
 	// If we do not have a scraper just pass the fields through so it will be filtered out by the app.
 	return {
 		scrape: function( fields ) {

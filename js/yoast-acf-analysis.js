@@ -58,9 +58,9 @@ App.prototype.acf5Listener = function() {
 };
 
 App.prototype.bindListeners = function() {
-	if( helper.acf_version >= 5 ) {
+	if ( helper.acf_version >= 5 ) {
 		jQuery( this.acf5Listener.bind( this ) );
-	}else{
+	} else {
 		var fieldSelectors = config.fieldSelectors.slice( 0 );
 		var wysiwygSelector = "textarea[id^=wysiwyg-acf]";
 
@@ -77,7 +77,7 @@ App.prototype.maybeRefresh = function() {
 	}
 
 	analysisTimeout = window.setTimeout( function() {
-		if( config.debug ) {
+		if ( config.debug ) {
 			console.log( "Recalculate..." + new Date() + "(Internal)" );
 		}
 
@@ -113,17 +113,17 @@ var refresh = function( attachment_ids ) {
 var get = function( id ) {
 	var attachment = cache.get( id, "attachment" );
 
-	if( ! attachment ) {
+	if ( ! attachment ) {
 		return false;
 	}
 
 	var changedAttachment = window.wp.media.attachment( id );
 
-	if( changedAttachment.has( "alt" ) ) {
+	if ( changedAttachment.has( "alt" ) ) {
 		attachment.alt = changedAttachment.get( "alt" );
 	}
 
-	if( changedAttachment.has( "title" ) ) {
+	if ( changedAttachment.has( "title" ) ) {
 		attachment.title = changedAttachment.get( "title" );
 	}
 
@@ -146,7 +146,7 @@ var _cache;
 Cache.prototype.set = function( id, value, store ) {
 	store = typeof store === "undefined" ? "default" : store;
 
-	if( ! ( store in _cache ) ) {
+	if ( ! ( store in _cache ) ) {
 		_cache[ store ] = {};
 	}
 
@@ -159,6 +159,7 @@ Cache.prototype.get =  function( id, store ) {
 	if ( store in _cache && id in _cache[ store ] ) {
 		return _cache[ store ][ id ];
 	}
+
 	return false;
 };
 
@@ -171,6 +172,7 @@ Cache.prototype.getUncached =  function( ids, store ) {
 
 	return ids.filter( function( id ) {
 		var value = that.get( id, store );
+
 		return value === false;
 	} );
 };
@@ -178,9 +180,9 @@ Cache.prototype.getUncached =  function( ids, store ) {
 Cache.prototype.clear =  function( store ) {
 	store = typeof store === "undefined" ? "default" : store;
 
-	if( store === "all" ) {
+	if ( store === "all" ) {
 		_cache = {};
-	}else{
+	} else {
 		_cache[ store ] = {};
 	}
 };
@@ -230,16 +232,16 @@ module.exports = function() {
 		field_data.post_meta_key = field_data.name;
 
 		// Collect nested and parent
-		if( outerFieldsName.indexOf( field_data.type ) === -1 ) {
+		if ( outerFieldsName.indexOf( field_data.type ) === -1 ) {
 			innerFields.push( field_data );
-		}else{
+		} else {
 			outerFields.push( field_data );
 		}
 
 		return field_data;
 	} );
 
-	if( outerFields.length === 0 ) {
+	if ( outerFields.length === 0 ) {
 		return fields;
 	}
 
@@ -284,7 +286,7 @@ Collect.prototype.getFieldData = function() {
 
 	var used_types = _.uniq( _.pluck( field_data, "type" ) );
 
-	if( config.debug ) {
+	if ( config.debug ) {
 		console.log( "Used types:" );
 		console.log( used_types );
 	}
@@ -297,19 +299,19 @@ Collect.prototype.getFieldData = function() {
 };
 
 Collect.prototype.append = function( data ) {
-	if( config.debug ) {
+	if ( config.debug ) {
 		console.log( "Recalculate..." + new Date() );
 	}
 
 	var field_data = this.getFieldData();
 
 	_.each( field_data, function( field ) {
-		if( typeof field.content !== "undefined" && field.content !== "" ) {
+		if ( typeof field.content !== "undefined" && field.content !== "" ) {
 			data += "\n" + field.content;
 		}
 	} );
 
-	if( config.debug ) {
+	if ( config.debug ) {
 		console.log( "Field data:" );
 		console.table( field_data );
 
@@ -321,7 +323,7 @@ Collect.prototype.append = function( data ) {
 };
 
 Collect.prototype.getData = function() {
-	if( helper.acf_version >= 5 ) {
+	if ( helper.acf_version >= 5 ) {
 		return require( "./collect-v5.js" )();
 	}
 	return require( "./collect-v4.js" );
@@ -366,7 +368,7 @@ var App = require( "./app.js" );
 
 ( function( $ ) {
 	$( document ).ready( function() {
-		if( "undefined" !== typeof YoastSEO ) {
+		if ( "undefined" !== typeof YoastSEO ) {
 			YoastACFAnalysis = new App();
 		}
 	} );
@@ -388,8 +390,10 @@ var replaceVarPluginAvailable = function() {
 		if ( config.debug ) {
 			console.log( "Replacing ACF variables in the Snippet Window requires Yoast SEO >= 5.3." );
 		}
+
 		return false;
 	}
+
 	return true;
 };
 
@@ -406,14 +410,14 @@ var updateReplaceVars = function( collect ) {
 		// Remove HTML tags using jQuery in case of a wysiwyg field.
 		var content = ( field.type === "wysiwyg" ) ? jQuery( jQuery.parseHTML( field.content ) ).text() : field.content;
 
-		if( typeof replaceVars[ field.post_meta_key ] === "undefined" ) {
+		if ( typeof replaceVars[ field.post_meta_key ] === "undefined" ) {
 			replaceVars[ field.post_meta_key ] = new ReplaceVar( "%%cf_" + field.post_meta_key + "%%", content, { source: "direct" } );
 			YoastSEO.wp.replaceVarsPlugin.addReplacement( replaceVars[ field.post_meta_key ] );
 
 			if ( config.debug ) {
 				console.log( "Created ReplaceVar for: ", field.post_meta_key, " with: ", content, replaceVars[ field.post_meta_key ] );
 			}
-		}else{
+		} else {
 			replaceVars[ field.post_meta_key ].replacement = content;
 
 			if ( config.debug ) {
@@ -428,16 +432,15 @@ module.exports = {
 };
 
 },{"./config/config.js":7}],11:[function(require,module,exports){
-
 var config = require( "./config/config.js" );
 
 var scraperObjects = {
-
 	// Basic
 	text: require( "./scraper/scraper.text.js" ),
 	textarea: require( "./scraper/scraper.textarea.js" ),
 	email: require( "./scraper/scraper.email.js" ),
 	url: require( "./scraper/scraper.url.js" ),
+	link: require( "./scraper/scraper.link.js" ),
 
 	// Content
 	wysiwyg: require( "./scraper/scraper.wysiwyg.js" ),
@@ -461,25 +464,29 @@ var scrapers = {};
 /**
  * Checks if there already is a scraper for a field type in the store.
  *
- * @param {string} type Type to check for a connected scraper.
+ * @param {string} type Type of scraper to find.
  *
- * @returns {boolean} True if a scraper is connected to the type.
+ * @returns {boolean} True if the scraper is already defined.
  */
 var hasScraper = function( type ) {
-	return ( type in scrapers );
+	return (
+		type in scrapers
+	);
 };
 
 /**
  * Set a scraper object on the store. Existing scrapers will be overwritten.
  *
- * @param {Object} scraper Scraper object to use.
- * @param {string} type Identifier of the scraper.
+ * @param {Object} scraper The scraper to add.
+ * @param {string} type Type of scraper.
  *
- * @returns {Object} The scraper which was added to the store.
+ * @chainable
+ *
+ * @returns {Object} Added scraper.
  */
 var setScraper = function( scraper, type ) {
-	if( config.debug && hasScraper( type ) ) {
-		console.warn( 'Scraper for "' + type + '" already exists and will be overwritten.' );
+	if ( config.debug && hasScraper( type ) ) {
+		console.warn( "Scraper for " + type + " already exists and will be overwritten." );
 	}
 
 	scrapers[ type ] = scraper;
@@ -491,20 +498,23 @@ var setScraper = function( scraper, type ) {
  * Returns the scraper object for a field type.
  * If there is no scraper object for this field type a no-op scraper is returned.
  *
- * @param {string} type Type to get the scraper for.
+ * @param {string} type Type of scraper to fetch.
  *
- * @returns {Object} Scraper connected to the supplied type.
+ * @returns {Object} The scraper for the specified type.
  */
 var getScraper = function( type ) {
-	if( hasScraper( type ) ) {
+	if ( hasScraper( type ) ) {
 		return scrapers[ type ];
-	}else if( type in scraperObjects ) {
+	}
+
+	if ( type in scraperObjects ) {
 		return setScraper( new scraperObjects[ type ](), type );
 	}
+
 	// If we do not have a scraper just pass the fields through so it will be filtered out by the app.
 	return {
 		scrape: function( fields ) {
-			if( config.debug ) {
+			if ( config.debug ) {
 				console.warn( "No Scraper for field type: " + type );
 			}
 			return fields;
@@ -517,14 +527,14 @@ module.exports = {
 	getScraper: getScraper,
 };
 
-},{"./config/config.js":7,"./scraper/scraper.email.js":12,"./scraper/scraper.gallery.js":13,"./scraper/scraper.image.js":14,"./scraper/scraper.taxonomy.js":15,"./scraper/scraper.text.js":16,"./scraper/scraper.textarea.js":17,"./scraper/scraper.url.js":18,"./scraper/scraper.wysiwyg.js":19}],12:[function(require,module,exports){
+},{"./config/config.js":7,"./scraper/scraper.email.js":12,"./scraper/scraper.gallery.js":13,"./scraper/scraper.image.js":14,"./scraper/scraper.link.js":15,"./scraper/scraper.taxonomy.js":16,"./scraper/scraper.text.js":17,"./scraper/scraper.textarea.js":18,"./scraper/scraper.url.js":19,"./scraper/scraper.wysiwyg.js":20}],12:[function(require,module,exports){
 /* global _ */
 
 var Scraper = function() {};
 
 Scraper.prototype.scrape = function( fields ) {
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "email" ) {
+		if ( field.type !== "email" ) {
 			return field;
 		}
 
@@ -549,7 +559,7 @@ Scraper.prototype.scrape = function( fields ) {
 	var attachment_ids = [];
 
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "gallery" ) {
+		if ( field.type !== "gallery" ) {
 			return field;
 		}
 
@@ -563,7 +573,7 @@ Scraper.prototype.scrape = function( fields ) {
 			attachment_ids.push( attachment_id );
 
 			// If we have the attachment data in the cache we can return a useful value
-			if( attachmentCache.get( attachment_id, "attachment" ) ) {
+			if ( attachmentCache.get( attachment_id, "attachment" ) ) {
 				var attachment = attachmentCache.get( attachment_id, "attachment" );
 
 				field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';
@@ -591,7 +601,7 @@ Scraper.prototype.scrape = function( fields ) {
 	var attachment_ids = [];
 
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "image" ) {
+		if ( field.type !== "image" ) {
 			return field;
 		}
 
@@ -601,7 +611,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 		attachment_ids.push( attachment_id );
 
-		if( attachmentCache.get( attachment_id, "attachment" ) ) {
+		if ( attachmentCache.get( attachment_id, "attachment" ) ) {
 			var attachment = attachmentCache.get( attachment_id, "attachment" );
 
 			field.content += '<img src="' + attachment.url + '" alt="' + attachment.alt + '" title="' + attachment.title + '">';
@@ -619,19 +629,54 @@ Scraper.prototype.scrape = function( fields ) {
 module.exports = Scraper;
 
 },{"./../cache/cache.attachments.js":2}],15:[function(require,module,exports){
+/* global _ */
+require( "./../scraper-store.js" );
+
+var Scraper = function() {};
+
+/**
+ * Scraper for the link field type.
+ *
+ * @param {Object} fields Fields to parse.
+ *
+ * @returns {Object} Mapped list of fields.
+ */
+Scraper.prototype.scrape = function( fields ) {
+	/**
+	 * Set content for all link fields as a-tag with title, url and target.
+	 * Return the fields object containing all fields.
+	 */
+	return _.map( fields, function( field ) {
+		if ( field.type !== "link" ) {
+			return field;
+		}
+
+		var title = field.$el.find( "input[type=hidden].input-title" ).val(),
+			url = field.$el.find( "input[type=hidden].input-url" ).val(),
+			target = field.$el.find( "input[type=hidden].input-target" ).val();
+
+		field.content = "<a href=\"" + url + "\" target=\"" + target + "\">" + title + "</a>";
+
+		return field;
+	} );
+};
+
+module.exports = Scraper;
+
+},{"./../scraper-store.js":11}],16:[function(require,module,exports){
 /* global _, acf */
 
 var Scraper = function() {};
 
 Scraper.prototype.scrape = function( fields ) {
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "taxonomy" ) {
+		if ( field.type !== "taxonomy" ) {
 			return field;
 		}
 
 		var terms = [];
 
-		if( field.$el.find( '.acf-taxonomy-field[data-type="multi_select"]' ).length > 0 ) {
+		if ( field.$el.find( '.acf-taxonomy-field[data-type="multi_select"]' ).length > 0 ) {
 			var select2Target = ( acf.select2.version >= 4 ) ? "select" : "input";
 
 			terms = _.pluck(
@@ -639,19 +684,19 @@ Scraper.prototype.scrape = function( fields ) {
 					.select2( "data" )
 				, "text"
 			);
-		}else if( field.$el.find( '.acf-taxonomy-field[data-type="checkbox"]' ).length > 0 ) {
+		} else if ( field.$el.find( '.acf-taxonomy-field[data-type="checkbox"]' ).length > 0 ) {
 			terms = _.pluck(
 				field.$el.find( '.acf-taxonomy-field[data-type="checkbox"] input[type="checkbox"]:checked' )
 					.next(),
 				"textContent"
 			);
-		}else if( field.$el.find( "input[type=checkbox]:checked" ).length > 0 ) {
+		} else if ( field.$el.find( "input[type=checkbox]:checked" ).length > 0 ) {
 			terms = _.pluck(
 				field.$el.find( "input[type=checkbox]:checked" )
 					.parent(),
 				"textContent"
 			);
-		}else if( field.$el.find( "select option:checked" ).length > 0 ) {
+		} else if ( field.$el.find( "select option:checked" ).length > 0 ) {
 			terms = _.pluck(
 				field.$el.find( "select option:checked" ),
 				"textContent"
@@ -662,7 +707,7 @@ Scraper.prototype.scrape = function( fields ) {
 			return term.trim();
 		} );
 
-		if( terms.length > 0 ) {
+		if ( terms.length > 0 ) {
 			field.content = "<ul>\n<li>" + terms.join( "</li>\n<li>" ) + "</li>\n</ul>";
 		}
 
@@ -674,7 +719,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* global _ */
 
 var config = require( "./../config/config.js" );
@@ -685,7 +730,7 @@ Scraper.prototype.scrape = function( fields ) {
 	var that = this;
 
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "text" ) {
+		if ( field.type !== "text" ) {
 			return field;
 		}
 
@@ -700,7 +745,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 Scraper.prototype.wrapInHeadline = function( field ) {
 	var level = this.isHeadline( field );
-	if( level ) {
+	if ( level ) {
 		field.content = "<h" + level + ">" + field.content + "</h" + level + ">";
 	}
 
@@ -713,12 +758,12 @@ Scraper.prototype.isHeadline = function( field ) {
 	} );
 
 	// It has to be an integer
-	if( level ) {
+	if ( level ) {
 		level = parseInt( level, 10 );
 	}
 
 	// Headlines only exist from h1 to h6
-	if( level < 1 || level > 6 ) {
+	if ( level < 1 || level > 6 ) {
 		level = false;
 	}
 
@@ -727,14 +772,14 @@ Scraper.prototype.isHeadline = function( field ) {
 
 module.exports = Scraper;
 
-},{"./../config/config.js":7}],17:[function(require,module,exports){
+},{"./../config/config.js":7}],18:[function(require,module,exports){
 /* global _ */
 
 var Scraper = function() {};
 
 Scraper.prototype.scrape = function( fields ) {
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "textarea" ) {
+		if ( field.type !== "textarea" ) {
 			return field;
 		}
 
@@ -748,14 +793,14 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /* global _ */
 
 var Scraper = function() {};
 
 Scraper.prototype.scrape = function( fields ) {
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "url" ) {
+		if ( field.type !== "url" ) {
 			return field;
 		}
 
@@ -769,7 +814,7 @@ Scraper.prototype.scrape = function( fields ) {
 
 module.exports = Scraper;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /* global tinyMCE, _ */
 
 var Scraper = function() {};
@@ -814,7 +859,7 @@ var getContentTinyMCE = function( field ) {
 
 Scraper.prototype.scrape = function( fields ) {
 	fields = _.map( fields, function( field ) {
-		if( field.type !== "wysiwyg" ) {
+		if ( field.type !== "wysiwyg" ) {
 			return field;
 		}
 
