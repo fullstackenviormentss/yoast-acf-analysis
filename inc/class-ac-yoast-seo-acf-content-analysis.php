@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Class Yoast_ACF_Analysis
- *
  * Adds ACF data to the content analyses of WordPress SEO.
  */
 class AC_Yoast_SEO_ACF_Content_Analysis {
@@ -29,10 +27,6 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 		}
 
 		$this->boot();
-
-		if ( defined( 'AC_YOAST_ACF_ANALYSIS_ENVIRONMENT' ) && 'development' === AC_YOAST_ACF_ANALYSIS_ENVIRONMENT ) {
-			$this->boot_dev();
-		}
 
 		$this->register_config_filters();
 
@@ -79,20 +73,12 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 	}
 
 	/**
-	 * Boots the plugin for dev environment.
-	 */
-	public function boot_dev() {
-		$version = ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) ? '4' : '5';
-		require_once AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . '/tests/js/system/data/acf' . $version . '.php';
-	}
-
-	/**
 	 * Filters the Scraper Configuration to add the headlines configuration for the text scraper.
 	 */
 	protected function register_config_filters() {
 		add_filter(
 			Yoast_ACF_Analysis_Facade::get_filter_name( 'scraper_config' ),
-			array( $this, 'filter_scraper_config')
+			array( $this, 'filter_scraper_config' )
 		);
 	}
 
@@ -207,8 +193,14 @@ class AC_Yoast_SEO_ACF_Content_Analysis {
 			$blacklist->add( $type );
 		}
 
-		if ( -1 === version_compare( get_option( 'acf_version' ), 5 ) ) {
-			// It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
+		/**
+		 * Disable Pro fields for anything but ACF 5 pro.
+		 *
+		 * - It is not worth supporting the Pro Addons to v4, as Pro users can just switch to v5.
+		 * - ACF v5 FREE on the other hand does not support these fields either.
+		 */
+		if ( ! defined( 'ACF_PRO' ) || ! ACF_PRO ) {
+
 			$blacklist->remove( 'gallery' );
 			$blacklist->remove( 'repeater' );
 			$blacklist->remove( 'flexible_content' );

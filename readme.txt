@@ -1,11 +1,11 @@
 === ACF Content Analysis for Yoast SEO ===
 Contributors: yoast, angrycreative, kraftner, marcusforsberg, viktorfroberg, joostdevalk, atimmer, jipmoors, theorboman
 Tags: Yoast, SEO, ACF, Advanced Custom Fields, analysis, Search Engine Optimization
-Requires at least: 4.3.1
-Tested up to: 4.8.1
+Requires at least: 4.6
+Tested up to: 4.8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 Text Domain: acf-content-analysis-for-yoast-seo
 
 WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
@@ -24,13 +24,53 @@ This Plugin is compatible with the free ACF 4 Version as well as with the PRO Ve
 
 Previously called Yoast ACF Analysis.
 
+== Filters ==
+
+= Remove specific field from scoring =
+`add_filter( 'yoast-acf-analysis/blacklist_name', function ( $blacklist_name ) {
+    $blacklist_name->add( 'my-field-name' );
+    return $blacklist_name;
+});`
+
+= Remove field type from scoring =
+`add_filter( 'yoast-acf-analysis/blacklist_type', function ( $blacklist_type ) {
+    // text, image etc
+    $blacklist_type->add( 'text' );
+    $blacklist_type->add( 'image' );
+    return $blacklist_type;
+});`
+
+= Define custom field a specific heading value =
+`add_filter( 'yoast-acf-analysis/headlines', function ( $headlines ) {
+    // value from 1-6, 1=h1, 6=h6
+    $headlines['field_591eb45f2be86'] = 3;
+    return $headlines;
+});`
+
+= Change refresh rate =
+`add_filter( 'yoast-acf-analysis/refresh_rate', function () {
+    // Refresh rates in milliseconds
+    return 1000;
+});`
+
 == Changelog ==
+
+= 2.0.1 =
+
+Released October 19th, 2017
+
+Bugfixes:
+	* Fixes the mismatch in textdomain according to the plugin slug.
+	* Fixes using an incorrect path when loading plugin data.
+	* Fixes a bug with flexible content and repeaters, in combination with ACF 5, causing JavaScript errors.
+	* Fixes a bug with short array notation which is a problem on sites running on PHP 5.3 or lower.
+	* Fixes a bug where assets are loaded without checking for required dependencies.
 
 = 2.0.0 =
 
 Released August 22th, 2017
 
-* Changed:
+Changes:
 	* Complete rewrite, including full support for ACF 4 and 5.
 
 = 1.2.1 =
