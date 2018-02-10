@@ -6,7 +6,7 @@ Tested up to: 4.8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Stable tag: 2.0.1
-Text Domain: acf-content-analysis-for-yoast-seo
+Requires PHP: 5.2.4
 
 WordPress plugin that adds the content of all ACF fields to the Yoast SEO score analysis.
 
