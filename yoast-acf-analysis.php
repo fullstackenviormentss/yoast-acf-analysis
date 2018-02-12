@@ -49,19 +49,23 @@ function yoast_acf_analysis_load_textdomain() {
 /**
  * Triggers a message whenever the class is missing.
  */
-if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) && is_admin() ) {
-	$message = sprintf(
-		/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
-		__( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ),
-		'ACF Content Analysis for Yoast SEO'
-	);
-
-	add_action(
-		'admin_notices',
-		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )
-	);
+if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) ) {
+	add_action( 'admin_notices', 'yoast_acf_report_missing_acf' );
 }
 else {
 	$ac_yoast_seo_acf_analysis = new AC_Yoast_SEO_ACF_Content_Analysis();
 	$ac_yoast_seo_acf_analysis->init();
+}
+
+/**
+ * Show admin notice when ACF is missing.
+ */
+function yoast_acf_report_missing_acf() {
+	echo '<div class="error"><p>';
+	printf(
+		/* translators: %1$s resolves to ACF Content Analysis for Yoast SEO */
+		esc_html__( '%1$s could not be loaded because of missing files.', 'acf-content-analysis-for-yoast-seo' ),
+		'ACF Content Analysis for Yoast SEO'
+	);
+	echo '</p></div>';
 }
