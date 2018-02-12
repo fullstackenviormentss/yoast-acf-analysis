@@ -1,18 +1,19 @@
 <?php
 /**
+ * ACF Content Analysis for Yoast SEO plugin.
+ *
  * @package YoastACFAnalysis
- */
-
-/*
-Plugin Name: ACF Content Analysis for Yoast SEO
-Plugin URI: https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/
-Description: Ensure that Yoast SEO analyzes all Advanced Custom Fields 4 and 5 content including Flexible Content and Repeaters.
-Version: 2.0.1
-Author: Thomas Kräftner, ViktorFroberg, marol87, pekz0r, angrycreative, Team Yoast
-Author URI: http://angrycreative.se
-License: GPL v3
-Text Domain: acf-content-analysis-for-yoast-seo
-Domain Path: /languages/
+ *
+ * @wordpress-plugin
+ * Plugin Name: ACF Content Analysis for Yoast SEO
+ * Plugin URI:  https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/
+ * Description: Ensure that Yoast SEO analyzes all Advanced Custom Fields 4 and 5 content including Flexible Content and Repeaters.
+ * Version:     2.0.1
+ * Author:      Thomas Kräftner, ViktorFroberg, marol87, pekz0r, angrycreative, Team Yoast
+ * Author URI:  http://angrycreative.se
+ * License:     GPL v3
+ * Text Domain: acf-content-analysis-for-yoast-seo
+ * Domain Path: /languages/
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
