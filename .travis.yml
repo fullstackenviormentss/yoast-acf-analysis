@@ -69,8 +69,8 @@ before_script:
 
 script:
 # Exclude tests directory from linting for PHP 5.2/3
-- if [[ $TRAVIS_PHP_VERSION == "5.2" || $TRAVIS_PHP_VERSION == "5.3" ]]; then find -L . -path ./vendor -prune -o -path ./node_modules -prune -o -path ./tests -prune -o -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l; fi
-- if [[ $TRAVIS_PHP_VERSION != "5.2" && $TRAVIS_PHP_VERSION != "5.3" ]]; then find -L . -path ./vendor -prune -o -path ./node_modules -prune -o -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l; fi
+- if [[ $TRAVIS_PHP_VERSION == "5.2" || $TRAVIS_PHP_VERSION == "5.3" ]]; then if  find -L . -path ./vendor -prune -o -path ./node_modules -prune -o -path ./tests -prune -o -name '*.php' -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then exit 1; fi; fi
+- if [[ $TRAVIS_PHP_VERSION != "5.2" && $TRAVIS_PHP_VERSION != "5.3" ]]; then if find -L . -path ./vendor -prune -o -path ./node_modules -prune -o -name '*.php' -exec php -l {} \; | grep "^[Parse error|Fatal error]"; then exit 1; fi; fi
 - if [[ "$PHPCS" == "1" ]]; then composer configure-phpcs; composer check-cs-errors; fi
 - if [[ "$CHECKJS" == "1" ]]; then grunt check; fi
 - if [[ "$PHPUNIT" == "1" ]]; then composer test; fi
