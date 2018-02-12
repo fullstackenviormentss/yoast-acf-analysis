@@ -3,7 +3,6 @@
 
 namespace Yoast\AcfAnalysis\Tests\Configuration;
 
-
 class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -13,23 +12,23 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		return new \Yoast_ACF_Analysis_String_Store();
 	}
 
-	public function testEmpty(){
+	public function testEmpty() {
 		$store = $this->getStore();
 		$this->assertEmpty( $store->to_array() );
 	}
 
-	public function testAdd(){
+	public function testAdd() {
 
 		$type = "test";
 
 		$store = $this->getStore();
 		$store->add( $type );
 
-		$this->assertSame( [ $type ],  $store->to_array() );
+		$this->assertSame( [ $type ], $store->to_array() );
 
 	}
 
-	public function testAddSame(){
+	public function testAddSame() {
 
 		$type = "test";
 
@@ -37,37 +36,37 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 		$store->add( $type );
 		$store->add( $type );
 
-		$this->assertSame( [ $type ],  $store->to_array() );
+		$this->assertSame( [ $type ], $store->to_array() );
 
 	}
 
-	public function testAddMultiple(){
+	public function testAddMultiple() {
 
-		$typeA= "A";
-		$typeB= "B";
+		$typeA = "A";
+		$typeB = "B";
 
 		$store = $this->getStore();
 		$store->add( $typeA );
 		$store->add( $typeB );
 
-		$this->assertSame( [ $typeA, $typeB ],  $store->to_array() );
+		$this->assertSame( [ $typeA, $typeB ], $store->to_array() );
 
 	}
 
-	public function testAddMultipleSorting(){
+	public function testAddMultipleSorting() {
 
-		$typeA= "Z";
-		$typeB= "A";
+		$typeA = "Z";
+		$typeB = "A";
 
 		$store = $this->getStore();
 		$store->add( $typeA );
 		$store->add( $typeB );
 
-		$this->assertSame( [ $typeB, $typeA ],  $store->to_array() );
+		$this->assertSame( [ $typeB, $typeA ], $store->to_array() );
 
 	}
 
-	public function testAddNonString(){
+	public function testAddNonString() {
 
 		$store = $this->getStore();
 
@@ -76,21 +75,21 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testRemove(){
+	public function testRemove() {
 
-		$typeA= "A";
-		$typeB= "B";
+		$typeA = "A";
+		$typeB = "B";
 
 		$store = $this->getStore();
 
 		$store->add( $typeA );
 		$store->add( $typeB );
 
-		$this->assertSame( [ $typeA, $typeB ],  $store->to_array() );
+		$this->assertSame( [ $typeA, $typeB ], $store->to_array() );
 
 		$store->remove( $typeA );
 
-		$this->assertSame( [ $typeB ],  $store->to_array() );
+		$this->assertSame( [ $typeB ], $store->to_array() );
 
 		$store->remove( $typeB );
 
@@ -98,7 +97,7 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testRemoveNonString(){
+	public function testRemoveNonString() {
 
 		$store = $this->getStore();
 		$store->add( "999" );
@@ -107,7 +106,7 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testRemoveNonExist(){
+	public function testRemoveNonExist() {
 
 		$store = $this->getStore();
 

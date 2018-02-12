@@ -11,7 +11,7 @@ function yoast_acf_analysis_test_data_loader() {
 		return;
 	}
 
-	$registry = Yoast_ACF_Analysis_Facade::get_registry();
+	$registry      = Yoast_ACF_Analysis_Facade::get_registry();
 	$configuration = $registry->get( 'config' );
 
 	$version = 4;
