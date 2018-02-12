@@ -5,6 +5,9 @@
  * @package YoastACFAnalysis
  */
 
+/**
+ * Interface Yoast_ACF_Analysis_Dependency.
+ */
 interface Yoast_ACF_Analysis_Dependency {
 	/**
 	 * Checks if this dependency is met.

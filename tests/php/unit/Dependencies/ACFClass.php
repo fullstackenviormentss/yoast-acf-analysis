@@ -5,6 +5,9 @@
  * @package YoastACFAnalysis
  */
 
+/**
+ * Test helper.
+ */
 class acf {
 
 }
