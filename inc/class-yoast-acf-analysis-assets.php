@@ -10,7 +10,11 @@
  */
 class Yoast_ACF_Analysis_Assets {
 
-	/** @var array Plugin information. */
+	/**
+	 * Plugin information.
+	 *
+	 * @var array
+	 */
 	protected $plugin_data;
 
 	/**

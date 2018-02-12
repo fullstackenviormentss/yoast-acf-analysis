@@ -25,10 +25,18 @@ class Yoast_ACF_Analysis_Configuration {
 	 */
 	protected $field_selectors;
 
-	/** @var int Refresh rate to use */
+	/**
+	 * Refresh rate to use.
+	 *
+	 * @var int
+	 */
 	protected $refresh_rate = 1000;
 
-	/** @var array Scraper configuration */
+	/**
+	 * Scraper configuration.
+	 *
+	 * @var array
+	 */
 	protected $scraper_config = array();
 
 	/**
