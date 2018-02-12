@@ -21,6 +21,10 @@
         <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
     </rule>
 
+    <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace">
+        <exclude-pattern>*/yoast-acf-analysis\.php$</exclude-pattern>
+    </rule>
+
     <!-- exclude the 'empty' index files from some documentation checks -->
     <rule ref="Squiz.Commenting.FileComment">
         <exclude-pattern>*/index.php</exclude-pattern>
