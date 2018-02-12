@@ -1,4 +1,9 @@
 <?php
+/**
+ * ACF Content Analysis for Yoast SEO test file.
+ *
+ * @package YoastACFAnalysis
+ */
 
 // Only load data when Plugin API is available because it is not needed in Unit Tests anyway.
 if ( function_exists( 'add_action' ) ) {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * ACF Content Analysis for Yoast SEO plugin file.
+ *
+ * @package YoastACFAnalysis
+ */
 
 interface Yoast_ACF_Analysis_Dependency {
 	/**
