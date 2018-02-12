@@ -27,14 +27,14 @@ if ( ! defined( 'AC_SEO_ACF_ANALYSIS_PLUGIN_PATH' ) ) {
 	define( 'AC_SEO_ACF_ANALYSIS_PLUGIN_NAME', untrailingslashit( plugin_basename( __FILE__ ) ) );
 }
 
-$autoload_file = '/vendor/autoload.php';
+$yoast_acf_autoload_file = '/vendor/autoload.php';
 
 if ( version_compare( PHP_VERSION, '5.3.2', '<' ) ) {
-	$autoload_file = '/vendor/autoload_52.php';
+	$yoast_acf_autoload_file = '/vendor/autoload_52.php';
 }
 
-if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . $autoload_file ) ) {
-	require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . $autoload_file;
+if ( is_file( AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . $yoast_acf_autoload_file ) ) {
+	require AC_SEO_ACF_ANALYSIS_PLUGIN_PATH . $yoast_acf_autoload_file;
 }
 
 /**
