@@ -42,27 +42,27 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddMultiple() {
 
-		$typeA = 'A';
-		$typeB = 'B';
+		$type_a = 'A';
+		$type_b = 'B';
 
 		$store = $this->getStore();
-		$store->add( $typeA );
-		$store->add( $typeB );
+		$store->add( $type_a );
+		$store->add( $type_b );
 
-		$this->assertSame( [ $typeA, $typeB ], $store->to_array() );
+		$this->assertSame( [ $type_a, $type_b ], $store->to_array() );
 
 	}
 
 	public function testAddMultipleSorting() {
 
-		$typeA = 'Z';
-		$typeB = 'A';
+		$type_a = 'Z';
+		$type_b = 'A';
 
 		$store = $this->getStore();
-		$store->add( $typeA );
-		$store->add( $typeB );
+		$store->add( $type_a );
+		$store->add( $type_b );
 
-		$this->assertSame( [ $typeB, $typeA ], $store->to_array() );
+		$this->assertSame( [ $type_b, $type_a ], $store->to_array() );
 
 	}
 
@@ -77,21 +77,21 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testRemove() {
 
-		$typeA = 'A';
-		$typeB = 'B';
+		$type_a = 'A';
+		$type_b = 'B';
 
 		$store = $this->getStore();
 
-		$store->add( $typeA );
-		$store->add( $typeB );
+		$store->add( $type_a );
+		$store->add( $type_b );
 
-		$this->assertSame( [ $typeA, $typeB ], $store->to_array() );
+		$this->assertSame( [ $type_a, $type_b ], $store->to_array() );
 
-		$store->remove( $typeA );
+		$store->remove( $type_a );
 
-		$this->assertSame( [ $typeB ], $store->to_array() );
+		$this->assertSame( [ $type_b ], $store->to_array() );
 
-		$store->remove( $typeB );
+		$store->remove( $type_b );
 
 		$this->assertEmpty( $store->to_array() );
 
