@@ -74,3 +74,4 @@ script:
 - if [[ "$PHPCS" == "1" ]]; then composer configure-phpcs; composer check-cs-errors; fi
 - if [[ "$CHECKJS" == "1" ]]; then grunt check; fi
 - if [[ "$PHPUNIT" == "1" ]]; then composer test; fi
+- if [[ $TRAVIS_PHP_VERSION == "5.3" || $TRAVIS_PHP_VERSION == "7.2" ]]; then composer validate --no-check-all; fi
