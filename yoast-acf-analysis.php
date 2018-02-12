@@ -60,7 +60,8 @@ if ( ! class_exists( 'AC_Yoast_SEO_ACF_Content_Analysis' ) && is_admin() ) {
 		'admin_notices',
 		create_function( '', "echo '<div class=\"error\"><p>$message</p></div>';" )
 	);
-} else {
+}
+else {
 	$ac_yoast_seo_acf_analysis = new AC_Yoast_SEO_ACF_Content_Analysis();
 	$ac_yoast_seo_acf_analysis->init();
 }

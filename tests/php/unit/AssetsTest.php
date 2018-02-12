@@ -6,7 +6,7 @@ use Brain\Monkey;
 use Brain\Monkey\Functions;
 
 class AssetsTest extends \PHPUnit_Framework_TestCase {
-	protected $preserveGlobalState = false;
+	protected $preserveGlobalState      = false;
 	protected $runTestInSeparateProcess = true;
 
 	protected function setUp() {
