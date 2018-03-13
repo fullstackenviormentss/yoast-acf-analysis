@@ -19,7 +19,7 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAdd() {
 
-		$type = "test";
+		$type = 'test';
 
 		$store = $this->getStore();
 		$store->add( $type );
@@ -30,7 +30,7 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddSame() {
 
-		$type = "test";
+		$type = 'test';
 
 		$store = $this->getStore();
 		$store->add( $type );
@@ -42,8 +42,8 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddMultiple() {
 
-		$typeA = "A";
-		$typeB = "B";
+		$typeA = 'A';
+		$typeB = 'B';
 
 		$store = $this->getStore();
 		$store->add( $typeA );
@@ -55,8 +55,8 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testAddMultipleSorting() {
 
-		$typeA = "Z";
-		$typeB = "A";
+		$typeA = 'Z';
+		$typeB = 'A';
 
 		$store = $this->getStore();
 		$store->add( $typeA );
@@ -77,8 +77,8 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 	public function testRemove() {
 
-		$typeA = "A";
-		$typeB = "B";
+		$typeA = 'A';
+		$typeB = 'B';
 
 		$store = $this->getStore();
 
@@ -100,7 +100,7 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 	public function testRemoveNonString() {
 
 		$store = $this->getStore();
-		$store->add( "999" );
+		$store->add( '999' );
 
 		$this->assertFalse( $store->remove( 999 ) );
 
@@ -110,7 +110,7 @@ class StringStoreTest extends \PHPUnit_Framework_TestCase {
 
 		$store = $this->getStore();
 
-		$this->assertFalse( $store->remove( "test" ) );
+		$this->assertFalse( $store->remove( 'test' ) );
 
 	}
 
