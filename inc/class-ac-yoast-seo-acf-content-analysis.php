@@ -1,4 +1,9 @@
 <?php
+/**
+ * ACF Content Analysis for Yoast SEO plugin file.
+ *
+ * @package YoastACFAnalysis
+ */
 
 /**
  * Adds ACF data to the content analyses of WordPress SEO.

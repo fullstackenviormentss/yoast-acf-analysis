@@ -1,12 +1,20 @@
 <?php
-
+/**
+ * ACF Content Analysis for Yoast SEO plugin file.
+ *
+ * @package YoastACFAnalysis
+ */
 
 /**
  * Class Yoast_ACF_Analysis_Frontend
  */
 class Yoast_ACF_Analysis_Assets {
 
-	/** @var array Plugin information. */
+	/**
+	 * Plugin information.
+	 *
+	 * @var array
+	 */
 	protected $plugin_data;
 
 	/**

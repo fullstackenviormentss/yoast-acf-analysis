@@ -1,4 +1,9 @@
 <?php
+/**
+ * ACF Content Analysis for Yoast SEO plugin file.
+ *
+ * @package YoastACFAnalysis
+ */
 
 /**
  * Class Yoast_ACF_Analysis_String_Store
@@ -7,7 +12,11 @@
  */
 class Yoast_ACF_Analysis_String_Store {
 
-	/** @var array List of stored items. */
+	/**
+	 * List of stored items.
+	 *
+	 * @var array
+	 */
 	protected $items = array();
 
 	/**

@@ -1,12 +1,20 @@
 <?php
-
+/**
+ * ACF Content Analysis for Yoast SEO plugin file.
+ *
+ * @package YoastACFAnalysis
+ */
 
 /**
  * Class Yoast_ACF_Analysis_Requirements
  */
 class Yoast_ACF_Analysis_Requirements {
 
-	/** @var Yoast_ACF_Analysis_Dependency[] List of registered dependencies. */
+	/**
+	 * List of registered dependencies.
+	 *
+	 * @var Yoast_ACF_Analysis_Dependency[]
+	 */
 	protected $dependencies = array();
 
 	/**
