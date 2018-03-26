@@ -5,7 +5,7 @@ namespace Yoast\AcfAnalysis\Tests\Assets;
 use Brain\Monkey;
 use Brain\Monkey\Functions;
 
-class AssetsTest extends \PHPUnit_Framework_TestCase {
+class Assets_Test extends \PHPUnit_Framework_TestCase {
 	protected $preserveGlobalState      = false;
 	protected $runTestInSeparateProcess = true;
 

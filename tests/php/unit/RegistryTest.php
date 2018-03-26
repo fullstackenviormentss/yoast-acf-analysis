@@ -3,7 +3,7 @@
 
 namespace Yoast\AcfAnalysis\Tests\Configuration;
 
-class RegistryTest extends \PHPUnit_Framework_TestCase {
+class Registry_Test extends \PHPUnit_Framework_TestCase {
 
 	public function testSingleton() {
 

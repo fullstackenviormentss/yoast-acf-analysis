@@ -8,7 +8,7 @@ use Brain\Monkey\Functions;
 use Brain\Monkey\Filters;
 
 
-class PassingDependency implements \Yoast_ACF_Analysis_Dependency {
+class Passing_Dependency implements \Yoast_ACF_Analysis_Dependency {
 	/**
 	 * Checks if this dependency is met.
 	 *
@@ -27,7 +27,7 @@ class PassingDependency implements \Yoast_ACF_Analysis_Dependency {
 	}
 }
 
-class FailingDependency implements \Yoast_ACF_Analysis_Dependency {
+class Failing_Dependency implements \Yoast_ACF_Analysis_Dependency {
 	/**
 	 * Checks if this dependency is met.
 	 *
@@ -46,7 +46,7 @@ class FailingDependency implements \Yoast_ACF_Analysis_Dependency {
 	}
 }
 
-class RequirementsTest extends \PHPUnit_Framework_TestCase {
+class Requirements_Test extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		parent::setUp();
@@ -62,22 +62,22 @@ class RequirementsTest extends \PHPUnit_Framework_TestCase {
 
 	public function testPassingDependency() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
-		$testee->add_dependency( new PassingDependency() );
+		$testee->add_dependency( new Passing_Dependency() );
 
 		$this->assertTrue( $testee->are_met() );
 	}
 
 	public function testFailingDependency() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
-		$testee->add_dependency( new FailingDependency() );
+		$testee->add_dependency( new Failing_Dependency() );
 
 		$this->assertFalse( $testee->are_met() );
 	}
 
 	public function testMixedDependencies() {
 		$testee = new \Yoast_ACF_Analysis_Requirements();
-		$testee->add_dependency( new FailingDependency() );
-		$testee->add_dependency( new PassingDependency() );
+		$testee->add_dependency( new Failing_Dependency() );
+		$testee->add_dependency( new Passing_Dependency() );
 
 		$this->assertFalse( $testee->are_met() );
 	}

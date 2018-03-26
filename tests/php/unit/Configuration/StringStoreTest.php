@@ -3,7 +3,7 @@
 
 namespace Yoast\AcfAnalysis\Tests\Configuration;
 
-class StringStoreTest extends \PHPUnit_Framework_TestCase {
+class String_Store_Test extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @return \Yoast_ACF_Analysis_String_Store

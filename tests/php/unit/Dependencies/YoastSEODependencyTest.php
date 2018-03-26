@@ -4,7 +4,7 @@ namespace Yoast\AcfAnalysis\Tests\Dependencies;
 
 use Brain\Monkey;
 
-class YoastSEODependencyTest extends \PHPUnit_Framework_TestCase {
+class Yoast_SEO_Dependency_Test extends \PHPUnit_Framework_TestCase {
 	protected $preserveGlobalState      = false;
 	protected $runTestInSeparateProcess = true;
 

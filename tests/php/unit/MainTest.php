@@ -4,7 +4,7 @@ namespace Yoast\AcfAnalysis\Tests;
 
 use Brain\Monkey;
 
-class MainTest extends \PHPUnit_Framework_TestCase {
+class Main_Test extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		parent::setUp();
