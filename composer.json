@@ -62,7 +62,7 @@
       "Yoast\\AcfAnalysis\\Tests\\": "tests/php/unit"
     },
     "files": [
-      "tests/js/system/data/test-data-loader.php"
+      "tests/js/system/data/test-data-loader-functions.php"
     ]
   },
   "scripts": {
