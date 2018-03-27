@@ -19,6 +19,9 @@
 
         <!-- Namespacing hooks sound reasonable. -->
         <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
+
+        <!-- Exclude WP filename rules for the time being. YoastCS 0.5 will solve this better. -->
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
     </rule>
 
     <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace">
